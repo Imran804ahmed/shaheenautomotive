@@ -1,26 +1,229 @@
 @import "tailwindcss";
 
+/*
+ * Shaheen Automotive design system
+ * ---------------------------------------------------------------
+ * Palette: "Forge & Forest"
+ *   Primary   forest green  (from the SAPL gear-and-eagle mark)
+ *   Secondary graphite ink  (deep green-black, used for dark surfaces)
+ *   Accent    brass         (heat-treated metal, used sparingly for CTAs on dark)
+ *   Background warm paper   (light surfaces), white for raised cards
+ *   Text      ink on paper, paper on ink
+ */
+@theme {
+  /* surfaces */
+  --color-bg: #f4f2ec;
+  --color-bg-elevated: #ffffff;
+  --color-bg-inverted: #0a1a13;
+  --color-ink-2: #12281e;
+  --color-ink-3: #1b382b;
+
+  /* text */
+  --color-fg: #0f1d16;
+  --color-fg-muted: #4d5a53;
+  --color-fg-inverted: #f4f2ec;
+  --color-fg-inverted-muted: #a9b8af;
+
+  /* lines */
+  --color-border: #ddd9cd;
+  --color-border-inverted: #24402f;
+
+  /* primary (forest green) */
+  --color-accent: #17703f;
+  --color-accent-strong: #0f5530;
+  --color-accent-soft: #e2efe6;
+  --color-accent-fg: #f4f2ec;
+  --color-glow: #38c27a;
+
+  /* accent (brass) */
+  --color-brass: #e3a63a;
+  --color-brass-strong: #f0bb55;
+  --color-brass-soft: #f7ecd2;
+  --color-brass-fg: #1a1205;
+
+  --color-steel: #6b7570;
+
+  /* type */
+  --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-bricolage), var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, monospace;
+
+  /* shape: every existing `rounded-sm` now resolves to the softer system radius */
+  --radius-sm: 1rem;
+  --radius-md: 1.25rem;
+  --radius-lg: 1.75rem;
+  --radius-xl: 2.25rem;
+
+  /* depth */
+  --shadow-soft: 0 1px 2px rgb(15 29 22 / 0.04), 0 8px 24px -12px rgb(15 29 22 / 0.14);
+  --shadow-lift: 0 2px 4px rgb(15 29 22 / 0.05), 0 24px 48px -20px rgb(15 29 22 / 0.28);
+  --shadow-deep: 0 30px 80px -30px rgb(4 12 8 / 0.7);
+
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+
+  --animate-spin-slow: spin-slow 90s linear infinite;
+  --animate-marquee: marquee 40s linear infinite;
+}
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --header-h: 4.5rem;
+  color-scheme: light;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+* {
+  border-color: var(--color-border);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 6rem;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--color-bg);
+  color: var(--color-fg);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+h1,
+h2,
+h3 {
+  font-family: var(--font-display);
+  letter-spacing: -0.025em;
+}
+
+::selection {
+  background: var(--color-accent);
+  color: var(--color-accent-fg);
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-glow);
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+
+.text-balance {
+  text-wrap: balance;
+}
+
+.mono-figure {
+  font-family: var(--font-mono);
+  font-feature-settings: "tnum" 1;
+}
+
+/* headline stat numbers: bold display face with a green gradient fill */
+.stat-figure {
+  font-family: var(--font-display);
+  font-weight: 800;
+  letter-spacing: -0.04em;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+  background-image: linear-gradient(135deg, var(--color-accent-strong), var(--color-accent) 55%, var(--color-glow));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.stat-label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--color-fg-muted);
+}
+
+/* ---- reusable surfaces ------------------------------------------------ */
+
+/* dark "ink" surface with a green glow and a faint engineering grid */
+.surface-ink {
+  position: relative;
+  isolation: isolate;
+  background:
+    radial-gradient(60rem 30rem at 85% -10%, rgb(56 194 122 / 0.22), transparent 60%),
+    radial-gradient(40rem 26rem at 0% 110%, rgb(227 166 58 / 0.1), transparent 60%),
+    linear-gradient(180deg, var(--color-bg-inverted), var(--color-ink-2));
+  color: var(--color-fg-inverted);
+}
+.surface-ink::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background-image:
+    linear-gradient(to right, rgb(244 242 236 / 0.045) 1px, transparent 1px),
+    linear-gradient(to bottom, rgb(244 242 236 / 0.045) 1px, transparent 1px);
+  background-size: 56px 56px;
+  mask-image: radial-gradient(ellipse at 70% 30%, black 10%, transparent 75%);
+}
+
+/* raised card that lifts on hover: transform + shadow only */
+.card-lift {
+  transition:
+    transform 0.35s var(--ease-out-expo),
+    box-shadow 0.35s var(--ease-out-expo),
+    border-color 0.25s ease;
+}
+.card-lift:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-lift);
+  border-color: color-mix(in srgb, var(--color-accent) 45%, var(--color-border));
+}
+
+.text-brass-gradient {
+  background: linear-gradient(100deg, var(--color-brass-strong), var(--color-brass) 55%, #f6d894);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* ---- motion ----------------------------------------------------------- */
+
+@keyframes spin-slow {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes page-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.page-in {
+  animation: page-in 0.5s var(--ease-out-expo) both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  .card-lift:hover {
+    transform: none;
+  }
 }
