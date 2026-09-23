@@ -4,6 +4,7 @@ import { Container } from "@/components/ui/Container";
 import { Reveal } from "@/components/ui/Reveal";
 import { Button } from "@/components/ui/Button";
 import { SectionHeading } from "@/components/ui/SectionHeading";
+import { SpotTrack } from "@/components/ui/SpotTrack";
 import type { Award } from "@/content/company";
 
 export function QualityEvidence({ awards }: { awards: Award[] }) {
@@ -27,7 +28,7 @@ export function QualityEvidence({ awards }: { awards: Award[] }) {
               delay={i * 0.05}
               className="w-[230px] shrink-0 snap-start sm:w-[250px]"
             >
-              <div className="card-lift relative aspect-[4/5] w-full overflow-hidden rounded-[1.5rem] border border-border bg-bg shadow-soft">
+              <SpotTrack className="card-lift relative aspect-[4/5] w-full overflow-hidden rounded-[1.5rem] border border-border bg-bg shadow-soft">
                 {award.image && (
                   <Image
                     src={award.image}
@@ -37,7 +38,8 @@ export function QualityEvidence({ awards }: { awards: Award[] }) {
                     className="object-contain p-4"
                   />
                 )}
-              </div>
+                <span className="spot-glow" aria-hidden="true" />
+              </SpotTrack>
               <p className="mt-4 text-sm font-semibold leading-snug text-fg">{award.title}</p>
               <p className="mt-0.5 text-xs leading-snug text-fg-muted">
                 {award.awardedBy}

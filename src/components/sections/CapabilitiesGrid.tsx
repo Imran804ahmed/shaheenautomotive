@@ -12,6 +12,7 @@ import { Container } from "@/components/ui/Container";
 import { Reveal } from "@/components/ui/Reveal";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Gear } from "@/components/ui/Gear";
+import { SpotTrack } from "@/components/ui/SpotTrack";
 import type { Capability } from "@/content/company";
 import { cn } from "@/lib/cn";
 
@@ -29,7 +30,7 @@ export function CapabilitiesGrid({ capabilities }: { capabilities: Capability[] 
   const order = ["press-shop", "inspection", "pipe-shop", "welding", "design-tooling", "surface-finishing"];
 
   return (
-    <section className="bg-bg pb-20 pt-0 sm:pb-28">
+    <section className="surface-paper bg-bg pb-20 pt-0 sm:pb-28">
       <Container>
         <div className="flex flex-col items-start justify-between gap-6 sm:flex-row sm:items-end">
           <SectionHeading
@@ -66,7 +67,7 @@ export function CapabilitiesGrid({ capabilities }: { capabilities: Capability[] 
                 from={isWide || isFull ? "scale" : "up"}
                 className={cn(isWide && "sm:col-span-2", isFull && "sm:col-span-3")}
               >
-                <div
+                <SpotTrack
                   className={cn(
                     "card-lift relative flex h-full flex-col justify-between overflow-hidden rounded-[1.75rem] border p-6 sm:p-8",
                     isFull ? "sm:flex-row sm:items-center sm:gap-8" : "min-h-[240px]",
@@ -103,7 +104,8 @@ export function CapabilitiesGrid({ capabilities }: { capabilities: Capability[] 
                     </p>
                     {cap.note && <p className="mt-2 text-xs italic text-fg-muted">{cap.note}</p>}
                   </div>
-                </div>
+                  <span className="spot-glow" aria-hidden="true" />
+                </SpotTrack>
               </Reveal>
             );
           })}

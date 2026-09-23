@@ -24,7 +24,7 @@ const categoryImages: Record<ProductCategory["slug"], { src: string; alt: string
 
 export function ProductsShowcase({ categories }: { categories: ProductCategory[] }) {
   return (
-    <section className="bg-bg py-20 sm:py-28">
+    <section className="surface-paper bg-bg py-20 sm:py-28">
       <Container>
         <SectionHeading eyebrow="Products" title="Three product families, one production system." />
 
@@ -47,6 +47,7 @@ export function ProductsShowcase({ categories }: { categories: ProductCategory[]
                         className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-bg-inverted/40 to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
+                      <span className="spot-glow" aria-hidden="true" />
                     </div>
                     <div className="p-6 sm:p-7">
                       <div className="flex items-center justify-between gap-3">

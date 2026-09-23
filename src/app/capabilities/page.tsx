@@ -4,6 +4,7 @@ import { ProcessTimeline } from "@/components/sections/ProcessTimeline";
 import { CtaBanner } from "@/components/sections/CtaBanner";
 import { Container } from "@/components/ui/Container";
 import { Reveal } from "@/components/ui/Reveal";
+import { SpotTrack } from "@/components/ui/SpotTrack";
 import {
   Wrench,
   Cube,
@@ -113,21 +114,24 @@ export default function CapabilitiesPage() {
               const Icon = icons[cap.slug];
               return (
                 <Reveal key={cap.slug} delay={i * 0.05}>
-                  <a
-                    href={`#${cap.slug}`}
-                    className={cn(
-                      "card-lift block h-full rounded-sm border border-border bg-bg-elevated p-6 shadow-soft"
-                    )}
-                  >
-                    {Icon && (
-                      <span className="inline-flex h-11 w-11 items-center justify-center rounded-2xl bg-accent/10 text-accent">
-                        <Icon size={22} weight="regular" />
-                      </span>
-                    )}
-                    <h3 className="mt-4 text-base font-semibold tracking-tight text-fg">{cap.title}</h3>
-                    <p className="mt-2 text-sm leading-relaxed text-fg-muted">{cap.body}</p>
-                    {cap.note && <p className="mt-2 text-xs italic text-fg-muted">{cap.note}</p>}
-                  </a>
+                  <SpotTrack className="h-full">
+                    <a
+                      href={`#${cap.slug}`}
+                      className={cn(
+                        "card-lift relative block h-full overflow-hidden rounded-sm border border-border bg-bg-elevated p-6 shadow-soft"
+                      )}
+                    >
+                      {Icon && (
+                        <span className="inline-flex h-11 w-11 items-center justify-center rounded-2xl bg-accent/10 text-accent">
+                          <Icon size={22} weight="regular" />
+                        </span>
+                      )}
+                      <h3 className="mt-4 text-base font-semibold tracking-tight text-fg">{cap.title}</h3>
+                      <p className="mt-2 text-sm leading-relaxed text-fg-muted">{cap.body}</p>
+                      {cap.note && <p className="mt-2 text-xs italic text-fg-muted">{cap.note}</p>}
+                      <span className="spot-glow" aria-hidden="true" />
+                    </a>
+                  </SpotTrack>
                 </Reveal>
               );
             })}

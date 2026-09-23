@@ -5,6 +5,9 @@ import { motion, useMotionValue, useReducedMotion, useSpring, useTransform } fro
 
 /**
  * Pointer-driven 3D tilt. Communicates: this card is interactive and physical.
+ * Also writes --spot-x/--spot-y as the pointer moves, so a `.spot-glow`
+ * element placed inside the caller's own rounded/overflow-hidden markup can
+ * track a light-following glow (see globals.css `.spot-track`/`.spot-glow`).
  * Uses motion values (no React state) and only activates for a fine pointer
  * with motion allowed; touch and reduced-motion users get a plain card.
  */
@@ -36,14 +39,18 @@ export function Tilt({
         onPointerMove={(e) => {
           if (e.pointerType !== "mouse" || !ref.current) return;
           const r = ref.current.getBoundingClientRect();
-          px.set((e.clientX - r.left) / r.width - 0.5);
-          py.set((e.clientY - r.top) / r.height - 0.5);
+          const nx = (e.clientX - r.left) / r.width - 0.5;
+          const ny = (e.clientY - r.top) / r.height - 0.5;
+          px.set(nx);
+          py.set(ny);
+          ref.current.style.setProperty("--spot-x", `${(nx + 0.5) * 100}%`);
+          ref.current.style.setProperty("--spot-y", `${(ny + 0.5) * 100}%`);
         }}
         onPointerLeave={() => {
           px.set(0);
           py.set(0);
         }}
-        className="h-full will-change-transform"
+        className="spot-track h-full will-change-transform"
       >
         {children}
       </motion.div>

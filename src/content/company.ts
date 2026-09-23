@@ -460,6 +460,142 @@ export const facilityPhotos = [
   },
 ];
 
+// ---------------------------------------------------------------------------
+// Leadership
+//
+// HOW TO UPDATE — this is the single place that drives the "Our Leadership"
+// section (src/components/sections/Leadership.tsx, shown on /about):
+//   - The FIRST entry in the array is always the featured / most-highlighted
+//     card (larger portrait, full bio). Every entry after it renders in the
+//     normal-weight grid (smaller portrait, name + title only). Reorder the
+//     array to change who's featured.
+//   - name / title / bio: replace the placeholder strings with the real,
+//     verified name, designation and a 2-3 sentence introduction. `bio` is
+//     only displayed for the featured (first) entry.
+//   - quote: optional, featured entry only. Leave `undefined` unless you
+//     have real words from that person.
+//   - photo: leave `undefined` to keep showing the placeholder portrait, or
+//     set it once the image file exists, e.g. "/images/leadership/director.jpg".
+//     Drop the actual photo file into public/images/leadership/ under that
+//     same name. Recommended: a portrait-orientation photo (4:5 ratio or
+//     taller, ~1200px+ on the long edge) so it crops cleanly on all screens.
+//   - isPlaceholder: set to `false` once name, title, bio and photo are all
+//     real — this only controls the "placeholder" badge shown on the card.
+// ---------------------------------------------------------------------------
+export type LeadershipMember = {
+  slug: string;
+  name: string;
+  title: string;
+  bio: string;
+  quote?: string;
+  photo?: string;
+  photoAlt: string;
+  isPlaceholder: boolean;
+};
+
+export const leadership: LeadershipMember[] = [
+  {
+    slug: "director",
+    name: "Director Name",
+    title: "Director",
+    bio: "Add a 2-3 sentence introduction here: the Director's role at Shaheen Automotive, their background, and what they focus on.",
+    quote: undefined,
+    photo: "/images/leadership/director.jpg",
+    photoAlt: "Portrait of the Director of Shaheen Automotive (Pvt.) Ltd.",
+    isPlaceholder: true,
+  },
+  {
+    slug: "director-2",
+    name: "Director Name 2",
+    title: "Director",
+    bio: "Add a 2-3 sentence introduction here.",
+    quote: undefined,
+    photo: "/images/leadership/director-2.jpg",
+    photoAlt: "Portrait of a Director of Shaheen Automotive (Pvt.) Ltd.",
+    isPlaceholder: true,
+  },
+  {
+    slug: "director-3",
+    name: "Director Name 3",
+    title: "Director",
+    bio: "Add a 2-3 sentence introduction here.",
+    quote: undefined,
+    photo: "/images/leadership/director-3.jpg",
+    photoAlt: "Portrait of a Director of Shaheen Automotive (Pvt.) Ltd.",
+    isPlaceholder: true,
+  },
+  {
+    slug: "director-4",
+    name: "Director Name 4",
+    title: "Director",
+    bio: "Add a 2-3 sentence introduction here.",
+    quote: undefined,
+    photo: "/images/leadership/director-4.jpg",
+    photoAlt: "Portrait of a Director of Shaheen Automotive (Pvt.) Ltd.",
+    isPlaceholder: true,
+  },
+  {
+    slug: "director-5",
+    name: "Director Name 5",
+    title: "Director",
+    bio: "Add a 2-3 sentence introduction here.",
+    quote: undefined,
+    photo: "/images/leadership/director-5.jpg",
+    photoAlt: "Portrait of a Director of Shaheen Automotive (Pvt.) Ltd.",
+    isPlaceholder: true,
+  },
+  {
+    slug: "director-6",
+    name: "Director Name 6",
+    title: "Director",
+    bio: "Add a 2-3 sentence introduction here.",
+    quote: undefined,
+    photo: "/images/leadership/director-6.jpg",
+    photoAlt: "Portrait of a Director of Shaheen Automotive (Pvt.) Ltd.",
+    isPlaceholder: true,
+  },
+  {
+    slug: "director-7",
+    name: "Director Name 7",
+    title: "Director",
+    bio: "Add a 2-3 sentence introduction here.",
+    quote: undefined,
+    photo: "/images/leadership/director-7.jpg",
+    photoAlt: "Portrait of a Director of Shaheen Automotive (Pvt.) Ltd.",
+    isPlaceholder: true,
+  },
+  {
+    slug: "director-8",
+    name: "Director Name 8",
+    title: "Director",
+    bio: "Add a 2-3 sentence introduction here.",
+    quote: undefined,
+    photo: "/images/leadership/director-8.jpg",
+    photoAlt: "Portrait of a Director of Shaheen Automotive (Pvt.) Ltd.",
+    isPlaceholder: true,
+  },
+  {
+    slug: "director-9",
+    name: "Director Name 9",
+    title: "Director",
+    bio: "Add a 2-3 sentence introduction here.",
+    quote: undefined,
+    photo: "/images/leadership/director-9.jpg",
+    photoAlt: "Portrait of a Director of Shaheen Automotive (Pvt.) Ltd.",
+    isPlaceholder: true,
+  },
+  {
+    slug: "director-10",
+    name: "Director Name 10",
+    title: "Director",
+    bio: "Add a 2-3 sentence introduction here.",
+    quote: undefined,
+    photo: "/images/leadership/director-10.jpg",
+    photoAlt: "Portrait of a Director of Shaheen Automotive (Pvt.) Ltd.",
+    isPlaceholder: true,
+  },
+];
+
 export const brand = {
   logoFull: "/images/brand/sapl-logo-full.png",
   mark: "/images/brand/sapl-mark.png",

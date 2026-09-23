@@ -159,6 +159,24 @@ h3 {
   mask-image: radial-gradient(ellipse at 70% 30%, black 10%, transparent 75%);
 }
 
+/* slow-drifting light source: the one ambient-motion layer shared by every
+   dark surface (hero, page headers, CTA banners, footer, the dark capability
+   card, 404) so the site's "lighting" reads as alive without any per-section
+   setup. Transform-only; static (no drift) under reduced motion. */
+.surface-ink::after {
+  content: "";
+  position: absolute;
+  inset: -15%;
+  z-index: -1;
+  background: radial-gradient(34rem 26rem at 30% 22%, rgb(56 194 122 / 0.16), transparent 62%);
+}
+@media (prefers-reduced-motion: no-preference) {
+  .surface-ink::after {
+    animation: glow-drift 26s ease-in-out infinite alternate;
+    will-change: transform;
+  }
+}
+
 /* raised card that lifts on hover: transform + shadow only */
 .card-lift {
   transition:
@@ -170,6 +188,42 @@ h3 {
   transform: translateY(-4px);
   box-shadow: var(--shadow-lift);
   border-color: color-mix(in srgb, var(--color-accent) 45%, var(--color-border));
+}
+/* touch tap-feedback: the mobile equivalent of the hover lift above */
+.card-lift:active {
+  transform: scale(0.985);
+}
+
+/* Pointer-following glow: caller places `.spot-glow` inside its own
+   rounded + overflow-hidden card, and wraps the interactive area with a
+   `.spot-track` element (see <Tilt> / <SpotTrack>) that writes --spot-x/
+   --spot-y on pointer move. Fades in on hover/focus; mouse (fine pointer)
+   only, and off entirely under reduced motion. Position updates are a CSS
+   custom property, not layout — paint-only. */
+.spot-glow {
+  position: absolute;
+  inset: 0;
+  z-index: 20;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  background: radial-gradient(220px circle at var(--spot-x, 50%) var(--spot-y, 50%), rgb(255 255 255 / 0.16), transparent 70%);
+}
+.spot-track:hover .spot-glow,
+.spot-track:focus-within .spot-glow {
+  opacity: 1;
+}
+@media (hover: none), (prefers-reduced-motion: reduce) {
+  .spot-glow {
+    display: none;
+  }
+}
+
+/* faint static wash for otherwise-flat light sections, so the "paper"
+   surface reads as a layer rather than a flat fill. No motion, negligible
+   cost: a single background gradient. */
+.surface-paper {
+  background-image: radial-gradient(46rem 24rem at 100% 0%, rgb(23 112 63 / 0.05), transparent 60%);
 }
 
 .text-brass-gradient {
@@ -193,6 +247,18 @@ h3 {
   }
   to {
     transform: translateX(-50%);
+  }
+}
+
+@keyframes glow-drift {
+  0% {
+    transform: translate3d(-4%, -3%, 0) scale(1);
+  }
+  50% {
+    transform: translate3d(5%, 4%, 0) scale(1.12);
+  }
+  100% {
+    transform: translate3d(-2%, 5%, 0) scale(0.96);
   }
 }
 
@@ -223,7 +289,11 @@ h3 {
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
   }
-  .card-lift:hover {
+  .card-lift:hover,
+  .card-lift:active {
     transform: none;
+  }
+  .surface-ink::after {
+    animation: none;
   }
 }

@@ -6,6 +6,7 @@ import { PageHeader } from "@/components/sections/PageHeader";
 import { CtaBanner } from "@/components/sections/CtaBanner";
 import { Container } from "@/components/ui/Container";
 import { Reveal, RevealGroup, RevealItem } from "@/components/ui/Reveal";
+import { SpotTrack } from "@/components/ui/SpotTrack";
 import { clients, productPrograms, industriesServed } from "@/content/company";
 
 export const metadata: Metadata = {
@@ -36,29 +37,32 @@ export default function CustomersPage() {
           <div className="mt-8 grid grid-cols-1 gap-6 sm:grid-cols-3">
             {productPrograms.map((program, i) => (
               <Reveal key={program.oemSlug} delay={i * 0.06}>
-                <Link
-                  href={`/products/${program.oemSlug === "toyota" ? "sheet-metal-parts" : program.oemSlug === "yamaha" ? "bent-rod-parts" : "formed-pipe-parts"}`}
-                  className="card-lift group block h-full rounded-sm border border-border bg-bg-elevated p-6 shadow-soft"
-                >
-                  <div className="flex h-9 items-center">
-                    <Image
-                      src={program.logo}
-                      alt={program.oemName}
-                      width={110}
-                      height={36}
-                      className="h-7 w-auto object-contain"
-                    />
-                  </div>
-                  <p className="mt-4 text-sm leading-relaxed text-fg-muted">{program.summary}</p>
-                  <span className="mt-4 inline-flex items-center gap-1.5 text-sm font-medium text-accent">
-                    View component examples
-                    <ArrowUpRight
-                      size={14}
-                      weight="bold"
-                      className="transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
-                    />
-                  </span>
-                </Link>
+                <SpotTrack className="h-full">
+                  <Link
+                    href={`/products/${program.oemSlug === "toyota" ? "sheet-metal-parts" : program.oemSlug === "yamaha" ? "bent-rod-parts" : "formed-pipe-parts"}`}
+                    className="card-lift group relative block h-full overflow-hidden rounded-sm border border-border bg-bg-elevated p-6 shadow-soft"
+                  >
+                    <div className="flex h-9 items-center">
+                      <Image
+                        src={program.logo}
+                        alt={program.oemName}
+                        width={110}
+                        height={36}
+                        className="h-7 w-auto object-contain"
+                      />
+                    </div>
+                    <p className="mt-4 text-sm leading-relaxed text-fg-muted">{program.summary}</p>
+                    <span className="mt-4 inline-flex items-center gap-1.5 text-sm font-medium text-accent">
+                      View component examples
+                      <ArrowUpRight
+                        size={14}
+                        weight="bold"
+                        className="transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+                      />
+                    </span>
+                    <span className="spot-glow" aria-hidden="true" />
+                  </Link>
+                </SpotTrack>
               </Reveal>
             ))}
           </div>

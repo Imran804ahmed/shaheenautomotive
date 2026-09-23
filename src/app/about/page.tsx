@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { ParallaxImage } from "@/components/ui/ParallaxImage";
 import { PageHeader } from "@/components/sections/PageHeader";
 import { CtaBanner } from "@/components/sections/CtaBanner";
+import { Leadership } from "@/components/sections/Leadership";
 import { Container } from "@/components/ui/Container";
 import { Reveal, RevealGroup, RevealItem } from "@/components/ui/Reveal";
 import { StatCounter } from "@/components/ui/StatCounter";
@@ -14,6 +15,7 @@ import {
   aboutStats,
   industriesServed,
   facilityPhotos,
+  leadership,
 } from "@/content/company";
 
 export const metadata: Metadata = {
@@ -53,6 +55,8 @@ export default function AboutPage() {
           </div>
         </Container>
       </section>
+
+      <Leadership members={leadership} />
 
       <section className="rounded-[2.5rem] bg-bg-elevated shadow-soft sm:rounded-[3.5rem] py-20 sm:py-24">
         <Container className="grid grid-cols-2 gap-6 sm:grid-cols-4">
