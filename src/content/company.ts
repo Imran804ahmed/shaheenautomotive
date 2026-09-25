@@ -80,6 +80,8 @@ export type Award = {
   title: string;
   awardedBy: string;
   year?: string;
+  /** Short OEM name for badges, e.g. "Toyota". */
+  oem?: string;
   image?: string;
   imageCaption?: string;
 };
@@ -98,34 +100,39 @@ export const namedAwards: Award[] = [
 // of recognition received, independent of the exact bullet list above.
 export const awardPhotos: Award[] = [
   {
+    title: "Vendor Special Award",
+    awardedBy: "Pak Suzuki Motor Co. Ltd., for special efforts in development",
+    year: "1998-2000",
+    oem: "Suzuki",
+    image: "/images/awards/enhanced/pak-suzuki-vendor-special-1998-2000.jpg",
+  },
+  {
+    title: "Vendor Performance Award",
+    awardedBy: "Hyundai / Kia (Dewan Farooque Motors Ltd.), for timely development of components",
+    year: "2000-01",
+    oem: "Hyundai / Kia",
+    image: "/images/awards/enhanced/kia-vendor-performance.jpg",
+  },
+  {
     title: "Delivery Award",
     awardedBy: "Indus Motor Company Ltd., Suppliers Convention",
     year: "2008",
-    image: "/images/awards/indus-motor-delivery-2008.jpeg",
+    oem: "Toyota",
+    image: "/images/awards/enhanced/indus-motor-delivery-2008.jpg",
   },
   {
     title: "Overall Performance Award",
     awardedBy: "Indus Motor Company, Suppliers Convention",
     year: "2014",
-    image: "/images/awards/indus-motor-overall-performance-2014.jpeg",
-  },
-  {
-    title: "Vendor Special Award",
-    awardedBy: "Pak Suzuki Motor Co. Ltd., for special efforts in development",
-    year: "1998-2000",
-    image: "/images/awards/pak-suzuki-vendor-special-1998-2000.jpeg",
+    oem: "Toyota",
+    image: "/images/awards/enhanced/indus-motor-overall-performance-2014.jpg",
   },
   {
     title: "Timely Development Award",
     awardedBy: "Toyota Indus Motor Company, Suppliers Conference",
     year: "2024",
-    image: "/images/awards/toyota-timely-development-2024.png",
-  },
-  {
-    title: "Vendor Performance Award",
-    awardedBy: "Kia / Hyundai (Dewan Motors), presented to Shaheen Engineering Works",
-    year: "Date partially legible in source photograph",
-    image: "/images/awards/kia-vendor-performance.jpeg",
+    oem: "Toyota",
+    image: "/images/awards/enhanced/toyota-timely-development-2024.jpg",
   },
 ];
 
@@ -602,3 +609,160 @@ export const brand = {
   logoFullLight: "/images/brand/sapl-logo-full-light.png",
   markLight: "/images/brand/sapl-mark-light.png",
 };
+
+// ---------------------------------------------------------------------------
+// Gallery
+// ---------------------------------------------------------------------------
+export type PhotoCategory = { key: string; label: string };
+export type GalleryCategory = { key: "sheet-metal" | "hinges" | "jacks"; label: string };
+
+export const galleryCategories: GalleryCategory[] = [
+  { key: "sheet-metal", label: "Sheet Metal Panels" },
+  { key: "hinges", label: "Hinges" },
+  { key: "jacks", label: "Jack Assemblies" },
+];
+
+export type GalleryPhoto = { src: string; alt: string; caption: string; category: string };
+
+const galleryPhoto = (n: number, category: GalleryCategory["key"], caption: string, alt: string): GalleryPhoto => ({
+  src: `/images/products/showcase/showcase-${n}.jpg`,
+  category,
+  caption,
+  alt,
+});
+
+export const galleryPhotos: GalleryPhoto[] = [
+  galleryPhoto(1, "jacks", "Scissor Jack Assembly", "Zinc-plated scissor jack assembly with lead screw"),
+  galleryPhoto(9, "sheet-metal", "Stamped Sheet Metal Panel", "Stamped sheet metal panel with punched mounting holes"),
+  galleryPhoto(2, "hinges", "Hood Hinge Assembly", "Zinc-plated hood hinge arm with pivot bracket"),
+  galleryPhoto(5, "hinges", "Hinge Assembly — Yellow Zinc", "Yellow zinc hinge arm with pivot pin and base bracket"),
+  galleryPhoto(10, "sheet-metal", "Bracket Panel with Weld Nuts", "Sheet metal bracket panel with projection-welded nuts"),
+  galleryPhoto(3, "hinges", "Hood Hinge — Alternate View", "Zinc-plated hood hinge assembly from an alternate angle"),
+  galleryPhoto(7, "sheet-metal", "Reinforcement Panel", "Formed sheet metal reinforcement panel"),
+  galleryPhoto(4, "hinges", "Hinge Arm with Mounting Bracket", "Formed hinge arm with welded mounting bracket"),
+  galleryPhoto(6, "hinges", "Hinge Arm and Base Plate", "Yellow zinc hinge arm and base plate"),
+  galleryPhoto(8, "sheet-metal", "Reinforcement Panel — Reverse", "Sheet metal reinforcement panel, reverse side"),
+  galleryPhoto(31, "jacks", "Scissor Jack — Yellow Zinc", "Yellow zinc scissor jack with riveted saddle, lead screw and clevis drive end"),
+  galleryPhoto(33, "jacks", "Scissor Jack with Formed Saddle", "Zinc-plated scissor jack with formed saddle, black lead screw and eye drive end"),
+  galleryPhoto(35, "jacks", "Scissor Jack with Hex Drive", "Zinc-plated scissor jack with formed saddle and hex drive end"),
+  galleryPhoto(32, "jacks", "Scissor Jack — Yellow Zinc, Angled View", "Yellow zinc scissor jack from an angled view"),
+  galleryPhoto(34, "jacks", "Scissor Jack with Formed Saddle — Angled View", "Zinc-plated scissor jack with eye drive end from an angled view"),
+  galleryPhoto(36, "jacks", "Scissor Jack with Hex Drive — Angled View", "Zinc-plated scissor jack with hex drive end from an angled view"),
+  galleryPhoto(37, "jacks", "Scissor Jack with Slotted Saddle", "Zinc-plated scissor jack with slotted saddle and flat drive end"),
+  galleryPhoto(11, "sheet-metal", "Mounting Panel with Weld Nuts", "Formed sheet metal mounting panel with embossed ribs and projection-welded nuts"),
+  galleryPhoto(13, "sheet-metal", "Flanged Mounting Plate", "Flanged stamped mounting plate with central cut-out and four bolt holes"),
+  galleryPhoto(15, "sheet-metal", "Bracket with Welded Stud", "Formed sheet metal bracket with welded stud and slotted mounting tabs"),
+  galleryPhoto(17, "sheet-metal", "Channel Bracket", "Deep-drawn channel bracket with ribbed flanges and pierced holes"),
+  galleryPhoto(19, "sheet-metal", "Reinforcement Bracket with Weld Nuts", "Formed reinforcement bracket with weld nuts and spot-welded patch plate"),
+  galleryPhoto(12, "sheet-metal", "Mounting Panel — Reverse", "Sheet metal mounting panel, reverse side showing weld nut flanges"),
+  galleryPhoto(14, "sheet-metal", "Flanged Mounting Plate — Alternate View", "Flanged stamped mounting plate from an alternate angle"),
+  galleryPhoto(16, "sheet-metal", "Bracket with Welded Stud — Reverse", "Formed sheet metal bracket with welded stud, reverse side"),
+  galleryPhoto(18, "sheet-metal", "Channel Bracket with Weld Nut", "Deep-drawn channel bracket with projection-welded nut"),
+  galleryPhoto(20, "sheet-metal", "Reinforcement Bracket — Alternate View", "Formed reinforcement bracket with weld nuts from an alternate angle"),
+  galleryPhoto(21, "sheet-metal", "Frame Bracket with Cut-Out", "Deep-drawn frame bracket with large central cut-out and flanged edges"),
+  galleryPhoto(23, "sheet-metal", "Formed Mounting Plate", "Stamped mounting plate with U-shaped embossing, extruded hole and folded tabs"),
+  galleryPhoto(25, "sheet-metal", "Ribbed Support Plate", "Ribbed support plate with flanged opening and embossed weld-nut boss"),
+  galleryPhoto(28, "sheet-metal", "Long Reinforcement Rail", "Zinc-coated long reinforcement rail with pierced holes and ribbed side flanges"),
+  galleryPhoto(30, "sheet-metal", "Channel Strip with Weld Nuts", "Formed channel strip with projection-welded hex nuts and embossed stiffeners"),
+  galleryPhoto(22, "sheet-metal", "Frame Bracket — Reverse", "Deep-drawn frame bracket with central cut-out, reverse side"),
+  galleryPhoto(24, "sheet-metal", "Formed Mounting Plate — Alternate View", "Stamped mounting plate with U-shaped embossing from an alternate angle"),
+  galleryPhoto(27, "sheet-metal", "Ribbed Support Plate with Weld Nut", "Ribbed support plate with projection-welded square nut"),
+  galleryPhoto(29, "sheet-metal", "Channel Strip — Reverse", "Formed channel strip with embossed stiffeners, reverse side"),
+];
+
+// ---------------------------------------------------------------------------
+// Shop floor: SAPL's own photography of machines and people at work.
+// Drives /facility and the home-page ShopFloor section.
+// ---------------------------------------------------------------------------
+export type FloorArea = PhotoCategory & {
+  number: string;
+  body: string;
+  cover: string;
+  coverAlt: string;
+};
+
+export const floorAreas: FloorArea[] = [
+  {
+    key: "press-shop",
+    label: "Press Shop",
+    number: "01",
+    body: "Lines of mechanical power presses pierce, trim and form sheet metal and pipe parts. Operators load every stroke by hand and stack finished parts at the station for the next operation.",
+    cover: "/images/facility/floor/press-line.jpg",
+    coverAlt: "Operators running a line of mechanical power presses in the SAPL press shop",
+  },
+  {
+    key: "mig-welding",
+    label: "MIG Welding",
+    number: "02",
+    body: "Welders join formed pipe assemblies on dedicated fixtures that hold every tube in position, so each assembly is welded to the same geometry, batch after batch.",
+    cover: "/images/facility/floor/mig-welding-arc.jpg",
+    coverAlt: "Welder behind a hand shield MIG welding a pipe assembly held in a fixture",
+  },
+  {
+    key: "spot-welding",
+    label: "Spot Welding",
+    number: "03",
+    body: "Water-cooled pedestal spot welders fix brackets and tabs to pipe and sheet metal parts, each station set up for the part it runs.",
+    cover: "/images/facility/floor/spot-welding-sparks.jpg",
+    coverAlt: "Gloved operator spot welding a bracket between the electrodes of a pedestal welder",
+  },
+];
+
+/** Filters for the /facility photo grid: the three areas plus supporting shops. */
+export const floorCategories: PhotoCategory[] = [
+  ...floorAreas,
+  { key: "pipe-bending", label: "Pipe Bending" },
+  { key: "assembly", label: "Assembly" },
+  { key: "finishing", label: "Finishing" },
+  { key: "inspection", label: "Inspection" },
+  { key: "storage", label: "Storage" },
+];
+
+const floorPhoto = (file: string, category: string, caption: string, alt: string): GalleryPhoto => ({
+  src: `/images/facility/floor/${file}.jpg`,
+  category,
+  caption,
+  alt,
+});
+
+export const floorPhotos: GalleryPhoto[] = [
+  floorPhoto("press-line", "press-shop", "Power Press Line", "Operators running a line of mechanical power presses in the SAPL press shop"),
+  floorPhoto("mig-welding-sparks", "mig-welding", "Welding a Pipe Assembly", "Sparks flying as a welder MIG welds a pipe assembly held in a fixture"),
+  floorPhoto("spot-welding-sparks", "spot-welding", "Spot Welding a Bracket", "Gloved operator spot welding a bracket between the electrodes of a pedestal welder"),
+  floorPhoto("mig-welding-fixture", "mig-welding", "Pipe Assembly on the Fixture", "Welder in a cap and safety glasses welding a pipe assembly on a fixture"),
+  floorPhoto("welding-bay", "mig-welding", "Welding Bay", "Two welders at their stations beneath a Safety Comes First poster, with bins of formed pipe parts in front"),
+  floorPhoto("press-line-operators", "press-shop", "Operators at the Presses", "Three operators working side by side at a row of power presses"),
+  floorPhoto("mig-welding-arc", "mig-welding", "Under the Arc", "Welder behind a hand shield lit by the welding arc"),
+  floorPhoto("spot-welding-bracket", "spot-welding", "Spot Welder, Machine No. 2", "Operator positioning a sheet metal bracket in a pedestal spot welder"),
+  floorPhoto("welding-and-spot-welding-shop", "spot-welding", "Welding and Spot Welding Shop", "Wide view of the welding shop with MIG welding benches and a row of spot welding machines"),
+  floorPhoto("mig-welding-closeup", "mig-welding", "Welding at the Fixture", "Welder holding a hand shield while welding a pipe assembly on a fixture"),
+  floorPhoto("press-shop-hall", "press-shop", "The Press Shop", "Wide view of the press shop hall with rows of presses, operators and stacks of sheet metal blanks"),
+  floorPhoto("jack-assembly", "assembly", "Assembling a Scissor Jack", "Worker assembling a zinc-plated scissor jack at a bench stacked with jack components"),
+  floorPhoto("press-blank-loading", "press-shop", "Loading a Blank", "Operator positioning a sheet metal blank in the die of a double-crank press"),
+  floorPhoto("parts-racks", "storage", "Parts Racks", "Racks and bins of bagged, finished parts in the storage hall"),
+  floorPhoto("press-operator-controls", "press-shop", "Operator at the Press", "Press operator at the controls of a mechanical press fitted with a progressive die"),
+  floorPhoto("press-row", "press-shop", "Row of Presses", "Operators working at a row of mechanical presses of different tonnages"),
+  floorPhoto("pipe-end-forming", "press-shop", "Forming Pipe Ends", "Operator forming the ends of steel tubes on a power press, with finished tubes stacked on the table"),
+  floorPhoto("storage-area", "storage", "Storage Area", "Entrance to the storage area with steel bins and part trolleys"),
+  floorPhoto("straight-side-press", "press-shop", "Straight-Side Press", "Operator working inside the bed of a large straight-side press"),
+  floorPhoto("warehouse-bay", "storage", "Warehouse Bay", "Warehouse bay with stacked SAPL part bins, wire cages of formed parts and a delivery truck"),
+  floorPhoto("komatsu-press", "press-shop", "Komatsu 200 Press", "Komatsu straight-side press with a die set in the bed and die racks alongside"),
+  floorPhoto("surface-activation-tank", "finishing", "Surface Activation Tank", "Motor-driven perforated barrel sitting in a surface activation tank"),
+  floorPhoto("bent-rod-parts-bin", "storage", "Bent Rod Parts", "Steel bin filled with bent rod parts with flattened, pierced ends"),
+  floorPhoto("chin-fong-press", "press-shop", "Chin Fong Press No. 42", "Chin Fong straight-side press, machine number 42, with a die set in the bed"),
+  floorPhoto("primed-steel-frames", "finishing", "Primed Steel Frames", "Rows of welded steel frames finished in red primer on the shop floor"),
+  floorPhoto("straight-side-press-front", "press-shop", "Straight-Side Press, Front View", "Cowlishaw Walker straight-side press flanked by bins of formed parts"),
+  floorPhoto("storage-hall-bins", "storage", "Storage Hall", "Storage hall with colour-coded steel bins in front of parts racks"),
+  floorPhoto("heavy-press", "press-shop", "Heavy Press", "Large straight-side press with its bolster exposed, cordoned off with safety tape"),
+  floorPhoto("surface-activation-line", "finishing", "Barrel Tanks", "Two barrel tanks against the wall under caustic hazard and surface activation signs"),
+  floorPhoto("checking-fixture", "inspection", "Checking Fixture", "Inspector clamping a stamped sheet metal panel into a checking fixture"),
+  floorPhoto("pipe-bender-loading", "pipe-bending", "Loading the Bender", "Operator placing a steel tube into a hydraulic pipe bending machine"),
+  floorPhoto("toggle-clamp", "inspection", "Toggle Clamp", "Close-up of a red-handled toggle clamp on a checking fixture"),
+  floorPhoto("mandrel-bender", "pipe-bending", "Feeding a Tube", "Operator feeding a straight steel tube into a pipe bending machine"),
+  floorPhoto("checking-fixture-closeup", "inspection", "Seating the Panel", "Gloved inspector seating a panel against the locators of a checking fixture"),
+  floorPhoto("pipe-bender-operator", "pipe-bending", "Pipe Bender Operator", "Operator at a hydraulic pipe bender beside a rack of straight tubes"),
+  floorPhoto("panel-gauging", "inspection", "Gap Check", "Inspector in a Shaheen Automotive cap checking a clamped panel with a gauge"),
+  floorPhoto("pipe-bender-setup", "pipe-bending", "Two Operators at the Bender", "Two operators working together at a hydraulic pipe bending machine"),
+  floorPhoto("tube-bending", "pipe-bending", "Bending a Tube", "Operator bending a tube on a hydraulic bender, with bundles of tube stock in the foreground"),
+  floorPhoto("pipe-bending-cell", "pipe-bending", "Pipe Bending Cell", "One operator unloading a bent tube while another pulls stock from a stack of steel tubes"),
+];

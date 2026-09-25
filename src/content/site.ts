@@ -60,6 +60,7 @@ export const siteConfig = {
     { label: "Products", href: "/products" },
     { label: "Quality", href: "/quality" },
     { label: "Customers", href: "/customers" },
+    { label: "Gallery", href: "/gallery" },
   ],
 
   productCategories: [

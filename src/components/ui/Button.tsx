@@ -5,7 +5,7 @@ import { ArrowUpRight } from "@phosphor-icons/react/dist/ssr";
 type ButtonVariant = "primary" | "brass" | "secondary" | "onDark" | "ghost";
 
 const base =
-  "group/btn inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-full px-6 py-3.5 text-sm font-semibold tracking-tight transition-[transform,box-shadow,background-color,border-color] duration-300 ease-out hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.98] motion-reduce:transition-none motion-reduce:hover:translate-y-0";
+  "group/btn inline-flex min-h-12 max-w-full items-center justify-center gap-2 rounded-full px-6 py-3.5 text-center text-sm leading-tight sm:whitespace-nowrap font-semibold tracking-tight transition-[transform,box-shadow,background-color,border-color] duration-300 ease-out hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.98] motion-reduce:transition-none motion-reduce:hover:translate-y-0";
 
 // light sweep across the button on hover/focus: transform-only, sits under the label
 const sheen =
@@ -46,7 +46,7 @@ export function Button({
     <ArrowUpRight
       size={16}
       weight="bold"
-      className="transition-transform duration-300 group-hover/btn:-translate-y-0.5 group-hover/btn:translate-x-0.5 motion-reduce:transform-none"
+      className="shrink-0 transition-transform duration-300 group-hover/btn:-translate-y-0.5 group-hover/btn:translate-x-0.5 motion-reduce:transform-none"
     />
   );
   if (external) {

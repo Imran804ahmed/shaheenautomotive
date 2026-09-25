@@ -18,7 +18,7 @@ const menuItem = {
 };
 
 const ctaClasses =
-  "inline-flex items-center justify-center rounded-full bg-accent px-5 py-2.5 text-sm font-semibold text-accent-fg shadow-[0_8px_20px_-8px_rgb(23_112_63/0.7)] transition-[background-color,transform] duration-200 hover:-translate-y-px hover:bg-accent-strong";
+  "inline-flex items-center justify-center whitespace-nowrap rounded-full bg-accent px-4 py-2.5 text-sm font-semibold xl:px-5 text-accent-fg shadow-[0_8px_20px_-8px_rgb(23_112_63/0.7)] transition-[background-color,transform] duration-200 hover:-translate-y-px hover:bg-accent-strong";
 
 export function Header() {
   const pathname = usePathname();
@@ -79,16 +79,16 @@ export function Header() {
               alt={siteConfig.companyLegalName}
               width={1000}
               height={231}
-              className="h-9 w-auto sm:h-10"
+              className="h-8 w-auto sm:h-10 lg:h-9 xl:h-10"
               priority
             />
           </Link>
 
-          <nav className="hidden items-center gap-1 lg:flex">
+          <nav aria-label="Main" className="hidden items-center gap-0.5 lg:flex xl:gap-1">
             {siteConfig.nav.map((item) => {
               const active = item.href === "/" ? pathname === "/" : pathname.startsWith(item.href);
               const linkClasses = cn(
-                "group/link relative flex items-center gap-1 rounded-full px-3.5 py-2 text-sm font-medium transition-colors",
+                "group/link relative flex items-center gap-1 whitespace-nowrap rounded-full px-2.5 py-2 text-sm font-medium transition-colors xl:px-3.5",
                 active ? "text-fg" : "text-fg-muted hover:text-fg"
               );
               const pill = active && (
@@ -101,7 +101,7 @@ export function Header() {
               const underline = !active && (
                 <span
                   aria-hidden="true"
-                  className="absolute inset-x-4 bottom-1 h-px origin-left scale-x-0 bg-accent transition-transform duration-300 ease-out group-hover/link:scale-x-100 group-focus-visible/link:scale-x-100 motion-reduce:transition-none"
+                  className="absolute inset-x-2.5 bottom-1 h-px origin-left xl:inset-x-4 scale-x-0 bg-accent transition-transform duration-300 ease-out group-hover/link:scale-x-100 group-focus-visible/link:scale-x-100 motion-reduce:transition-none"
                 />
               );
               if (item.label === "Products") {
@@ -171,7 +171,7 @@ export function Header() {
           <button
             type="button"
             onClick={() => setOpen((v) => !v)}
-            className="inline-flex h-10 w-10 items-center justify-center rounded-full text-fg transition-[background-color,transform] duration-150 hover:bg-accent-soft active:scale-90 lg:hidden"
+            className="inline-flex h-11 w-11 items-center justify-center rounded-full text-fg transition-[background-color,transform] duration-150 hover:bg-accent-soft active:scale-90 lg:hidden"
             aria-label={open ? "Close menu" : "Open menu"}
             aria-expanded={open}
           >

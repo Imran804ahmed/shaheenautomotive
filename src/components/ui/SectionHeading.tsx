@@ -29,7 +29,7 @@ export function SectionHeading({
       )}
       <h2
         className={cn(
-          "text-balance text-3xl font-semibold leading-[1.1] sm:text-4xl lg:text-[2.75rem]",
+          "text-balance text-display-md font-semibold",
           onDark ? "text-fg-inverted" : "text-fg"
         )}
       >

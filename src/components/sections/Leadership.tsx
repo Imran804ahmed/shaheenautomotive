@@ -28,17 +28,17 @@ function FeaturedCard({ member }: { member: LeadershipMember }) {
         />
 
         <Tilt max={4}>
-          <div className="card-lift relative flex flex-col overflow-hidden rounded-[2rem] border border-brass/30 bg-white/[0.05] shadow-deep ring-1 ring-brass/20 sm:min-h-[26rem] sm:flex-row">
+          <div className="card-lift relative flex flex-col overflow-hidden rounded-[2rem] border border-brass/30 bg-white/[0.05] shadow-deep ring-1 ring-brass/20 md:min-h-[26rem] md:flex-row">
             <Gear className="pointer-events-none absolute -right-20 -top-20 h-64 w-64 opacity-[0.08] sm:h-80 sm:w-80" />
 
-            <div className="relative aspect-[4/5] w-full shrink-0 overflow-hidden sm:aspect-auto sm:w-[42%]">
+            <div className="relative aspect-[4/5] w-full shrink-0 overflow-hidden sm:aspect-[4/3] md:aspect-auto md:w-[42%]">
               {member.photo ? (
                 <Image
                   src={member.photo}
                   alt={member.photoAlt}
                   fill
-                  sizes="(min-width: 640px) 40vw, 90vw"
-                  className="object-cover transition-transform duration-700 ease-[var(--ease-out-expo)] group-hover:scale-105"
+                  sizes="(min-width: 768px) 40vw, 90vw"
+                  className="object-cover object-[center_20%] transition-transform duration-700 ease-[var(--ease-out-expo)] group-hover:scale-105"
                 />
               ) : (
                 <div className="flex h-full w-full flex-col items-center justify-center gap-3 bg-[radial-gradient(60%_60%_at_50%_20%,rgb(227_166_58/0.14),transparent_70%)] px-6 text-center">
@@ -48,13 +48,13 @@ function FeaturedCard({ member }: { member: LeadershipMember }) {
                   </p>
                 </div>
               )}
-              <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-bg-inverted/60 via-transparent to-transparent sm:hidden" />
-              <div className="pointer-events-none absolute inset-0 hidden bg-gradient-to-r from-transparent via-transparent to-bg-inverted/50 sm:block" />
+              <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-bg-inverted/60 via-transparent to-transparent md:hidden" />
+              <div className="pointer-events-none absolute inset-0 hidden bg-gradient-to-r from-transparent via-transparent to-bg-inverted/50 md:block" />
               {member.isPlaceholder && <PlaceholderBadge />}
               <span className="spot-glow" aria-hidden="true" />
             </div>
 
-            <div className="relative flex flex-1 flex-col justify-center p-7 sm:p-10 lg:p-12">
+            <div className="relative flex flex-1 flex-col justify-center p-6 sm:p-10 lg:p-12">
               <Quotes
                 weight="fill"
                 className="pointer-events-none absolute -top-2 right-6 h-28 w-28 text-brass/[0.07] sm:h-36 sm:w-36"
@@ -64,7 +64,7 @@ function FeaturedCard({ member }: { member: LeadershipMember }) {
                 <span className="h-px w-8 bg-brass" />
                 Leadership
               </p>
-              <h3 className="relative mt-4 text-3xl font-semibold tracking-tight text-fg-inverted sm:text-4xl">
+              <h3 className="relative mt-4 text-2xl font-semibold tracking-tight text-fg-inverted sm:text-3xl lg:text-4xl">
                 {member.name}
               </h3>
               <p className="relative mt-1.5 text-xs font-semibold uppercase tracking-[0.16em] text-brass">
@@ -140,7 +140,7 @@ export function Leadership({ members }: { members: LeadershipMember[] }) {
           body="Four decades of precision manufacturing, guided by hands-on leadership from the shop floor to the boardroom."
         />
 
-        <div className="mt-14">
+        <div className="mt-10 sm:mt-14">
           <FeaturedCard member={featured} />
         </div>
 
@@ -155,7 +155,7 @@ export function Leadership({ members }: { members: LeadershipMember[] }) {
 
             <RevealGroup
               className={cn(
-                "mt-6 grid grid-cols-2 gap-4 sm:grid-cols-3 sm:gap-5 lg:grid-cols-5"
+                "mt-6 grid grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-5 lg:grid-cols-5"
               )}
             >
               {rest.map((member) => (

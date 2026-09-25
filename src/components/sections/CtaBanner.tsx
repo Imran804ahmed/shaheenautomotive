@@ -23,7 +23,7 @@ export function CtaBanner({
             <Gear className="pointer-events-none absolute -right-20 -top-24 h-80 w-80 opacity-80 motion-safe:animate-spin-slow sm:h-[26rem] sm:w-[26rem]" />
             <div className="relative flex flex-col items-start justify-between gap-8 lg:flex-row lg:items-center">
               <div className="max-w-xl">
-                <h2 className="text-balance text-3xl font-semibold leading-[1.1] text-fg-inverted sm:text-4xl">
+                <h2 className="text-balance text-display-md font-semibold text-fg-inverted">
                   {heading}
                 </h2>
                 <p className="mt-4 text-base leading-relaxed text-fg-inverted-muted">{body}</p>

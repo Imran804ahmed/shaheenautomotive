@@ -23,14 +23,14 @@ export default function ContactPage() {
       />
 
       <section className="py-16 sm:py-20">
-        <Container className="grid gap-12 lg:grid-cols-[0.85fr_1.15fr]">
-          <Reveal className="space-y-8">
+        <Container className="grid gap-10 sm:gap-12 lg:grid-cols-[0.85fr_1.15fr] lg:gap-16">
+          <Reveal className="min-w-0 space-y-8">
             <div>
               <h2 className="text-lg font-semibold tracking-tight text-fg">Contact details</h2>
               <ul className="mt-5 space-y-4">
                 <li className="flex items-start gap-3 text-sm text-fg-muted">
                   <MapPin size={18} className="mt-0.5 shrink-0 text-steel" />
-                  <span>
+                  <span className="min-w-0 wrap-anywhere">
                     {siteConfig.contact.addressLine1}
                     {siteConfig.contact.addressLine2 ? `, ${siteConfig.contact.addressLine2}` : ""}
                     <br />
@@ -39,11 +39,11 @@ export default function ContactPage() {
                 </li>
                 <li className="flex items-center gap-3 text-sm text-fg-muted">
                   <Phone size={18} className="shrink-0 text-steel" />
-                  <span>{siteConfig.contact.phone}</span>
+                  <span className="min-w-0 wrap-anywhere">{siteConfig.contact.phone}</span>
                 </li>
                 <li className="flex items-center gap-3 text-sm text-fg-muted">
                   <EnvelopeSimple size={18} className="shrink-0 text-steel" />
-                  <a href={`mailto:${siteConfig.contact.email}`} className="hover:text-fg">
+                  <a href={`mailto:${siteConfig.contact.email}`} className="min-w-0 wrap-anywhere hover:text-fg">
                     {siteConfig.contact.email}
                   </a>
                 </li>
@@ -64,7 +64,7 @@ export default function ContactPage() {
             </div>
           </Reveal>
 
-          <Reveal delay={0.08} className="rounded-sm border border-border bg-bg-elevated shadow-soft p-6 sm:p-8">
+          <Reveal delay={0.08} className="min-w-0 rounded-sm border border-border bg-bg-elevated p-5 shadow-soft sm:p-8">
             <RfqForm />
           </Reveal>
         </Container>

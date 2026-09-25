@@ -25,7 +25,7 @@ export function PageHeader({
               {eyebrow}
             </p>
           )}
-          <h1 className="max-w-3xl text-balance text-4xl font-semibold leading-[1.05] text-fg-inverted sm:text-5xl lg:text-6xl">
+          <h1 className="max-w-3xl text-balance text-display-lg font-semibold text-fg-inverted">
             {title}
           </h1>
         </Reveal>

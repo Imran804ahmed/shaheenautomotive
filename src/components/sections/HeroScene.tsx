@@ -69,32 +69,32 @@ export function HeroScene() {
             className="object-cover"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-bg-inverted/80 via-transparent to-transparent" />
-          <p className="absolute bottom-5 right-6 text-xs font-medium text-fg-inverted/85">
+          <p className="absolute bottom-5 right-6 hidden text-xs font-medium text-fg-inverted/85 sm:block">
             Press shop floor, Shaheen Automotive
           </p>
         </div>
 
         <div
-          className="absolute left-2 top-10 rounded-2xl border border-white/20 bg-white/10 px-4 py-3 shadow-deep backdrop-blur-md sm:-left-10"
+          className="absolute left-4 top-8 rounded-2xl border border-white/20 bg-white/10 px-3.5 py-2.5 shadow-deep backdrop-blur-md sm:-left-10 sm:top-10 lg:-left-5 xl:-left-10 sm:px-4 sm:py-3"
           style={{ transform: "translateZ(80px)" }}
         >
           <p className="text-[0.65rem] font-semibold uppercase tracking-[0.16em] text-brass">Since</p>
-          <p className="mono-figure text-2xl font-semibold text-fg-inverted">1983</p>
+          <p className="mono-figure text-xl font-semibold sm:text-2xl text-fg-inverted">1983</p>
         </div>
 
         <div
-          className="absolute -bottom-6 left-2 rounded-2xl border border-white/20 bg-bg-elevated px-5 py-4 shadow-deep sm:-left-12"
+          className="absolute -bottom-6 left-4 rounded-2xl border border-white/20 bg-bg-elevated px-4 py-3 shadow-deep sm:-left-12 lg:-left-5 xl:-left-12 sm:px-5 sm:py-4"
           style={{ transform: "translateZ(110px)" }}
         >
-          <p className="mono-figure text-2xl font-semibold text-fg">100&ndash;120</p>
+          <p className="mono-figure text-xl font-semibold sm:text-2xl text-fg">100&ndash;120</p>
           <p className="mt-0.5 text-xs text-fg-muted">Tons manufactured per month</p>
         </div>
 
         <div
-          className="absolute right-2 bottom-16 rounded-2xl border border-white/20 bg-white/10 px-4 py-3 shadow-deep backdrop-blur-md sm:-right-8"
+          className="absolute bottom-16 right-4 rounded-2xl border border-white/20 bg-white/10 px-3.5 py-2.5 shadow-deep backdrop-blur-md sm:-right-8 lg:-right-3 xl:-right-6 sm:px-4 sm:py-3"
           style={{ transform: "translateZ(60px)" }}
         >
-          <p className="mono-figure text-2xl font-semibold text-fg-inverted">350+</p>
+          <p className="mono-figure text-xl font-semibold sm:text-2xl text-fg-inverted">350+</p>
           <p className="text-xs text-fg-inverted-muted">Parts in production</p>
         </div>
       </motion.div>

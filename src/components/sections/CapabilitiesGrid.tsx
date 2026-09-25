@@ -37,10 +37,10 @@ export function CapabilitiesGrid({ capabilities }: { capabilities: Capability[] 
             eyebrow="Capabilities"
             title="Manufacturing capabilities built around your production line."
           />
-          <Reveal delay={0.06}>
+          <Reveal delay={0.06} className="shrink-0">
             <Link
               href="/capabilities"
-              className="group inline-flex shrink-0 items-center gap-1.5 text-sm font-semibold text-accent transition-colors hover:text-accent-strong"
+              className="group inline-flex items-center gap-1.5 whitespace-nowrap py-2.5 text-sm font-semibold text-accent transition-colors hover:text-accent-strong"
             >
               View all capabilities
               <ArrowUpRight
@@ -52,7 +52,7 @@ export function CapabilitiesGrid({ capabilities }: { capabilities: Capability[] 
           </Reveal>
         </div>
 
-        <div className="mt-12 grid grid-cols-1 gap-4 sm:grid-cols-3 sm:gap-5">
+        <div className="mt-10 grid grid-cols-1 gap-4 sm:mt-12 sm:grid-cols-2 sm:gap-5 lg:grid-cols-3">
           {order.map((slug, i) => {
             const cap = bySlug[slug];
             const Icon = icons[slug];
@@ -65,12 +65,12 @@ export function CapabilitiesGrid({ capabilities }: { capabilities: Capability[] 
                 key={slug}
                 delay={i * 0.05}
                 from={isWide || isFull ? "scale" : "up"}
-                className={cn(isWide && "sm:col-span-2", isFull && "sm:col-span-3")}
+                className={cn(isWide && "sm:col-span-2", isFull && "sm:col-span-2 lg:col-span-3")}
               >
                 <SpotTrack
                   className={cn(
                     "card-lift relative flex h-full flex-col justify-between overflow-hidden rounded-[1.75rem] border p-6 sm:p-8",
-                    isFull ? "sm:flex-row sm:items-center sm:gap-8" : "min-h-[240px]",
+                    isFull ? "md:flex-row md:items-center md:gap-8" : "min-h-56 sm:min-h-60",
                     isDark
                       ? "surface-ink border-transparent text-fg-inverted shadow-deep"
                       : isSoft
@@ -81,7 +81,7 @@ export function CapabilitiesGrid({ capabilities }: { capabilities: Capability[] 
                   {isDark && (
                     <Gear className="pointer-events-none absolute -bottom-24 -right-16 h-72 w-72 opacity-70" />
                   )}
-                  <div className={cn("relative", isFull && "flex items-center gap-4")}>
+                  <div className={cn("relative", isFull && "flex shrink-0 items-center gap-4")}>
                     <span
                       className={cn(
                         "inline-flex h-12 w-12 items-center justify-center rounded-2xl",
@@ -97,7 +97,7 @@ export function CapabilitiesGrid({ capabilities }: { capabilities: Capability[] 
                       className={cn(
                         "text-sm leading-relaxed",
                         isDark ? "max-w-md text-fg-inverted-muted" : "text-fg-muted",
-                        !isFull && "mt-3"
+                        isFull ? "mt-4 md:mt-0" : "mt-3"
                       )}
                     >
                       {cap.body}

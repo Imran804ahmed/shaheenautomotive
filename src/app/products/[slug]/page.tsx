@@ -100,7 +100,7 @@ export default async function ProductCategoryPage({
               listed independently of the photographs above.
             </p>
           </Reveal>
-          <div className="mt-6 grid gap-6 sm:grid-cols-3">
+          <div className="mt-6 grid gap-4 sm:gap-6 md:grid-cols-3">
             {productPrograms.map((program) => (
               <Reveal key={program.oemSlug}>
                 <div className="rounded-sm border border-border bg-bg p-6">

@@ -34,7 +34,7 @@ export default function CustomersPage() {
               Programmes with verified component examples
             </h2>
           </Reveal>
-          <div className="mt-8 grid grid-cols-1 gap-6 sm:grid-cols-3">
+          <div className="mt-8 grid grid-cols-1 gap-4 sm:gap-6 md:grid-cols-3">
             {productPrograms.map((program, i) => (
               <Reveal key={program.oemSlug} delay={i * 0.06}>
                 <SpotTrack className="h-full">

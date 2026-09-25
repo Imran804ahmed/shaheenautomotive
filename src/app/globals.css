@@ -48,6 +48,18 @@
   --font-display: var(--font-bricolage), var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
   --font-mono: var(--font-geist-mono), ui-monospace, monospace;
 
+  /* fluid display sizes: scale smoothly from 320px phones to wide desktops
+     instead of jumping at breakpoints. `text-display-xl` etc. */
+  /* home hero h1: sized to its column (cqi) rather than the viewport, because
+     the hero switches to two columns at lg and the copy column halves. Needs
+     an `@container` ancestor. */
+  --text-display-xl: clamp(2.125rem, 0.85rem + 8cqi, 4.25rem);
+  --text-display-xl--line-height: 1.02;
+  --text-display-lg: clamp(2.125rem, 1.55rem + 2.9vw, 3.75rem); /* page header h1 */
+  --text-display-lg--line-height: 1.05;
+  --text-display-md: clamp(1.75rem, 1.3rem + 1.9vw, 2.75rem); /* section h2 */
+  --text-display-md--line-height: 1.1;
+
   /* shape: every existing `rounded-sm` now resolves to the softer system radius */
   --radius-sm: 1rem;
   --radius-md: 1.25rem;
@@ -141,6 +153,9 @@ h3 {
 .surface-ink {
   position: relative;
   isolation: isolate;
+  /* the drifting ::after glow bleeds 15% past the box; clip (not hidden) so it
+     can't widen the page, without creating a scroll container that breaks sticky */
+  overflow: clip;
   background:
     radial-gradient(60rem 30rem at 85% -10%, rgb(56 194 122 / 0.22), transparent 60%),
     radial-gradient(40rem 26rem at 0% 110%, rgb(227 166 58 / 0.1), transparent 60%),

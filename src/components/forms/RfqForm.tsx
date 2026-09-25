@@ -12,9 +12,13 @@ const productCategories = siteConfig.productCategories;
 type Status = "idle" | "submitting" | "success" | "error";
 
 const fieldClasses =
-  "w-full rounded-2xl border border-border bg-bg px-4 py-3 text-sm text-fg placeholder:text-fg-muted/70 transition-[border-color,box-shadow] focus:border-accent focus:shadow-[0_0_0_4px_rgb(23_112_63/0.12)] focus:outline-none";
+  "min-h-12 w-full min-w-0 rounded-2xl border border-border bg-bg px-4 py-3 text-base text-fg placeholder:text-fg-muted/70 sm:text-sm transition-[border-color,box-shadow] focus:border-accent focus:shadow-[0_0_0_4px_rgb(23_112_63/0.12)] focus:outline-none";
 
 const invalidClasses = "border-red-600 focus:border-red-600 focus:shadow-[0_0_0_4px_rgb(220_38_38/0.12)]";
+
+// native arrow is removed for consistent styling, so draw a caret in its place
+const selectClasses =
+  "appearance-none bg-[url('data:image/svg+xml,%3Csvg%20xmlns=%27http://www.w3.org/2000/svg%27%20viewBox=%270%200%2016%2016%27%20fill=%27none%27%20stroke=%27%234d5a53%27%20stroke-width=%272%27%20stroke-linecap=%27round%27%20stroke-linejoin=%27round%27%3E%3Cpath%20d=%27m4%206%204%204%204-4%27/%3E%3C/svg%3E')] bg-[length:1rem] bg-[position:right_1rem_center] bg-no-repeat pr-11";
 
 type Errors = Partial<Record<"name" | "company" | "email" | "category" | "description", string>>;
 
@@ -258,7 +262,7 @@ function RfqFormInner() {
         </div>
       )}
 
-      <div className="grid gap-6 sm:grid-cols-2">
+      <div className="grid gap-5 sm:grid-cols-2 sm:gap-6">
         <Field label="Full name" name="name" required error={errors.name}>
           <input {...fieldProps("name")} type="text" autoComplete="name" className={cn(fieldClasses, errors.name && invalidClasses)} placeholder="Your name" />
         </Field>
@@ -275,7 +279,7 @@ function RfqFormInner() {
           <select
             {...fieldProps("category")}
             value={category}
-            className={cn(fieldClasses, "appearance-none", errors.category && invalidClasses)}
+            className={cn(fieldClasses, selectClasses, errors.category && invalidClasses)}
           >
             <option value="" disabled>
               Select a category
@@ -331,7 +335,7 @@ function RfqFormInner() {
       <button
         type="submit"
         disabled={status === "submitting"}
-        className="inline-flex items-center justify-center gap-2 rounded-full border border-accent bg-accent px-7 py-3.5 text-sm font-semibold text-accent-fg shadow-[0_10px_24px_-10px_rgb(23_112_63/0.7)] transition-[transform,background-color,opacity] hover:-translate-y-0.5 hover:bg-accent-strong active:translate-y-0 active:scale-[0.98] disabled:translate-y-0 disabled:opacity-70"
+        className="inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-full border border-accent bg-accent px-7 py-3.5 text-sm font-semibold sm:w-auto text-accent-fg shadow-[0_10px_24px_-10px_rgb(23_112_63/0.7)] transition-[transform,background-color,opacity] hover:-translate-y-0.5 hover:bg-accent-strong active:translate-y-0 active:scale-[0.98] disabled:translate-y-0 disabled:opacity-70"
       >
         {status === "submitting" ? <Spinner /> : <PaperPlaneTilt size={16} weight="bold" />}
         {status === "submitting" ? "Sending..." : hasEndpoint ? "Send RFQ" : "Open email to send this RFQ"}

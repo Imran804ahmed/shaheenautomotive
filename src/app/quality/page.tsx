@@ -46,7 +46,7 @@ export default function QualityPage() {
 
       <section className="bg-bg py-20 sm:py-24">
         <Container>
-          <RevealGroup className="grid grid-cols-1 gap-6 sm:grid-cols-3">
+          <RevealGroup className="grid grid-cols-1 gap-4 sm:gap-6 md:grid-cols-3">
             {checkpoints.map((c) => (
               <RevealItem key={c.title} className="card-lift rounded-[1.5rem] border border-border bg-bg-elevated p-7 shadow-soft">
                 <span className="inline-flex h-11 w-11 items-center justify-center rounded-2xl bg-accent/10 text-accent">
@@ -63,7 +63,7 @@ export default function QualityPage() {
       <section className="rounded-[2.5rem] bg-bg-elevated shadow-soft sm:rounded-[3.5rem] py-20 sm:py-24">
         <Container className="grid gap-10 lg:grid-cols-2 lg:items-center">
           <Reveal>
-            <h2 className="text-3xl font-semibold tracking-tight text-fg sm:text-4xl">
+            <h2 className="text-display-md font-semibold tracking-tight text-fg">
               Dimensional inspection
             </h2>
             <p className="mt-4 max-w-md text-base leading-relaxed text-fg-muted">
@@ -95,7 +95,7 @@ export default function QualityPage() {
       <section className="rounded-[2.5rem] bg-bg-elevated shadow-soft sm:rounded-[3.5rem] py-20 sm:py-24">
         <Container>
           <Reveal>
-            <h2 className="text-3xl font-semibold tracking-tight text-fg sm:text-4xl">
+            <h2 className="text-display-md font-semibold tracking-tight text-fg">
               Awards & recognition
             </h2>
             <p className="mt-3 max-w-xl text-sm leading-relaxed text-fg-muted">

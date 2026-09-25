@@ -41,7 +41,7 @@ export default function AboutPage() {
               <p className="text-xs font-semibold uppercase tracking-[0.18em] text-accent">
                 Since {history.founded}
               </p>
-              <h2 className="mt-3 text-3xl font-semibold tracking-tight text-fg sm:text-4xl">
+              <h2 className="mt-3 text-display-md font-semibold tracking-tight text-fg">
                 From {history.foundedAs} to {history.currentName}
               </h2>
             </div>
@@ -93,7 +93,7 @@ export default function AboutPage() {
       <section className="rounded-[2.5rem] bg-bg-elevated shadow-soft sm:rounded-[3.5rem] py-20 sm:py-24">
         <Container>
           <Reveal>
-            <h2 className="max-w-xl text-balance text-3xl font-semibold tracking-tight text-fg sm:text-4xl">
+            <h2 className="max-w-xl text-balance text-display-md font-semibold tracking-tight text-fg">
               What defines how we work.
             </h2>
           </Reveal>
@@ -119,7 +119,7 @@ export default function AboutPage() {
             />
           </Reveal>
           <Reveal delay={0.08} from="right">
-            <h2 className="text-3xl font-semibold tracking-tight text-fg sm:text-4xl">Industries served</h2>
+            <h2 className="text-display-md font-semibold tracking-tight text-fg">Industries served</h2>
             <ul className="mt-6 space-y-4">
               {industriesServed.map((ind) => (
                 <li key={ind} className="flex items-start gap-3 border-t border-border pt-4 text-fg">

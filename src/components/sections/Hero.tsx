@@ -57,8 +57,8 @@ export function Hero() {
       {siteConfig.heroVideo.src && (
         <HlsBackground src={siteConfig.heroVideo.src} poster={siteConfig.heroVideo.poster || undefined} />
       )}
-      <Container className="grid items-center gap-16 pt-[calc(var(--header-h)+3rem)] lg:grid-cols-[1.05fr_0.95fr] lg:gap-10 lg:pt-[calc(var(--header-h)+4.5rem)]">
-        <div data-hero-copy>
+      <Container className="grid items-center gap-14 pt-[calc(var(--header-h)+2.5rem)] sm:gap-16 sm:pt-[calc(var(--header-h)+3rem)] lg:grid-cols-[1.05fr_0.95fr] lg:gap-12 xl:gap-10 lg:pt-[calc(var(--header-h)+4.5rem)]">
+        <div data-hero-copy className="@container">
           <motion.p
             {...enter(0)}
             className="inline-flex items-center gap-2.5 rounded-full border border-white/15 bg-white/5 px-4 py-1.5 text-xs font-medium text-fg-inverted-muted backdrop-blur"
@@ -66,7 +66,7 @@ export function Hero() {
             <span className="h-1.5 w-1.5 rounded-full bg-glow" />
             Manufacturing in Pakistan since 1983
           </motion.p>
-          <h1 className="mt-6 text-balance text-[2.5rem] font-semibold leading-[1.02] text-fg-inverted sm:text-6xl lg:text-[4.25rem]">
+          <h1 className="mt-6 text-balance text-display-xl font-semibold text-fg-inverted">
               {headline.map((w, idx) => (
                 <span key={idx}>
                   <Word index={idx} className={w.accent ? "text-brass-gradient" : undefined}>
@@ -82,11 +82,11 @@ export function Hero() {
           >
             Shaheen Automotive (Pvt.) Ltd. designs and manufactures precision components for automotive and home appliance OEMs, from tooling through mass production.
           </motion.p>
-          <motion.div {...enter(0.22)} className="mt-9 flex flex-wrap items-center gap-3 sm:gap-4">
-            <Button href="/contact" variant="brass">
+          <motion.div {...enter(0.22)} className="mt-9 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center sm:gap-4">
+            <Button href="/contact" variant="brass" className="w-full sm:w-auto">
               Request a Quote
             </Button>
-            <Button href="/capabilities" variant="onDark" showArrow={false}>
+            <Button href="/capabilities" variant="onDark" showArrow={false} className="w-full sm:w-auto">
               Explore Capabilities
             </Button>
           </motion.div>
