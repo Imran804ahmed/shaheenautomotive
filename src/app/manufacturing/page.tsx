@@ -28,10 +28,10 @@ import type { Equipment } from "@/content/company";
 import { cn } from "@/lib/cn";
 
 export const metadata: Metadata = {
-  title: "Capabilities",
+  title: "Manufacturing",
   description:
     "Design and tooling, sheet metal stamping, pipe bending, welding, surface finishing and dimensional inspection at Shaheen Automotive.",
-  alternates: { canonical: "/capabilities" },
+  alternates: { canonical: "/manufacturing" },
 };
 
 const icons: Record<
@@ -102,6 +102,7 @@ export default function CapabilitiesPage() {
   return (
     <>
       <PageHeader
+        image={{ src: "/images/facility/floor/komatsu-press.jpg", alt: "Komatsu straight-side press with a die set in the bed and die racks alongside" }}
         eyebrow="Capabilities"
         title="Six capabilities, one production line."
         intro="From design and tooling through sheet metal stamping, pipe bending, welding, surface finishing and dimensional inspection, SAPL runs the full development-to-production chain in-house."

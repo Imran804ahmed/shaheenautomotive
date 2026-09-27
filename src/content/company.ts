@@ -672,7 +672,7 @@ export const galleryPhotos: GalleryPhoto[] = [
 
 // ---------------------------------------------------------------------------
 // Shop floor: SAPL's own photography of machines and people at work.
-// Drives /facility and the home-page ShopFloor section.
+// Drives /facility and the home-page machine cells.
 // ---------------------------------------------------------------------------
 export type FloorArea = PhotoCategory & {
   number: string;

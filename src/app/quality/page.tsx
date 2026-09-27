@@ -39,6 +39,7 @@ export default function QualityPage() {
   return (
     <>
       <PageHeader
+        image={{ src: "/images/facility/floor/checking-fixture.jpg", alt: "Inspector clamping a stamped sheet metal panel into a checking fixture" }}
         eyebrow="Quality"
         title="Quality verified at every stage, not just at the end."
         intro="From the first off-tool sample through trial production and into mass production, every part is checked against customer and SAPL quality requirements before it ships."
@@ -63,7 +64,7 @@ export default function QualityPage() {
       <section className="rounded-[2.5rem] bg-bg-elevated shadow-soft sm:rounded-[3.5rem] py-20 sm:py-24">
         <Container className="grid gap-10 lg:grid-cols-2 lg:items-center">
           <Reveal>
-            <h2 className="text-display-md font-semibold tracking-tight text-fg">
+            <h2 className="text-display-md tracking-tight text-fg">
               Dimensional inspection
             </h2>
             <p className="mt-4 max-w-md text-base leading-relaxed text-fg-muted">
@@ -95,7 +96,7 @@ export default function QualityPage() {
       <section className="rounded-[2.5rem] bg-bg-elevated shadow-soft sm:rounded-[3.5rem] py-20 sm:py-24">
         <Container>
           <Reveal>
-            <h2 className="text-display-md font-semibold tracking-tight text-fg">
+            <h2 className="text-display-md tracking-tight text-fg">
               Awards & recognition
             </h2>
             <p className="mt-3 max-w-xl text-sm leading-relaxed text-fg-muted">

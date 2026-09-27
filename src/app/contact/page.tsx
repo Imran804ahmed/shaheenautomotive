@@ -17,6 +17,7 @@ export default function ContactPage() {
   return (
     <>
       <PageHeader
+        image={{ src: "/images/facility/floor/press-operator-controls.jpg", alt: "Press operator at the controls of a mechanical press fitted with a progressive die" }}
         eyebrow="Contact"
         title="Request a quote."
         intro="Tell us about the part and we'll come back with feasibility, process and a quotation. The more detail you share up front, the faster we can respond."

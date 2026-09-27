@@ -16,6 +16,7 @@ export default function ProductsPage() {
   return (
     <>
       <PageHeader
+        image={{ src: "/images/facility/floor/parts-racks.jpg", alt: "Racks and bins of bagged, finished parts in the storage hall" }}
         eyebrow="Products"
         title="Sheet metal, pipe and rod parts, by category."
         intro="Every category below links to verified component examples manufactured for our OEM customers, alongside the processes used to produce them."

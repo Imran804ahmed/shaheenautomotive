@@ -1,143 +1,171 @@
+import Image from "next/image";
 import Link from "next/link";
 import { ArrowUpRight } from "@phosphor-icons/react/dist/ssr";
 import { Container } from "@/components/ui/Container";
 import { Reveal } from "@/components/ui/Reveal";
-import { Tilt } from "@/components/ui/Tilt";
-import { ImageCycle } from "@/components/ui/ImageCycle";
+import { SpotTrack } from "@/components/ui/SpotTrack";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import type { ProductCategory } from "@/content/company";
+import { cn } from "@/lib/cn";
 
-const img = (n: number, alt: string) => ({ src: `/images/products/showcase/showcase-${n}.jpg`, alt });
+type Shot = { src: string; alt: string };
+const shot = (n: number, alt: string): Shot => ({ src: `/images/products/showcase/showcase-${n}.jpg`, alt });
 
-const categoryImages: Record<ProductCategory["slug"], { src: string; alt: string }[]> = {
+// Primary studio shot + an alternate angle revealed on hover.
+const categoryShots: Record<ProductCategory["slug"], [Shot, Shot]> = {
   "sheet-metal-parts": [
-    img(9, "Stamped sheet metal panel with punched mounting holes"),
-    img(7, "Formed sheet metal reinforcement panel"),
-    img(10, "Sheet metal bracket panel with weld nuts"),
-    img(8, "Sheet metal reinforcement panel, reverse side"),
+    shot(9, "Stamped sheet metal panel with punched mounting holes and weld nuts"),
+    shot(17, "Deep-drawn channel bracket with ribbed flanges and pierced holes"),
   ],
   "formed-pipe-parts": [
-    img(2, "Formed hood hinge arm with pivot bracket"),
-    img(3, "Formed hood hinge assembly, alternate angle"),
-    img(4, "Formed hinge arm with mounting bracket"),
+    shot(2, "Formed hood hinge arm with pivot bracket, zinc plated"),
+    shot(3, "Formed hood hinge assembly from an alternate angle"),
   ],
   "bent-rod-parts": [
-    img(5, "Bent hinge arm with pivot pin, yellow zinc finish"),
-    img(6, "Hinge arm and base plate, yellow zinc finish"),
-    img(1, "Scissor jack assembly"),
+    shot(33, "Zinc-plated scissor jack with formed saddle, lead screw and eye drive end"),
+    shot(5, "Bent hinge arm with pivot pin and base bracket, yellow zinc finish"),
   ],
 };
 
-// One headline figure per family, taken from the category summaries.
-const categorySpec: Record<ProductCategory["slug"], { value: string; label: string }> = {
-  "sheet-metal-parts": { value: "15–300 T", label: "Press fleet range" },
-  "formed-pipe-parts": { value: "ø10–38 mm", label: "Pipe diameter range" },
-  "bent-rod-parts": { value: "Motorcycle", label: "Primary OEM sector" },
+const categorySpecs: Record<ProductCategory["slug"], [string, string][]> = {
+  "sheet-metal-parts": [
+    ["Process", "Stamping, progressive & line dies"],
+    ["Press range", "15–300 T"],
+    ["Sectors", "Passenger cars · appliances"],
+  ],
+  "formed-pipe-parts": [
+    ["Process", "NC / CNC bending, flaring"],
+    ["Diameter", "ø10–38 mm"],
+    ["Wall", "Up to 2.5 mm"],
+  ],
+  "bent-rod-parts": [
+    ["Process", "Rod bending, bracket welding"],
+    ["Parts", "Stands · brackets · jacks"],
+    ["Sectors", "Motorcycles · cars"],
+  ],
 };
+
+// Studio shots are lifted toward white. The featured card is taller than the
+// photos' 3:2 frame, so it shows the whole part (contain) with feathered
+// edges over a sweep matched to the photo backdrop instead of cropping.
+const shotClass = "object-cover brightness-[1.1] contrast-[1.04] saturate-[0.9]";
+const featuredShotClass =
+  "!object-contain p-[4%] [mask-image:radial-gradient(ellipse_58%_54%_at_center,black_40%,transparent_100%)]";
 
 export function ProductsShowcase({ categories }: { categories: ProductCategory[] }) {
   return (
-    <section className="surface-paper bg-bg py-20 sm:py-28">
+    <section className="relative bg-bg-elevated py-24 sm:py-32">
       <Container>
         <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
           <SectionHeading
             eyebrow="Products"
-            title="Three product families, one production system."
-            body="Stamped, bent and formed components built in-house, from die to dimensional inspection, for automotive, motorcycle and appliance OEMs."
+            title="Components engineered to OEM drawing."
+            body="Stamped, formed and bent parts built in-house from die to dimensional inspection, fitted to vehicles and appliances across Pakistan."
           />
           <Reveal delay={0.1} className="shrink-0">
             <Link
               href="/products"
-              className="group inline-flex items-center gap-2 rounded-full border border-border bg-bg-elevated px-5 py-2.5 text-sm font-semibold text-fg shadow-soft transition-colors duration-300 hover:border-accent hover:text-accent"
+              className="group inline-flex items-center gap-2 rounded-full border border-border bg-bg-elevated px-5 py-2.5 text-sm font-semibold text-fg shadow-soft transition-colors duration-300 hover:border-accent hover:text-accent-ink"
             >
-              View all products
-              <ArrowUpRight
-                size={14}
-                weight="bold"
-                className="transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
-              />
+              All product families
+              <ArrowUpRight size={14} weight="bold" className="transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
             </Link>
           </Reveal>
         </div>
 
-        <div className="mt-10 grid grid-cols-1 gap-5 sm:mt-12 sm:gap-6 lg:grid-cols-3 lg:gap-8">
+        <div className="mt-12 grid grid-cols-1 gap-5 sm:mt-16 lg:grid-cols-12 lg:grid-rows-2 lg:gap-6">
           {categories.map((cat, i) => {
-            const photos = categoryImages[cat.slug];
+            const [primary, alternate] = categoryShots[cat.slug];
+            const featured = i === 0;
             return (
-              <Reveal key={cat.slug} delay={i * 0.07} className="h-full">
-                <Tilt className="h-full">
+              <Reveal
+                key={cat.slug}
+                delay={i * 0.08}
+                className={cn("h-full", featured ? "lg:col-span-7 lg:row-span-2" : "lg:col-span-5")}
+              >
+                <SpotTrack className="h-full">
                   <Link
                     href={`/products/${cat.slug}`}
-                    className="group relative flex h-full flex-col overflow-hidden rounded-[1.75rem] border border-border bg-bg-elevated p-2 shadow-soft sm:flex-row lg:flex-col transition-[box-shadow,border-color] duration-500 hover:border-accent/40 hover:shadow-lift"
+                    className={cn(
+                      "group relative flex h-full flex-col overflow-hidden rounded-[2rem] border border-border bg-bg shadow-soft transition-[box-shadow,border-color,transform] duration-500 ease-out hover:-translate-y-1 hover:border-accent/30 hover:shadow-lift",
+                      !featured && "sm:flex-row lg:flex-col"
+                    )}
                   >
-                    <div className="relative aspect-[5/4] w-full shrink-0 overflow-hidden rounded-[1.35rem] bg-bg-inverted sm:aspect-auto sm:min-h-80 sm:w-[46%] lg:aspect-[5/4] lg:min-h-0 lg:w-full">
-                      <ImageCycle
-                        images={photos}
-                        sizes="(min-width: 1024px) 33vw, (min-width: 640px) 45vw, 95vw"
-                        offset={i * 1200}
-                        indicators
-                        className="group-hover:scale-[1.06]"
-                      />
-                      <div className="absolute inset-0 bg-gradient-to-t from-bg-inverted via-bg-inverted/35 to-bg-inverted/10" />
-                      <div className="absolute inset-0 bg-[radial-gradient(28rem_16rem_at_0%_100%,rgb(56_194_122/0.22),transparent_65%)] opacity-60 transition-opacity duration-500 group-hover:opacity-100" />
-                      <span className="spot-glow" aria-hidden="true" />
+                    {/* studio stage */}
+                    <div
+                      className={cn(
+                        "relative w-full overflow-hidden",
+                        featured
+                          ? "bg-[radial-gradient(85%_75%_at_50%_42%,#eceef2,#e1e4e9_70%,#d8dce1)]"
+                          : "product-stage",
+                        featured
+                          ? "aspect-[3/2] lg:aspect-auto lg:min-h-[28rem] lg:flex-1"
+                          : "aspect-[3/2] sm:aspect-auto sm:min-h-64 sm:w-1/2 lg:aspect-[16/9] lg:w-full"
+                      )}
+                    >
+                      <div className="absolute inset-0 transition-transform duration-700 ease-out group-hover:scale-[1.05]">
+                        <Image
+                          src={primary.src}
+                          alt={primary.alt}
+                          fill
+                          sizes={featured ? "(min-width: 1024px) 55vw, 100vw" : "(min-width: 1024px) 30vw, 100vw"}
+                          className={cn(shotClass, featured && featuredShotClass, "transition-opacity duration-500 group-hover:opacity-0")}
+                        />
+                        <Image
+                          src={alternate.src}
+                          alt=""
+                          aria-hidden="true"
+                          fill
+                          sizes={featured ? "(min-width: 1024px) 55vw, 100vw" : "(min-width: 1024px) 30vw, 100vw"}
+                          className={cn(shotClass, featured && featuredShotClass, "opacity-0 transition-opacity duration-500 group-hover:opacity-100")}
+                        />
+                      </div>
+                      {/* studio falloff: soft vignette + a metallic horizon line where the sweep meets the floor */}
+                      <span aria-hidden="true" className="absolute inset-0 bg-[radial-gradient(120%_90%_at_50%_40%,transparent_55%,rgb(13_17_20/0.14))]" />
+                      <span aria-hidden="true" className="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-white/50 to-transparent" />
+                      <span className="sheen sheen-hover" aria-hidden="true" />
 
-                      <span className="mono-figure absolute left-4 top-4 z-10 rounded-full border border-fg-inverted/15 bg-bg-inverted/50 px-3 py-1 text-[11px] font-medium tracking-wider text-fg-inverted backdrop-blur-md">
+                      <span className="mono-figure absolute left-5 top-5 text-[11px] text-fg-muted">
                         {String(i + 1).padStart(2, "0")} / {String(categories.length).padStart(2, "0")}
                       </span>
-
-                      <div className="absolute inset-x-0 bottom-0 z-10 p-5 sm:p-6">
-                        <span className="flex items-center gap-2 text-[11px] font-semibold uppercase tracking-[0.2em] text-brass">
-                          <span className="h-px w-5 bg-brass transition-[width] duration-500 group-hover:w-9" />
-                          {cat.shortTitle}
-                        </span>
-                        <h3 className="mt-2 text-2xl font-semibold leading-tight text-fg-inverted sm:text-[1.65rem]">
-                          {cat.title}
-                        </h3>
-                      </div>
+                      <span className="tech-label absolute right-5 top-5 hidden rounded-full [@media(hover:hover)]:block bg-bg-elevated/80 px-2.5 py-1 text-[10px] text-fg-muted backdrop-blur">
+                        Hover · alt view
+                      </span>
                     </div>
 
-                    <div className="flex min-w-0 flex-1 flex-col px-3 pb-3 pt-5 sm:px-5 sm:pb-4 lg:px-5">
-                      <div className="flex flex-wrap items-end justify-between gap-x-3 gap-y-1 rounded-2xl border border-border bg-bg px-4 py-3.5">
-                        <div>
-                          <div className="stat-figure whitespace-nowrap text-[clamp(1.35rem,1.1rem+1vw,1.6rem)]">{categorySpec[cat.slug].value}</div>
-                          <div className="mt-1.5 text-[10px] font-semibold uppercase tracking-[0.16em] text-fg-muted">
-                            {categorySpec[cat.slug].label}
+                    {/* spec card */}
+                    <div
+                      className={cn(
+                        "relative flex flex-col bg-bg-elevated p-6 sm:p-7",
+                        !featured && "sm:flex-1 lg:flex-none"
+                      )}
+                    >
+                      <span className="tech-label text-accent-ink">{cat.shortTitle}</span>
+                      <h3 className="mt-2 text-2xl font-bold leading-tight tracking-tight text-fg sm:text-[1.7rem]">{cat.title}</h3>
+                      {featured && <p className="mt-3 max-w-lg text-sm leading-relaxed text-fg-muted">{cat.summary}</p>}
+
+                      <dl className="mt-5 divide-y divide-border border-y border-border">
+                        {categorySpecs[cat.slug].map(([k, v]) => (
+                          <div key={k} className="flex items-baseline justify-between gap-4 py-2.5">
+                            <dt className="tech-label shrink-0 text-fg-muted">{k}</dt>
+                            <dd className="mono-figure text-right text-xs text-fg sm:text-[13px]">{v}</dd>
                           </div>
-                        </div>
-                        <span className="mono-figure shrink-0 text-[11px] text-fg-muted">{photos.length} photos</span>
-                      </div>
-
-                      <p className="mt-5 line-clamp-3 text-sm leading-relaxed text-fg-muted">{cat.summary}</p>
-
-                      <ul className="mb-6 mt-5 flex flex-wrap gap-2">
-                        {cat.processTags.slice(0, 3).map((tag) => (
-                          <li
-                            key={tag}
-                            className="rounded-full border border-accent/15 bg-accent-soft px-3 py-1 text-xs font-medium text-accent-strong"
-                          >
-                            {tag}
-                          </li>
                         ))}
-                      </ul>
+                      </dl>
 
-                      <div className="mt-auto flex items-center justify-between border-t border-border pt-5">
-                        <span className="relative text-sm font-semibold text-fg transition-colors duration-300 group-hover:text-accent">
-                          Explore range
-                          <span className="absolute -bottom-1 left-0 h-px w-full origin-left scale-x-0 bg-accent transition-transform duration-500 group-hover:scale-x-100" />
+                      <div className="mt-auto flex items-center justify-between pt-5">
+                        <span className="text-sm font-semibold text-fg transition-colors duration-300 group-hover:text-accent-ink">
+                          View specifications
                         </span>
-                        <span className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-bg-inverted text-fg-inverted transition-[background-color,color,transform] duration-300 group-hover:rotate-45 group-hover:bg-accent group-hover:text-accent-fg">
+                        <span className="flex h-11 w-11 items-center justify-center rounded-full bg-bg-inverted text-white transition-[transform,background-color] duration-300 group-hover:rotate-45 group-hover:bg-accent-ink">
                           <ArrowUpRight size={16} weight="bold" />
                         </span>
                       </div>
                     </div>
 
-                    <span
-                      aria-hidden="true"
-                      className="pointer-events-none absolute inset-x-8 top-0 h-[2px] origin-center scale-x-0 rounded-full bg-gradient-to-r from-transparent via-brass to-transparent transition-transform duration-700 group-hover:scale-x-100"
-                    />
+                    <span className="spot-border" aria-hidden="true" />
                   </Link>
-                </Tilt>
+                </SpotTrack>
               </Reveal>
             );
           })}

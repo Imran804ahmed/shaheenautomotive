@@ -12,7 +12,7 @@ const productCategories = siteConfig.productCategories;
 type Status = "idle" | "submitting" | "success" | "error";
 
 const fieldClasses =
-  "min-h-12 w-full min-w-0 rounded-2xl border border-border bg-bg px-4 py-3 text-base text-fg placeholder:text-fg-muted/70 sm:text-sm transition-[border-color,box-shadow] focus:border-accent focus:shadow-[0_0_0_4px_rgb(23_112_63/0.12)] focus:outline-none";
+  "min-h-12 w-full min-w-0 rounded-2xl border border-border bg-bg px-4 py-3 text-base text-fg placeholder:text-fg-muted/70 sm:text-sm transition-[border-color,box-shadow] focus:border-accent focus:shadow-[0_0_0_4px_rgb(4_148_72/0.12)] focus:outline-none";
 
 const invalidClasses = "border-red-600 focus:border-red-600 focus:shadow-[0_0_0_4px_rgb(220_38_38/0.12)]";
 
@@ -335,7 +335,7 @@ function RfqFormInner() {
       <button
         type="submit"
         disabled={status === "submitting"}
-        className="inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-full border border-accent bg-accent px-7 py-3.5 text-sm font-semibold sm:w-auto text-accent-fg shadow-[0_10px_24px_-10px_rgb(23_112_63/0.7)] transition-[transform,background-color,opacity] hover:-translate-y-0.5 hover:bg-accent-strong active:translate-y-0 active:scale-[0.98] disabled:translate-y-0 disabled:opacity-70"
+        className="inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-full border border-accent bg-accent px-7 py-3.5 text-sm font-semibold sm:w-auto text-accent-fg shadow-[0_10px_24px_-10px_rgb(4_148_72/0.7)] transition-[transform,background-color,opacity] hover:-translate-y-0.5 hover:bg-accent-strong active:translate-y-0 active:scale-[0.98] disabled:translate-y-0 disabled:opacity-70"
       >
         {status === "submitting" ? <Spinner /> : <PaperPlaneTilt size={16} weight="bold" />}
         {status === "submitting" ? "Sending..." : hasEndpoint ? "Send RFQ" : "Open email to send this RFQ"}

@@ -20,6 +20,7 @@ export default function FacilityPage() {
   return (
     <>
       <PageHeader
+        image={{ src: "/images/facility/floor/heavy-press.jpg", alt: "Large straight-side press with its bolster exposed" }}
         eyebrow="Facility"
         title="Inside the plant"
         intro="Our press shop, welding bays and spot welding lines, and the operators who run them every shift."
@@ -40,7 +41,7 @@ export default function FacilityPage() {
 
               <Reveal delay={0.08}>
                 <p className="mono-figure text-4xl font-semibold text-accent/25 sm:text-6xl">{area.number}</p>
-                <h2 className="mt-3 text-display-md font-semibold tracking-tight text-fg">{area.label}</h2>
+                <h2 className="mt-3 text-display-md tracking-tight text-fg">{area.label}</h2>
                 <p className="mt-4 max-w-xl text-base leading-relaxed text-fg-muted sm:text-lg">{area.body}</p>
 
                 {area.key === "press-shop" && (

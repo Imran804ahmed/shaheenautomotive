@@ -10,25 +10,25 @@ import { cn } from "@/lib/cn";
 
 function PlaceholderBadge() {
   return (
-    <span className="absolute left-3 top-3 z-10 inline-flex items-center rounded-full border border-dashed border-brass/50 bg-bg-inverted/70 px-2.5 py-1 text-[9px] font-semibold uppercase tracking-wider text-brass backdrop-blur-sm">
+    <span className="absolute left-3 top-3 z-10 inline-flex items-center rounded-full border border-dashed border-glow/50 bg-bg-inverted/70 px-2.5 py-1 text-[9px] font-semibold uppercase tracking-wider text-glow backdrop-blur-sm">
       Placeholder
     </span>
   );
 }
 
-/** The lead card: editorial split layout, large portrait, full bio, optional quote, brass "featured" ring and 3D tilt. */
+/** The lead card: editorial split layout, large portrait, full bio, optional quote, green "featured" ring and 3D tilt. */
 function FeaturedCard({ member }: { member: LeadershipMember }) {
   return (
     <Reveal from="scale">
       <div className="group relative mx-auto max-w-4xl">
-        {/* soft brass halo behind the card, blooms in on hover — same device as the CTA banner glow */}
+        {/* soft green halo behind the card, blooms in on hover — same device as the CTA banner glow */}
         <div
           aria-hidden="true"
-          className="pointer-events-none absolute -inset-4 -z-10 rounded-[2.5rem] bg-[radial-gradient(60%_60%_at_30%_20%,rgb(227_166_58/0.22),transparent_70%)] opacity-0 blur-xl transition-opacity duration-700 group-hover:opacity-100"
+          className="pointer-events-none absolute -inset-4 -z-10 rounded-[2.5rem] bg-[radial-gradient(60%_60%_at_30%_20%,rgb(4_148_72/0.22),transparent_70%)] opacity-0 blur-xl transition-opacity duration-700 group-hover:opacity-100"
         />
 
         <Tilt max={4}>
-          <div className="card-lift relative flex flex-col overflow-hidden rounded-[2rem] border border-brass/30 bg-white/[0.05] shadow-deep ring-1 ring-brass/20 md:min-h-[26rem] md:flex-row">
+          <div className="card-lift relative flex flex-col overflow-hidden rounded-[2rem] border border-glow/30 bg-white/[0.05] shadow-deep ring-1 ring-glow/20 md:min-h-[26rem] md:flex-row">
             <Gear className="pointer-events-none absolute -right-20 -top-20 h-64 w-64 opacity-[0.08] sm:h-80 sm:w-80" />
 
             <div className="relative aspect-[4/5] w-full shrink-0 overflow-hidden sm:aspect-[4/3] md:aspect-auto md:w-[42%]">
@@ -41,7 +41,7 @@ function FeaturedCard({ member }: { member: LeadershipMember }) {
                   className="object-cover object-[center_20%] transition-transform duration-700 ease-[var(--ease-out-expo)] group-hover:scale-105"
                 />
               ) : (
-                <div className="flex h-full w-full flex-col items-center justify-center gap-3 bg-[radial-gradient(60%_60%_at_50%_20%,rgb(227_166_58/0.14),transparent_70%)] px-6 text-center">
+                <div className="flex h-full w-full flex-col items-center justify-center gap-3 bg-[radial-gradient(60%_60%_at_50%_20%,rgb(4_148_72/0.14),transparent_70%)] px-6 text-center">
                   <UserCircle size={44} weight="thin" className="text-fg-inverted-muted" />
                   <p className="text-xs leading-relaxed text-fg-inverted-muted">
                     Photo placeholder — add the {member.title.toLowerCase()}&rsquo;s portrait
@@ -57,17 +57,17 @@ function FeaturedCard({ member }: { member: LeadershipMember }) {
             <div className="relative flex flex-1 flex-col justify-center p-6 sm:p-10 lg:p-12">
               <Quotes
                 weight="fill"
-                className="pointer-events-none absolute -top-2 right-6 h-28 w-28 text-brass/[0.07] sm:h-36 sm:w-36"
+                className="pointer-events-none absolute -top-2 right-6 h-28 w-28 text-glow/[0.07] sm:h-36 sm:w-36"
                 aria-hidden="true"
               />
-              <p className="relative inline-flex w-fit items-center gap-2.5 text-xs font-semibold uppercase tracking-[0.18em] text-brass">
-                <span className="h-px w-8 bg-brass" />
+              <p className="relative inline-flex w-fit items-center gap-2.5 text-xs font-semibold uppercase tracking-[0.18em] text-glow">
+                <span className="h-px w-8 bg-accent-ink" />
                 Leadership
               </p>
               <h3 className="relative mt-4 text-2xl font-semibold tracking-tight text-fg-inverted sm:text-3xl lg:text-4xl">
                 {member.name}
               </h3>
-              <p className="relative mt-1.5 text-xs font-semibold uppercase tracking-[0.16em] text-brass">
+              <p className="relative mt-1.5 text-xs font-semibold uppercase tracking-[0.16em] text-glow">
                 {member.title}
               </p>
               <p className="relative mt-5 max-w-md text-base leading-relaxed text-fg-inverted-muted">
@@ -75,8 +75,8 @@ function FeaturedCard({ member }: { member: LeadershipMember }) {
               </p>
 
               {member.quote && (
-                <div className="relative mt-6 flex gap-2.5 border-l-2 border-brass/40 pl-4">
-                  <Quotes size={16} weight="fill" className="mt-0.5 shrink-0 text-brass/70" />
+                <div className="relative mt-6 flex gap-2.5 border-l-2 border-glow/40 pl-4">
+                  <Quotes size={16} weight="fill" className="mt-0.5 shrink-0 text-glow/70" />
                   <p className="max-w-md text-sm italic leading-relaxed text-fg-inverted-muted">{member.quote}</p>
                 </div>
               )}
@@ -103,7 +103,7 @@ function GridCard({ member }: { member: LeadershipMember }) {
               className="object-cover transition-transform duration-500 ease-[var(--ease-out-expo)] group-hover:scale-110"
             />
           ) : (
-            <div className="flex h-full w-full flex-col items-center justify-center gap-2 bg-[radial-gradient(60%_60%_at_50%_20%,rgb(227_166_58/0.12),transparent_70%)] px-3 text-center">
+            <div className="flex h-full w-full flex-col items-center justify-center gap-2 bg-[radial-gradient(60%_60%_at_50%_20%,rgb(4_148_72/0.12),transparent_70%)] px-3 text-center">
               <UserCircle size={30} weight="thin" className="text-fg-inverted-muted" />
             </div>
           )}
@@ -114,7 +114,7 @@ function GridCard({ member }: { member: LeadershipMember }) {
 
           <div className="absolute inset-x-0 bottom-0 p-3.5 transition-transform duration-300 ease-[var(--ease-out-expo)] group-hover:-translate-y-0.5 sm:p-4">
             <h4 className="truncate text-sm font-semibold text-fg-inverted">{member.name}</h4>
-            <p className="mt-0.5 truncate text-[10px] font-semibold uppercase tracking-[0.12em] text-brass">
+            <p className="mt-0.5 truncate text-[10px] font-semibold uppercase tracking-[0.12em] text-glow">
               {member.title}
             </p>
           </div>

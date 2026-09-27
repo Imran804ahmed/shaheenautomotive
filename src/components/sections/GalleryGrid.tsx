@@ -113,7 +113,7 @@ export function GalleryGrid({
                     <motion.span
                       layoutId="gallery-filter"
                       transition={{ type: "spring", stiffness: 420, damping: 34 }}
-                      className="absolute inset-0 -z-0 rounded-full bg-accent shadow-[0_8px_20px_-8px_rgb(23_112_63/0.7)]"
+                      className="absolute inset-0 -z-0 rounded-full bg-accent shadow-[0_8px_20px_-8px_rgb(4_148_72/0.7)]"
                     />
                   )}
                   <span className="relative">{f.label}</span>
@@ -149,9 +149,9 @@ export function GalleryGrid({
                 transition={{ duration: 0.55, delay: reduce ? 0 : (i % 8) * 0.05, ease }}
                 aria-label={`View photo: ${photo.caption}`}
                 className={cn(
-                  "group relative overflow-hidden rounded-2xl text-left ring-1 transition-shadow duration-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brass sm:aspect-auto",
+                  "group relative overflow-hidden rounded-2xl text-left ring-1 transition-shadow duration-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-glow sm:aspect-auto",
                   dark
-                    ? "bg-ink-3 ring-white/10 hover:shadow-[0_24px_60px_-20px_rgb(0_0_0/0.8)] hover:ring-brass/50"
+                    ? "bg-ink-3 ring-white/10 hover:shadow-[0_24px_60px_-20px_rgb(0_0_0/0.8)] hover:ring-glow/50"
                     : "bg-bg-elevated ring-border hover:shadow-lift hover:ring-accent/40",
                   spanFor(i, visible.length)
                 )}
@@ -174,7 +174,7 @@ export function GalleryGrid({
                 <div className={cn("absolute inset-x-0 bottom-0 p-3 sm:p-4", feature && "sm:p-5 lg:p-6")}>
                   <span
                     className={cn(
-                      "inline-block max-w-full truncate rounded-full bg-brass/90 px-2 py-0.5 align-bottom text-[9px] font-semibold uppercase tracking-[0.12em] text-brass-fg sm:text-[10px] sm:tracking-[0.14em]",
+                      "inline-block max-w-full truncate rounded-full bg-accent-ink/90 px-2 py-0.5 align-bottom text-[9px] font-semibold uppercase tracking-[0.12em] text-accent-fg sm:text-[10px] sm:tracking-[0.14em]",
                       feature && "lg:text-[11px]"
                     )}
                   >
@@ -266,7 +266,7 @@ export function GalleryGrid({
 
               <div className="flex items-end justify-between gap-4 p-5 sm:p-6">
                 <div>
-                  <p className="text-xs font-semibold uppercase tracking-[0.16em] text-brass">{categoryLabel(current.category)}</p>
+                  <p className="text-xs font-semibold uppercase tracking-[0.16em] text-glow">{categoryLabel(current.category)}</p>
                   <p className="mt-1.5 text-lg font-semibold tracking-tight text-fg sm:text-xl">{current.caption}</p>
                 </div>
                 <p className="mono-figure shrink-0 text-sm text-fg-muted">

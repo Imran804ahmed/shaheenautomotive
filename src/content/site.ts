@@ -36,9 +36,16 @@ export const siteConfig = {
     mapEmbedUrl: "", // TODO optional Google Maps embed src
   },
 
+  // Leave a URL empty to hide that icon in the footer.
   social: {
     linkedin: "", // TODO
+    facebook: "", // TODO
+    instagram: "", // TODO
+    youtube: "", // TODO
   },
+
+  // Careers inbox. Falls back to contact.email when empty.
+  careersEmail: "", // TODO optional: e.g. careers@shaheenautomotive.com.pk
 
   // ---- RFQ form delivery -------------------------------------------------
   // This is a statically-exported site with no server/API routes, so the RFQ
@@ -55,12 +62,12 @@ export const siteConfig = {
 
   nav: [
     { label: "Home", href: "/" },
-    { label: "About", href: "/about" },
-    { label: "Capabilities", href: "/capabilities" },
+    { label: "About Us", href: "/about" },
+    { label: "Manufacturing", href: "/manufacturing" },
     { label: "Products", href: "/products" },
-    { label: "Quality", href: "/quality" },
-    { label: "Customers", href: "/customers" },
-    { label: "Gallery", href: "/gallery" },
+    { label: "Quality Standards", href: "/quality" },
+    { label: "Careers", href: "/careers" },
+    { label: "Contact", href: "/contact" },
   ],
 
   productCategories: [

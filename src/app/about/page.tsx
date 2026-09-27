@@ -29,6 +29,7 @@ export default function AboutPage() {
   return (
     <>
       <PageHeader
+        image={{ src: "/images/facility/floor/welding-and-spot-welding-shop.jpg", alt: "Wide view of the welding shop with MIG welding benches and a row of spot welding machines" }}
         eyebrow="About us"
         title="Four decades of precision manufacturing."
         intro="Shaheen Automotive (Pvt.) Ltd. designs and manufactures sheet metal, formed pipe and bent rod components for the automotive and home appliance industries."
@@ -41,7 +42,7 @@ export default function AboutPage() {
               <p className="text-xs font-semibold uppercase tracking-[0.18em] text-accent">
                 Since {history.founded}
               </p>
-              <h2 className="mt-3 text-display-md font-semibold tracking-tight text-fg">
+              <h2 className="mt-3 text-display-md tracking-tight text-fg">
                 From {history.foundedAs} to {history.currentName}
               </h2>
             </div>
@@ -93,7 +94,7 @@ export default function AboutPage() {
       <section className="rounded-[2.5rem] bg-bg-elevated shadow-soft sm:rounded-[3.5rem] py-20 sm:py-24">
         <Container>
           <Reveal>
-            <h2 className="max-w-xl text-balance text-display-md font-semibold tracking-tight text-fg">
+            <h2 className="max-w-xl text-balance text-display-md tracking-tight text-fg">
               What defines how we work.
             </h2>
           </Reveal>
@@ -119,7 +120,7 @@ export default function AboutPage() {
             />
           </Reveal>
           <Reveal delay={0.08} from="right">
-            <h2 className="text-display-md font-semibold tracking-tight text-fg">Industries served</h2>
+            <h2 className="text-display-md tracking-tight text-fg">Industries served</h2>
             <ul className="mt-6 space-y-4">
               {industriesServed.map((ind) => (
                 <li key={ind} className="flex items-start gap-3 border-t border-border pt-4 text-fg">

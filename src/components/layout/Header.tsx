@@ -2,24 +2,27 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { AnimatePresence, motion, useMotionValueEvent, useReducedMotion, useScroll, useSpring } from "motion/react";
-import { List, X, CaretDown } from "@phosphor-icons/react";
+import { List, X, CaretDown, ArrowUpRight } from "@phosphor-icons/react";
 import { siteConfig } from "@/content/site";
-import { brand } from "@/content/company";
 import { cn } from "@/lib/cn";
 
 const productCategories = siteConfig.productCategories;
 
 const menuItem = {
-  hidden: { opacity: 0, y: -6 },
-  show: { opacity: 1, y: 0, transition: { duration: 0.2, ease: [0.16, 1, 0.3, 1] as const } },
+  hidden: { opacity: 0, y: 14 },
+  show: { opacity: 1, y: 0, transition: { duration: 0.35, ease: [0.16, 1, 0.3, 1] as const } },
 };
 
-const ctaClasses =
-  "inline-flex items-center justify-center whitespace-nowrap rounded-full bg-accent px-4 py-2.5 text-sm font-semibold xl:px-5 text-accent-fg shadow-[0_8px_20px_-8px_rgb(23_112_63/0.7)] transition-[background-color,transform] duration-200 hover:-translate-y-px hover:bg-accent-strong";
+const isActive = (pathname: string, href: string) => (href === "/" ? pathname === "/" : pathname.startsWith(href));
 
+/**
+ * Full-width bar that sits transparent over every page's graphite opener,
+ * then turns to graphite glass once the page scrolls. Every route starts
+ * with a dark hero / PageHeader, so the light logo and nav always have
+ * contrast, scrolled or not.
+ */
 export function Header() {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
@@ -37,7 +40,6 @@ export function Header() {
 
   const closeMenu = () => setOpen(false);
 
-  // Escape closes the mobile menu
   useEffect(() => {
     if (!open) return;
     const onKey = (e: KeyboardEvent) => e.key === "Escape" && setOpen(false);
@@ -52,200 +54,232 @@ export function Header() {
     };
   }, [open]);
 
+  const solid = scrolled || open;
+
   return (
-    <header className="pointer-events-none sticky top-0 z-50 h-[var(--header-h)] px-3 pt-3 sm:px-6">
-      <div className="pointer-events-auto relative mx-auto max-w-7xl">
-        <div
+    <header className="sticky top-0 z-50 h-[var(--header-h)]">
+      {/* glass layer fades in on scroll; a soft top scrim keeps the bar legible over bright photography before that */}
+      <div
+        aria-hidden="true"
+        className={cn(
+          "absolute inset-0 transition-opacity duration-500",
+          solid ? "opacity-0" : "opacity-100",
+          "bg-gradient-to-b from-black/55 to-transparent"
+        )}
+      />
+      <div
+        aria-hidden="true"
+        className={cn(
+          "glass-dark absolute inset-0 border-b border-white/[0.07] transition-opacity duration-500",
+          solid ? "opacity-100" : "opacity-0"
+        )}
+      />
+
+      {!reduce && (
+        <motion.span
+          aria-hidden="true"
+          style={{ scaleX: progress }}
           className={cn(
-            "relative flex h-14 items-center justify-between rounded-full border border-white/40 pl-4 pr-2 backdrop-blur-xl transition-[background-color,box-shadow] duration-300 sm:pl-5",
-            scrolled
-              ? "bg-bg-elevated shadow-[0_14px_44px_-12px_rgb(4_12_8/0.55)]"
-              : "bg-bg-elevated/90 shadow-[0_10px_40px_-14px_rgb(4_12_8/0.35)]"
+            "absolute inset-x-0 bottom-0 h-px origin-left bg-gradient-to-r from-accent via-glow to-accent transition-opacity duration-500",
+            solid ? "opacity-100" : "opacity-0"
           )}
+        />
+      )}
+
+      <div className="relative mx-auto flex h-full max-w-[90rem] items-center justify-between gap-6 px-5 sm:px-8">
+        <Link
+          href="/"
+          onClick={closeMenu}
+          className="shrink-0 transition-transform duration-300 active:scale-[0.98]"
+          aria-label={`${siteConfig.companyLegalName}, home`}
         >
-          {/* reading progress: a thin line along the bar's lower edge */}
-          {!reduce && (
-            <span aria-hidden="true" className="pointer-events-none absolute inset-0 overflow-hidden rounded-full">
+          <span
+            className={cn(
+              "logo-duo h-9 w-auto origin-left transition-transform duration-500 ease-out sm:h-11",
+              solid && "scale-[0.84]"
+            )}
+          />
+        </Link>
+
+        <nav aria-label="Main" className="hidden items-center lg:flex">
+          {siteConfig.nav.map((item) => {
+            const active = isActive(pathname, item.href);
+            const linkClasses = cn(
+              "relative flex items-center gap-1 whitespace-nowrap px-2.5 py-3 text-[0.8125rem] font-medium tracking-wide transition-colors duration-200 xl:px-3.5 xl:text-sm",
+              active ? "text-white" : "text-white/65 hover:text-white"
+            );
+            const indicator = active && (
               <motion.span
-                style={{ scaleX: progress }}
-                className="absolute inset-x-0 bottom-0 h-[2px] origin-left bg-gradient-to-r from-accent to-glow"
+                layoutId="nav-active"
+                transition={{ type: "spring", stiffness: 420, damping: 34 }}
+                className="absolute inset-x-2.5 -bottom-px h-[2px] rounded-full bg-glow shadow-[0_0_12px_rgb(53_208_127/0.8)] xl:inset-x-3.5"
               />
-            </span>
-          )}
+            );
 
-          <Link href="/" className="flex shrink-0 items-center gap-2.5" aria-label={`${siteConfig.siteName} home`}>
-            <Image
-              src={brand.logoFull}
-              alt={siteConfig.companyLegalName}
-              width={1000}
-              height={231}
-              className="h-8 w-auto sm:h-10 lg:h-9 xl:h-10"
-              priority
-            />
-          </Link>
-
-          <nav aria-label="Main" className="hidden items-center gap-0.5 lg:flex xl:gap-1">
-            {siteConfig.nav.map((item) => {
-              const active = item.href === "/" ? pathname === "/" : pathname.startsWith(item.href);
-              const linkClasses = cn(
-                "group/link relative flex items-center gap-1 whitespace-nowrap rounded-full px-2.5 py-2 text-sm font-medium transition-colors xl:px-3.5",
-                active ? "text-fg" : "text-fg-muted hover:text-fg"
-              );
-              const pill = active && (
-                <motion.span
-                  layoutId="nav-active"
-                  transition={{ type: "spring", stiffness: 420, damping: 34 }}
-                  className="absolute inset-0 -z-10 rounded-full bg-accent-soft"
-                />
-              );
-              const underline = !active && (
-                <span
-                  aria-hidden="true"
-                  className="absolute inset-x-2.5 bottom-1 h-px origin-left xl:inset-x-4 scale-x-0 bg-accent transition-transform duration-300 ease-out group-hover/link:scale-x-100 group-focus-visible/link:scale-x-100 motion-reduce:transition-none"
-                />
-              );
-              if (item.label === "Products") {
-                return (
-                  <div
-                    key={item.href}
-                    className="relative"
-                    onMouseEnter={() => setProductsOpen(true)}
-                    onMouseLeave={() => setProductsOpen(false)}
-                    onFocus={() => setProductsOpen(true)}
-                    onBlur={(e) => {
-                      if (!e.currentTarget.contains(e.relatedTarget)) setProductsOpen(false);
-                    }}
-                  >
-                    <Link href={item.href} className={linkClasses} aria-current={active ? "page" : undefined}>
-                      {pill}
-                      {underline}
-                      {item.label}
-                      <CaretDown
-                        size={12}
-                        weight="bold"
-                        className={cn("transition-transform duration-200", productsOpen && "rotate-180")}
-                      />
-                    </Link>
-                    <AnimatePresence>
-                      {productsOpen && (
-                        <motion.div
-                          initial={{ opacity: 0, y: 6 }}
-                          animate={{ opacity: 1, y: 0 }}
-                          exit={{ opacity: 0, y: 6 }}
-                          transition={{ duration: 0.15 }}
-                          className="absolute left-1/2 top-full w-64 -translate-x-1/2 pt-3"
-                        >
-                          <div className="rounded-3xl border border-border bg-bg-elevated p-2 shadow-lift">
-                            {productCategories.map((cat) => (
-                              <Link
-                                key={cat.slug}
-                                href={`/products/${cat.slug}`}
-                                className="block rounded-2xl px-3.5 py-2.5 text-sm text-fg-muted transition-[background-color,color,transform] duration-150 hover:translate-x-0.5 hover:bg-accent-soft hover:text-accent"
-                              >
-                                {cat.label}
-                              </Link>
-                            ))}
-                          </div>
-                        </motion.div>
-                      )}
-                    </AnimatePresence>
-                  </div>
-                );
-              }
+            if (item.label === "Products") {
               return (
-                <Link key={item.href} href={item.href} className={linkClasses} aria-current={active ? "page" : undefined}>
-                  {pill}
-                  {underline}
-                  {item.label}
-                </Link>
+                <div
+                  key={item.href}
+                  className="relative"
+                  onMouseEnter={() => setProductsOpen(true)}
+                  onMouseLeave={() => setProductsOpen(false)}
+                  onFocus={() => setProductsOpen(true)}
+                  onBlur={(e) => {
+                    if (!e.currentTarget.contains(e.relatedTarget)) setProductsOpen(false);
+                  }}
+                >
+                  <Link href={item.href} className={linkClasses} aria-current={active ? "page" : undefined}>
+                    {indicator}
+                    {item.label}
+                    <CaretDown
+                      size={11}
+                      weight="bold"
+                      className={cn("transition-transform duration-200", productsOpen && "rotate-180")}
+                    />
+                  </Link>
+                  <AnimatePresence>
+                    {productsOpen && (
+                      <motion.div
+                        initial={{ opacity: 0, y: 6 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: 6 }}
+                        transition={{ duration: 0.15 }}
+                        className="absolute left-1/2 top-full w-72 -translate-x-1/2 pt-3"
+                      >
+                        <div className="glass-dark rounded-2xl p-2">
+                          {productCategories.map((cat, i) => (
+                            <Link
+                              key={cat.slug}
+                              href={`/products/${cat.slug}`}
+                              className="group flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm text-white/75 transition-colors duration-150 hover:bg-white/[0.07] hover:text-white"
+                            >
+                              <span className="mono-figure text-[11px] text-glow">{String(i + 1).padStart(2, "0")}</span>
+                              <span className="flex-1">{cat.label}</span>
+                              <ArrowUpRight
+                                size={13}
+                                weight="bold"
+                                className="opacity-0 transition-[opacity,transform] duration-200 group-hover:translate-x-0.5 group-hover:opacity-100"
+                              />
+                            </Link>
+                          ))}
+                        </div>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </div>
               );
-            })}
-          </nav>
+            }
 
-          <div className="hidden items-center lg:flex">
-            <Link href="/contact" className={ctaClasses}>
-              Request a Quote
-            </Link>
-          </div>
+            return (
+              <Link key={item.href} href={item.href} className={linkClasses} aria-current={active ? "page" : undefined}>
+                {indicator}
+                {item.label}
+              </Link>
+            );
+          })}
+        </nav>
 
-          <button
-            type="button"
-            onClick={() => setOpen((v) => !v)}
-            className="inline-flex h-11 w-11 items-center justify-center rounded-full text-fg transition-[background-color,transform] duration-150 hover:bg-accent-soft active:scale-90 lg:hidden"
-            aria-label={open ? "Close menu" : "Open menu"}
-            aria-expanded={open}
+        <div className="hidden items-center xl:flex">
+          <Link
+            href="/contact"
+            className="group inline-flex items-center gap-2 whitespace-nowrap rounded-full border border-white/10 bg-accent-ink px-5 py-2.5 text-sm font-semibold text-white shadow-[inset_0_1px_0_rgb(255_255_255/0.2),0_10px_24px_-10px_rgb(4_148_72/0.8)] transition-[background-color,transform] duration-200 hover:-translate-y-px hover:bg-accent active:translate-y-0"
           >
-            <AnimatePresence mode="wait" initial={false}>
-              <motion.span
-                key={open ? "x" : "list"}
-                initial={reduce ? false : { opacity: 0, rotate: open ? -60 : 60 }}
-                animate={{ opacity: 1, rotate: 0 }}
-                exit={{ opacity: 0, rotate: open ? 60 : -60 }}
-                transition={{ duration: 0.12 }}
-                className="flex"
-              >
-                {open ? <X size={22} /> : <List size={22} />}
-              </motion.span>
-            </AnimatePresence>
-          </button>
+            Request a Quote
+            <ArrowUpRight size={14} weight="bold" className="transition-transform duration-200 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
+          </Link>
         </div>
 
-        <AnimatePresence>
-          {open && (
-            <motion.div
-              initial={{ opacity: 0, y: -8, scale: 0.98 }}
-              animate={{ opacity: 1, y: 0, scale: 1 }}
-              exit={{ opacity: 0, y: -8, scale: 0.98 }}
-              transition={{ duration: 0.2, ease: [0.16, 1, 0.3, 1] }}
-              style={{ transformOrigin: "top center" }}
-              className="absolute inset-x-0 top-full mt-2 max-h-[calc(100dvh-6rem)] overflow-y-auto rounded-[1.75rem] border border-border bg-bg-elevated p-3 shadow-deep lg:hidden"
+        <button
+          type="button"
+          onClick={() => setOpen((v) => !v)}
+          className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-white/15 bg-white/5 text-white backdrop-blur transition-[background-color,transform] duration-150 hover:bg-white/10 active:scale-90 lg:hidden"
+          aria-label={open ? "Close menu" : "Open menu"}
+          aria-expanded={open}
+          aria-controls="mobile-menu"
+        >
+          <AnimatePresence mode="wait" initial={false}>
+            <motion.span
+              key={open ? "x" : "list"}
+              initial={reduce ? false : { opacity: 0, rotate: open ? -60 : 60 }}
+              animate={{ opacity: 1, rotate: 0 }}
+              exit={{ opacity: 0, rotate: open ? 60 : -60 }}
+              transition={{ duration: 0.12 }}
+              className="flex"
             >
-              <motion.div
-                className="flex flex-col gap-1"
-                initial={reduce ? false : "hidden"}
-                animate="show"
-                variants={{ show: { transition: { staggerChildren: 0.04, delayChildren: 0.05 } } }}
-              >
-                {siteConfig.nav.map((item) => {
-                  const active = item.href === "/" ? pathname === "/" : pathname.startsWith(item.href);
-                  return (
-                    <motion.div key={item.href} variants={menuItem}>
-                      <Link
-                        href={item.href}
-                        onClick={closeMenu}
-                        aria-current={active ? "page" : undefined}
+              {open ? <X size={20} /> : <List size={20} />}
+            </motion.span>
+          </AnimatePresence>
+        </button>
+      </div>
+
+      <AnimatePresence>
+        {open && (
+          <motion.div
+            id="mobile-menu"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.2 }}
+            className="surface-ink blueprint-grid fixed inset-x-0 bg-bg-inverted bottom-0 top-[var(--header-h)] overflow-y-auto lg:hidden"
+          >
+            <motion.nav
+              aria-label="Mobile"
+              className="flex min-h-full flex-col px-5 pb-10 pt-6 sm:px-8"
+              initial={reduce ? false : "hidden"}
+              animate="show"
+              variants={{ show: { transition: { staggerChildren: 0.045, delayChildren: 0.05 } } }}
+            >
+              {siteConfig.nav.map((item, i) => {
+                const active = isActive(pathname, item.href);
+                return (
+                  <motion.div key={item.href} variants={menuItem} className="border-b border-white/[0.07]">
+                    <Link
+                      href={item.href}
+                      onClick={closeMenu}
+                      aria-current={active ? "page" : undefined}
+                      className="group flex items-baseline gap-4 py-4"
+                    >
+                      <span className={cn("mono-figure text-xs", active ? "text-glow" : "text-white/35")}>
+                        {String(i + 1).padStart(2, "0")}
+                      </span>
+                      <span
                         className={cn(
-                          "block rounded-2xl px-4 py-3 text-base font-medium transition-colors hover:bg-accent-soft",
-                          active ? "bg-accent-soft text-accent" : "text-fg"
+                          "font-display text-[1.65rem] font-bold leading-none tracking-tight transition-colors",
+                          active ? "text-white" : "text-white/70 group-hover:text-white"
                         )}
                       >
                         {item.label}
-                      </Link>
-                    </motion.div>
-                  );
-                })}
-                <motion.div variants={menuItem} className="mt-1 flex flex-col gap-0.5 border-t border-border pt-2">
-                  {productCategories.map((cat) => (
-                    <Link
-                      key={cat.slug}
-                      href={`/products/${cat.slug}`}
-                      onClick={closeMenu}
-                      className="rounded-2xl px-4 py-2.5 text-sm text-fg-muted transition-colors hover:bg-accent-soft"
-                    >
-                      {cat.label}
+                      </span>
                     </Link>
-                  ))}
-                </motion.div>
-                <motion.div variants={menuItem}>
-                  <Link href="/contact" onClick={closeMenu} className={cn(ctaClasses, "mt-2 w-full py-3.5")}>
-                    Request a Quote
+                  </motion.div>
+                );
+              })}
+              <motion.div variants={menuItem} className="mt-6 flex flex-wrap gap-2">
+                {productCategories.map((cat) => (
+                  <Link
+                    key={cat.slug}
+                    href={`/products/${cat.slug}`}
+                    onClick={closeMenu}
+                    className="rounded-full border border-white/12 bg-white/5 px-4 py-2 text-sm text-white/75 transition-colors hover:border-glow/50 hover:text-white"
+                  >
+                    {cat.label}
                   </Link>
-                </motion.div>
+                ))}
               </motion.div>
-            </motion.div>
-          )}
-        </AnimatePresence>
-      </div>
+              <motion.div variants={menuItem} className="mt-auto pt-10">
+                <Link
+                  href="/contact"
+                  onClick={closeMenu}
+                  className="flex w-full items-center justify-center gap-2 rounded-full bg-accent-ink py-4 text-base font-semibold text-white shadow-[inset_0_1px_0_rgb(255_255_255/0.2)] active:scale-[0.98]"
+                >
+                  Request a Quote
+                  <ArrowUpRight size={16} weight="bold" />
+                </Link>
+              </motion.div>
+            </motion.nav>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </header>
   );
 }

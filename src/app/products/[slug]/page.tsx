@@ -54,7 +54,7 @@ export default async function ProductCategoryPage({
           ))}
         </Reveal>
         <Reveal delay={0.16} className="mt-8">
-          <Button href={`/contact?category=${category.slug}`} variant="brass">
+          <Button href={`/contact?category=${category.slug}`} variant="primary">
             Request a quote for this category
           </Button>
         </Reveal>

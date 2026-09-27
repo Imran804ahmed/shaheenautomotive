@@ -34,8 +34,8 @@ export function Gear({
     <svg viewBox="0 0 200 200" className={className} aria-hidden="true" focusable="false">
       <defs>
         <linearGradient id={id} x1="0" y1="0" x2="1" y2="1">
-          <stop offset="0" stopColor="#38c27a" stopOpacity="0.55" />
-          <stop offset="1" stopColor="#17703f" stopOpacity="0.08" />
+          <stop offset="0" stopColor="#35d07f" stopOpacity="0.55" />
+          <stop offset="1" stopColor="#049448" stopOpacity="0.08" />
         </linearGradient>
       </defs>
       <path d={d} fill={`url(#${id})`} fillRule="evenodd" />

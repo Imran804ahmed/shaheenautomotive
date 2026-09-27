@@ -22,6 +22,7 @@ export default function CustomersPage() {
   return (
     <>
       <PageHeader
+        image={{ src: "/images/facility/floor/warehouse-bay.jpg", alt: "Warehouse bay with stacked SAPL part bins and a delivery truck" }}
         eyebrow="Customers"
         title="OEM and industry relationships."
         intro="Client logos and named part examples below are drawn directly from SAPL's company profile. Where we show specific component photographs, that program has a verified, documented example; other logos are shown as referenced relationships without a photographed example on file."

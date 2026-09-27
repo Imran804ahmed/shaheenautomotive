@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono, Bricolage_Grotesque } from "next/font/google";
+import { Geist, Geist_Mono, Archivo } from "next/font/google";
 import "./globals.css";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
@@ -11,9 +11,11 @@ const geistSans = Geist({
   display: "swap",
 });
 
-const bricolage = Bricolage_Grotesque({
-  variable: "--font-bricolage",
+// Display face: Archivo with its width axis, set wide for headlines.
+const archivo = Archivo({
+  variable: "--font-archivo",
   subsets: ["latin"],
+  axes: ["wdth"],
   display: "swap",
 });
 
@@ -49,7 +51,7 @@ export const metadata: Metadata = {
     title: `${siteConfig.companyLegalName} | Sheet Metal, Pipe & Rod Component Manufacturer`,
     description:
       "Sheet metal, formed pipe and bent rod components for automotive and home appliance OEMs, manufacturing in Pakistan since 1983.",
-    images: ["/images/facility/hydraulic-press-operator.jpeg"],
+    images: ["/images/facility/floor/press-shop-hall.jpg"],
   },
   twitter: {
     card: "summary_large_image",
@@ -63,7 +65,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} ${bricolage.variable} h-full antialiased`}
+      className={`${geistSans.variable} ${geistMono.variable} ${archivo.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col bg-bg text-fg">
         <a
