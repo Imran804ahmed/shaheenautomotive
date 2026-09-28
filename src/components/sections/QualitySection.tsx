@@ -43,7 +43,7 @@ export function QualitySection({ awards }: { awards: Award[] }) {
           <Reveal delay={0.06} className="shrink-0">
             <Link
               href="/quality"
-              className="group inline-flex items-center gap-2 rounded-full border border-border bg-bg-elevated px-5 py-2.5 text-sm font-semibold text-fg shadow-soft transition-colors duration-300 hover:border-accent hover:text-accent-ink"
+              className="group inline-flex min-h-11 items-center gap-2 rounded-full border border-border bg-bg-elevated px-5 py-2.5 text-sm font-semibold text-fg shadow-soft transition-colors duration-300 hover:border-accent hover:text-accent-ink"
             >
               Quality process
               <ArrowUpRight size={14} weight="bold" className="transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
@@ -144,9 +144,9 @@ export function QualitySection({ awards }: { awards: Award[] }) {
             <p className="tech-label shrink-0 text-fg-muted">Recognised by the OEMs we supply</p>
             <span className="h-px flex-1 bg-border" />
           </div>
-          <ul className="-mx-5 mt-6 flex snap-x snap-mandatory gap-4 overflow-x-auto px-5 pb-4 [scrollbar-width:thin] sm:-mx-8 sm:px-8 lg:mx-0 lg:grid lg:grid-cols-5 lg:overflow-visible lg:px-0 lg:pb-0">
+          <ul className="-mx-5 mt-6 flex snap-x snap-mandatory scroll-px-5 gap-4 overflow-x-auto px-5 pb-4 [scrollbar-width:thin] sm:-mx-8 sm:scroll-px-8 sm:px-8 xl:mx-0 xl:grid xl:grid-cols-5 xl:overflow-visible xl:px-0 xl:pb-0">
             {awards.map((award) => (
-              <li key={award.title + award.year} className="w-[220px] shrink-0 snap-start lg:w-auto">
+              <li key={award.title + award.year} className="w-[min(15rem,78vw)] shrink-0 snap-start xl:w-auto">
                 <article className="group flex h-full items-center gap-4 rounded-2xl border border-border bg-bg-elevated p-3 transition-[box-shadow,border-color,transform] duration-300 hover:-translate-y-0.5 hover:border-accent/30 hover:shadow-lift">
                   <div className="relative h-16 w-14 shrink-0 overflow-hidden rounded-xl bg-bg-inverted">
                     {award.image && (

@@ -86,7 +86,7 @@ export function Header() {
         />
       )}
 
-      <div className="relative mx-auto flex h-full max-w-[90rem] items-center justify-between gap-6 px-5 sm:px-8">
+      <div className="relative mx-auto flex h-full max-w-7xl items-center justify-between gap-6 px-5 sm:px-8">
         <Link
           href="/"
           onClick={closeMenu}
@@ -224,7 +224,7 @@ export function Header() {
           >
             <motion.nav
               aria-label="Mobile"
-              className="flex min-h-full flex-col px-5 pb-10 pt-6 sm:px-8"
+              className="flex min-h-full flex-col px-5 pb-[max(2.5rem,env(safe-area-inset-bottom))] pt-6 sm:px-8"
               initial={reduce ? false : "hidden"}
               animate="show"
               variants={{ show: { transition: { staggerChildren: 0.045, delayChildren: 0.05 } } }}

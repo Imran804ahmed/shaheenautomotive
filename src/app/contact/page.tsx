@@ -40,11 +40,13 @@ export default function ContactPage() {
                 </li>
                 <li className="flex items-center gap-3 text-sm text-fg-muted">
                   <Phone size={18} className="shrink-0 text-steel" />
-                  <span className="min-w-0 wrap-anywhere">{siteConfig.contact.phone}</span>
+                  <a href={`tel:${siteConfig.contact.phone.replace(/[^\d+]/g, "")}`} className="min-w-0 wrap-anywhere py-1 pointer-coarse:py-3 hover:text-fg">
+                    {siteConfig.contact.phone}
+                  </a>
                 </li>
                 <li className="flex items-center gap-3 text-sm text-fg-muted">
                   <EnvelopeSimple size={18} className="shrink-0 text-steel" />
-                  <a href={`mailto:${siteConfig.contact.email}`} className="min-w-0 wrap-anywhere hover:text-fg">
+                  <a href={`mailto:${siteConfig.contact.email}`} className="min-w-0 wrap-anywhere py-1 pointer-coarse:py-3 hover:text-fg">
                     {siteConfig.contact.email}
                   </a>
                 </li>

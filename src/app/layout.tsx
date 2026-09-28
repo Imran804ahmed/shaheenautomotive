@@ -4,6 +4,7 @@ import "./globals.css";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { siteConfig } from "@/content/site";
+import { withBasePath } from "@/lib/base-path";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -42,8 +43,8 @@ export const metadata: Metadata = {
     "sheet metal parts manufacturer",
   ],
   icons: {
-    icon: "/images/brand/sapl-mark.png",
-    apple: "/images/brand/sapl-mark.png",
+    icon: withBasePath("/images/brand/sapl-mark.png"),
+    apple: withBasePath("/images/brand/sapl-mark.png"),
   },
   openGraph: {
     type: "website",
@@ -51,7 +52,7 @@ export const metadata: Metadata = {
     title: `${siteConfig.companyLegalName} | Sheet Metal, Pipe & Rod Component Manufacturer`,
     description:
       "Sheet metal, formed pipe and bent rod components for automotive and home appliance OEMs, manufacturing in Pakistan since 1983.",
-    images: ["/images/facility/floor/press-shop-hall.jpg"],
+    images: [withBasePath("/images/facility/floor/press-shop-hall.jpg")],
   },
   twitter: {
     card: "summary_large_image",

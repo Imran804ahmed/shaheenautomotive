@@ -70,15 +70,15 @@ export default async function ProductCategoryPage({
               Photographed components from our Toyota Indus Motor, Pak Suzuki and Yamaha production programmes, grouped here by manufacturing process.
             </p>
           </Reveal>
-          <div className="mt-8 columns-1 gap-4 sm:columns-2 lg:columns-3 [&>*]:mb-4">
+          <div className="mt-8 grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-3">
             {photos.map((photo) => (
-              <Reveal key={photo.src} className="break-inside-avoid overflow-hidden rounded-sm border border-border bg-bg-elevated shadow-soft">
-                <div className="relative w-full" style={{ aspectRatio: "4 / 3" }}>
+              <Reveal key={photo.src} className="overflow-hidden rounded-sm border border-border bg-bg-elevated shadow-soft">
+                <div className="relative aspect-[4/3] w-full">
                   <Image
                     src={photo.src}
                     alt={photo.alt}
                     fill
-                    sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
+                    sizes="(min-width: 1280px) 400px, (min-width: 1024px) 33vw, 50vw"
                     className="object-cover"
                   />
                 </div>

@@ -10,7 +10,7 @@ import { cn } from "@/lib/cn";
 
 function PlaceholderBadge() {
   return (
-    <span className="absolute left-3 top-3 z-10 inline-flex items-center rounded-full border border-dashed border-glow/50 bg-bg-inverted/70 px-2.5 py-1 text-[9px] font-semibold uppercase tracking-wider text-glow backdrop-blur-sm">
+    <span className="absolute left-3 top-3 z-10 inline-flex items-center rounded-full border border-dashed border-glow/50 bg-bg-inverted/70 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wider text-glow backdrop-blur-sm">
       Placeholder
     </span>
   );
@@ -113,7 +113,7 @@ function GridCard({ member }: { member: LeadershipMember }) {
           {member.isPlaceholder && <PlaceholderBadge />}
 
           <div className="absolute inset-x-0 bottom-0 p-3.5 transition-transform duration-300 ease-[var(--ease-out-expo)] group-hover:-translate-y-0.5 sm:p-4">
-            <h4 className="truncate text-sm font-semibold text-fg-inverted">{member.name}</h4>
+            <h4 className="line-clamp-2 text-sm font-semibold leading-snug text-fg-inverted">{member.name}</h4>
             <p className="mt-0.5 truncate text-[10px] font-semibold uppercase tracking-[0.12em] text-glow">
               {member.title}
             </p>

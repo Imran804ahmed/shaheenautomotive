@@ -136,7 +136,7 @@ export function Hero() {
       </div>
 
       {/* ---- copy ---- */}
-      <div className="relative mx-auto flex w-full max-w-[90rem] flex-1 flex-col justify-center px-5 pb-10 pt-[calc(var(--header-h)+2.5rem)] sm:px-8 lg:pb-12">
+      <div className="relative mx-auto flex w-full max-w-7xl flex-1 flex-col justify-center px-5 pb-10 pt-[calc(var(--header-h)+2.5rem)] sm:px-8 lg:pb-12">
         <div data-hero-copy className="max-w-4xl">
           <motion.p {...enter(0)} className="tech-label flex items-center gap-3 text-glow">
             <span className="h-px w-10 bg-gradient-to-r from-glow to-transparent" />
@@ -181,19 +181,19 @@ export function Hero() {
       </div>
 
       {/* ---- glass stat rail ---- */}
-      <motion.div {...enter(0.7)} className="relative mx-auto w-full max-w-[90rem] px-5 pb-6 sm:px-8 sm:pb-8">
+      <motion.div {...enter(0.7)} className="relative mx-auto w-full max-w-7xl px-5 pb-6 sm:px-8 sm:pb-8">
         <div className="glass-dark grid grid-cols-2 overflow-hidden rounded-3xl lg:grid-cols-[repeat(4,1fr)_auto]">
           {heroStats.map((stat, i) => (
             <div
               key={stat.label}
               className={
-                "px-5 py-5 sm:px-7 sm:py-6 " +
+                "min-w-0 px-4 py-5 sm:px-7 sm:py-6 " +
                 (i % 2 === 1 ? "border-l border-white/[0.07] " : "") +
                 (i >= 2 ? "border-t border-white/[0.07] lg:border-t-0 " : "") +
                 (i === 2 ? "lg:border-l " : "")
               }
             >
-              <p className="stat-figure-light text-3xl sm:text-4xl">
+              <p className="stat-figure-light whitespace-nowrap text-[clamp(1.25rem,7vw,1.875rem)] sm:text-4xl lg:text-3xl xl:text-4xl">
                 <StatCounter value={stat.value} />
               </p>
               <p className="tech-label mt-2.5 text-fg-inverted-muted">{stat.label}</p>

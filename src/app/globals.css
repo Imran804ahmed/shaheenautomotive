@@ -272,8 +272,8 @@ h2 {
   .logo-duo {
     display: block;
     aspect-ratio: 1000 / 231;
-    -webkit-mask: url("/images/brand/sapl-logo-full.png") center / contain no-repeat;
-    mask: url("/images/brand/sapl-logo-full.png") center / contain no-repeat;
+    -webkit-mask: url("../../public/images/brand/sapl-logo-full.png") center / contain no-repeat;
+    mask: url("../../public/images/brand/sapl-logo-full.png") center / contain no-repeat;
     background:
       linear-gradient(90deg, var(--color-accent) 0 24.8%, transparent 24.8%),
       linear-gradient(180deg, #ffffff 0%, #e4e8eb 45%, #aab3ba 55%, #f1f3f5 100%);

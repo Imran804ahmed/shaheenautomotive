@@ -16,7 +16,7 @@ import { Container } from "@/components/ui/Container";
 import { RevealGroup, RevealItem } from "@/components/ui/Reveal";
 
 const linkClasses =
-  "group inline-flex items-center gap-1.5 py-1 text-sm text-fg-inverted-muted transition-colors duration-200 hover:text-white";
+  "group inline-flex items-center gap-1.5 py-1 pointer-coarse:min-h-11 text-sm text-fg-inverted-muted transition-colors duration-200 hover:text-white";
 const headingClasses = "tech-label text-white/45";
 
 const columns = [
@@ -102,7 +102,7 @@ export function Footer() {
                       target="_blank"
                       rel="noopener noreferrer"
                       aria-label={label}
-                      className="flex h-10 w-10 items-center justify-center rounded-full border border-white/12 bg-white/[0.04] text-white/70 transition-[color,border-color,background-color,transform] duration-200 hover:-translate-y-0.5 hover:border-accent hover:bg-accent-ink hover:text-white"
+                      className="flex h-10 w-10 pointer-coarse:h-11 pointer-coarse:w-11 items-center justify-center rounded-full border border-white/12 bg-white/[0.04] text-white/70 transition-[color,border-color,background-color,transform] duration-200 hover:-translate-y-0.5 hover:border-accent hover:bg-accent-ink hover:text-white"
                     >
                       <Icon size={18} weight="fill" />
                     </a>
@@ -115,7 +115,7 @@ export function Footer() {
           {columns.map((col) => (
             <RevealItem key={col.heading}>
               <h3 className={headingClasses}>{col.heading}</h3>
-              <ul className="mt-5 space-y-1.5">
+              <ul className="mt-5 space-y-1.5 pointer-coarse:space-y-0">
                 {col.links.map((l) => (
                   <li key={l.href}>
                     <Link href={l.href} className={linkClasses}>
@@ -142,13 +142,13 @@ export function Footer() {
               </li>
               <li className="flex items-center gap-3 text-sm text-fg-inverted-muted">
                 <Phone size={18} weight="duotone" className="shrink-0 text-glow" />
-                <a href={`tel:${contact.phone.replace(/[^\d+]/g, "")}`} className="min-w-0 wrap-anywhere transition-colors hover:text-white">
+                <a href={`tel:${contact.phone.replace(/[^\d+]/g, "")}`} className="min-w-0 wrap-anywhere py-1 pointer-coarse:py-3 transition-colors hover:text-white">
                   {contact.phone}
                 </a>
               </li>
               <li className="flex items-center gap-3 text-sm text-fg-inverted-muted">
                 <EnvelopeSimple size={18} weight="duotone" className="shrink-0 text-glow" />
-                <a href={`mailto:${contact.email}`} className="min-w-0 wrap-anywhere transition-colors hover:text-white">
+                <a href={`mailto:${contact.email}`} className="min-w-0 wrap-anywhere py-1 pointer-coarse:py-3 transition-colors hover:text-white">
                   {contact.email}
                 </a>
               </li>

@@ -11,8 +11,8 @@ export const siteConfig = {
   companyLegalName: "Shaheen Automotive (Pvt.) Ltd.",
   companyShortName: "SAPL",
   siteName: "Shaheen Automotive",
-  domain: "PLACEHOLDER_DOMAIN.com", // TODO: replace with the live production domain
-  baseUrl: "https://PLACEHOLDER_DOMAIN.com", // TODO: used for metadataBase, sitemap, OG tags
+  domain: "shaheenautomotive.com.pk",
+  baseUrl: "https://shaheenautomotive.com.pk", // used for metadataBase, sitemap, OG tags (BASE_PATH is added separately)
 
   // Optional looping hero background (HLS .m3u8). Leave src empty to show the static hero.
   heroVideo: {

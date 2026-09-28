@@ -65,7 +65,7 @@ export function ProductsShowcase({ categories }: { categories: ProductCategory[]
           <Reveal delay={0.1} className="shrink-0">
             <Link
               href="/products"
-              className="group inline-flex items-center gap-2 rounded-full border border-border bg-bg-elevated px-5 py-2.5 text-sm font-semibold text-fg shadow-soft transition-colors duration-300 hover:border-accent hover:text-accent-ink"
+              className="group inline-flex min-h-11 items-center gap-2 rounded-full border border-border bg-bg-elevated px-5 py-2.5 text-sm font-semibold text-fg shadow-soft transition-colors duration-300 hover:border-accent hover:text-accent-ink"
             >
               All product families
               <ArrowUpRight size={14} weight="bold" className="transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />

@@ -105,7 +105,7 @@ export function GalleryGrid({
                   aria-selected={active}
                   onClick={() => setFilter(f.key)}
                   className={cn(
-                    "relative flex min-h-10 shrink-0 items-center gap-2 whitespace-nowrap rounded-full px-4 py-2 text-sm font-medium transition-colors duration-200",
+                    "relative flex min-h-10 pointer-coarse:min-h-11 shrink-0 items-center gap-2 whitespace-nowrap rounded-full px-4 py-2 text-sm font-medium transition-colors duration-200",
                     active ? "text-accent-fg" : dark ? "text-fg-inverted-muted hover:text-fg-inverted" : "text-fg-muted hover:text-fg"
                   )}
                 >
@@ -174,7 +174,7 @@ export function GalleryGrid({
                 <div className={cn("absolute inset-x-0 bottom-0 p-3 sm:p-4", feature && "sm:p-5 lg:p-6")}>
                   <span
                     className={cn(
-                      "inline-block max-w-full truncate rounded-full bg-accent-ink/90 px-2 py-0.5 align-bottom text-[9px] font-semibold uppercase tracking-[0.12em] text-accent-fg sm:text-[10px] sm:tracking-[0.14em]",
+                      "inline-block max-w-full truncate rounded-full bg-accent-ink/90 px-2 py-0.5 align-bottom text-[10px] font-semibold uppercase tracking-[0.12em] text-accent-fg sm:text-[10px] sm:tracking-[0.14em]",
                       feature && "lg:text-[11px]"
                     )}
                   >
@@ -237,7 +237,7 @@ export function GalleryGrid({
                   onClick={close}
                   aria-label="Close"
                   autoFocus
-                  className="absolute right-3 top-3 z-10 flex h-10 w-10 items-center justify-center rounded-full bg-white/90 text-fg shadow-soft transition-colors hover:bg-white"
+                  className="absolute right-3 top-3 z-10 flex h-11 w-11 items-center justify-center rounded-full bg-white/90 text-fg shadow-soft transition-colors hover:bg-white"
                 >
                   <X size={18} weight="bold" />
                 </button>
