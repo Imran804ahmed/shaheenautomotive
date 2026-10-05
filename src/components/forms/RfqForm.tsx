@@ -228,7 +228,7 @@ function RfqFormInner() {
         initial={reduce ? false : { opacity: 0, scale: 0.96, y: 10 }}
         animate={{ opacity: 1, scale: 1, y: 0 }}
         transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
-        className="rounded-sm border border-accent/30 bg-accent-soft p-8 text-center"
+        className="rounded-sm border border-accent/30 bg-accent-soft p-6 text-center sm:p-8"
       >
         <DrawnCheck />
         <h3 className="mt-4 text-lg font-semibold text-fg">
@@ -242,7 +242,7 @@ function RfqFormInner() {
         <button
           type="button"
           onClick={() => setStatus("idle")}
-          className="mt-5 text-sm font-medium text-accent underline underline-offset-4"
+          className="mt-3 inline-flex min-h-11 items-center text-sm font-medium text-accent underline underline-offset-4"
         >
           Submit another request
         </button>

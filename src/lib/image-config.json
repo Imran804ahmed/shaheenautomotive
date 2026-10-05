@@ -1,0 +1,16 @@
+{
+  "deviceSizes": [640, 828, 1200, 1920],
+  "imageSizes": [128, 256, 384],
+  "avif": [
+    "/images/facility/exterior/shaheen-plant-exterior.webp",
+    "/images/facility/storage/parts-store.webp",
+    "/images/quality/hero/panel-gauging-green.webp",
+    "/images/products/hero/bent-rods-bin.webp",
+    "/images/facility/floor/press-operators-hard-hats.jpg",
+    "/images/facility/floor/press-line-operators.jpg",
+    "/images/facility/floor/press-shop-hall.jpg",
+    "/images/facility/floor/pipe-bending-cell.jpg",
+    "/images/facility/floor/enhanced/jack-assembly-hero.jpg",
+    "/images/facility/floor/enhanced/press-shop-hall.jpg"
+  ]
+}

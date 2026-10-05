@@ -72,13 +72,8 @@ export function ProcessTimeline({ steps }: { steps: ProcessStep[] }) {
   return (
     <section
       ref={root}
-      className="relative overflow-clip rounded-[2.5rem] bg-bg-elevated py-20 shadow-soft sm:rounded-[3.5rem] sm:py-28"
+      className="relative overflow-clip bg-bg-elevated py-section shadow-soft"
     >
-      {/* faint engineering grid, fading out toward the bottom */}
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute inset-0 opacity-60 [background-image:linear-gradient(var(--color-border)_1px,transparent_1px),linear-gradient(90deg,var(--color-border)_1px,transparent_1px)] [background-size:48px_48px] [mask-image:radial-gradient(ellipse_at_top_left,black,transparent_65%)]"
-      />
       <div
         aria-hidden="true"
         className="pointer-events-none absolute -right-40 -top-40 h-[28rem] w-[28rem] rounded-full bg-accent/10 blur-3xl"

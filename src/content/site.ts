@@ -20,20 +20,22 @@ export const siteConfig = {
     poster: "",
   },
 
-  tagline: "Sheet metal, pipe and rod components for automotive and home appliance OEMs.",
+  tagline: "Jacks, Sheet Metal, Rods and Pipes for automotive and home appliance OEMs.",
 
   // ---- Contact details -------------------------------------------------
-  // None of the following were present in the source profile. They are
-  // obvious, clearly-labelled placeholders — replace with real details.
   contact: {
-    email: "PLACEHOLDER_EMAIL@shaheenautomotive.com.pk", // TODO
-    phone: "PLACEHOLDER_PHONE", // TODO e.g. +92 42 XXXX XXXX
+    email: "info@shaheenautomotive.com.pk",
+    phone: "0335 7275111",
+    phoneHref: "tel:+923357275111",
     whatsapp: "", // TODO optional
-    addressLine1: "PLACEHOLDER_ADDRESS_LINE_1", // TODO e.g. plot / street
-    addressLine2: "PLACEHOLDER_ADDRESS_LINE_2", // TODO e.g. industrial area
-    city: "PLACEHOLDER_CITY", // TODO
+    addressLine1: "DSU-36A Pakistan Steel Industrial Estate",
+    addressLine2: "Bin Qasim",
+    city: "Karachi",
     country: "Pakistan",
-    mapEmbedUrl: "", // TODO optional Google Maps embed src
+    mapEmbedUrl:
+      "https://www.google.com/maps?q=DSU-36A+Pakistan+Steel+Industrial+Estate,+Bin+Qasim,+Karachi,+Pakistan&output=embed",
+    mapLinkUrl:
+      "https://www.google.com/maps/search/?api=1&query=DSU-36A+Pakistan+Steel+Industrial+Estate,+Bin+Qasim,+Karachi,+Pakistan",
   },
 
   social: {
@@ -59,22 +61,25 @@ export const siteConfig = {
     { label: "Capabilities", href: "/capabilities" },
     { label: "Products", href: "/products" },
     { label: "Quality", href: "/quality" },
-    { label: "Customers", href: "/customers" },
     { label: "Gallery", href: "/gallery" },
   ],
 
   productCategories: [
     {
-      slug: "sheet-metal-parts",
-      label: "Sheet Metal Parts",
+      slug: "jack-assemblies",
+      label: "Jacks",
     },
     {
-      slug: "formed-pipe-parts",
-      label: "Formed Pipe Parts",
+      slug: "sheet-metal-parts",
+      label: "Sheet Metal",
     },
     {
       slug: "bent-rod-parts",
-      label: "Bent Rod Parts",
+      label: "Rods",
+    },
+    {
+      slug: "formed-pipe-parts",
+      label: "Pipes",
     },
   ],
 } as const;

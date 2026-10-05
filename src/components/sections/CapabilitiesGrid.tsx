@@ -1,4 +1,6 @@
 import Link from "next/link";
+import Image from "next/image";
+import { blurProps } from "@/lib/image-meta";
 import {
   Wrench,
   Cube,
@@ -11,10 +13,8 @@ import {
 import { Container } from "@/components/ui/Container";
 import { Reveal } from "@/components/ui/Reveal";
 import { SectionHeading } from "@/components/ui/SectionHeading";
-import { Gear } from "@/components/ui/Gear";
 import { SpotTrack } from "@/components/ui/SpotTrack";
 import type { Capability } from "@/content/company";
-import { cn } from "@/lib/cn";
 
 const icons: Record<string, React.ComponentType<{ size?: number; weight?: "regular" | "bold" }>> = {
   "design-tooling": Wrench,
@@ -25,12 +25,44 @@ const icons: Record<string, React.ComponentType<{ size?: number; weight?: "regul
   inspection: Crosshair,
 };
 
+const anchored = new Set(["design-tooling", "press-shop", "pipe-shop", "welding", "inspection"]);
+
+// a shop-floor photo for each capability card
+const photos: Record<string, { src: string; alt: string; position?: string }> = {
+  "press-shop": {
+    src: "/images/facility/floor/press-line-safety-gear.jpg",
+    alt: "Operators in hard hats, safety glasses and high-visibility vests running a line of mechanical power presses",
+  },
+  inspection: {
+    src: "/images/facility/floor/checking-fixture.jpg",
+    alt: "Inspector clamping a stamped sheet metal panel into a checking fixture",
+  },
+  "pipe-shop": {
+    src: "/images/facility/floor/pipe-bender-loading.jpg",
+    alt: "Operator placing a steel tube into a hydraulic pipe bending machine",
+  },
+  welding: {
+    src: "/images/facility/floor/mig-welding-pipe-assembly.jpg",
+    alt: "Welder in a hi-vis vest and welding helmet MIG welding a pipe assembly on a bench fixture, sparks flying",
+    position: "50% 31%",
+  },
+  "design-tooling": {
+    src: "/images/facility/floor/toggle-clamp.jpg",
+    alt: "Close-up of a red-handled toggle clamp on a checking fixture",
+  },
+  "surface-finishing": {
+    src: "/images/facility/floor/surface-activation-tank-front-v2.jpg",
+    alt: "Motor-driven perforated barrels in a Shaheen surface activation tank, with racks of pipe parts in the foreground",
+    position: "50% 32%",
+  },
+};
+
 export function CapabilitiesGrid({ capabilities }: { capabilities: Capability[] }) {
   const bySlug = Object.fromEntries(capabilities.map((c) => [c.slug, c]));
   const order = ["press-shop", "inspection", "pipe-shop", "welding", "design-tooling", "surface-finishing"];
 
   return (
-    <section className="surface-paper bg-bg pb-20 pt-0 sm:pb-28">
+    <section className="surface-paper bg-bg pb-section pt-0">
       <Container>
         <div className="flex flex-col items-start justify-between gap-6 sm:flex-row sm:items-end">
           <SectionHeading
@@ -40,7 +72,7 @@ export function CapabilitiesGrid({ capabilities }: { capabilities: Capability[] 
           <Reveal delay={0.06} className="shrink-0">
             <Link
               href="/capabilities"
-              className="group inline-flex items-center gap-1.5 whitespace-nowrap py-2.5 text-sm font-semibold text-accent transition-colors hover:text-accent-strong"
+              className="group inline-flex min-h-11 items-center gap-1.5 whitespace-nowrap text-sm font-semibold text-accent transition-colors hover:text-accent-strong"
             >
               View all capabilities
               <ArrowUpRight
@@ -52,58 +84,55 @@ export function CapabilitiesGrid({ capabilities }: { capabilities: Capability[] 
           </Reveal>
         </div>
 
-        <div className="mt-10 grid grid-cols-1 gap-4 sm:mt-12 sm:grid-cols-2 sm:gap-5 lg:grid-cols-3">
+        <div className="mt-10 grid grid-cols-1 gap-5 sm:mt-12 sm:grid-cols-2 lg:grid-cols-3">
           {order.map((slug, i) => {
             const cap = bySlug[slug];
             const Icon = icons[slug];
-            const isWide = slug === "press-shop";
-            const isFull = slug === "surface-finishing";
-            const isDark = slug === "press-shop";
-            const isSoft = slug === "inspection";
+            const photo = photos[slug];
+            // only these capabilities have their own section on /capabilities
+            const href = anchored.has(slug) ? `/capabilities#${slug}` : "/capabilities";
             return (
-              <Reveal
-                key={slug}
-                delay={i * 0.05}
-                from={isWide || isFull ? "scale" : "up"}
-                className={cn(isWide && "sm:col-span-2", isFull && "sm:col-span-2 lg:col-span-3")}
-              >
-                <SpotTrack
-                  className={cn(
-                    "card-lift relative flex h-full flex-col justify-between overflow-hidden rounded-[1.75rem] border p-6 sm:p-8",
-                    isFull ? "md:flex-row md:items-center md:gap-8" : "min-h-56 sm:min-h-60",
-                    isDark
-                      ? "surface-ink border-transparent text-fg-inverted shadow-deep"
-                      : isSoft
-                      ? "border-accent/15 bg-accent-soft text-fg"
-                      : "border-border bg-bg-elevated text-fg shadow-soft"
-                  )}
-                >
-                  {isDark && (
-                    <Gear className="pointer-events-none absolute -bottom-24 -right-16 h-72 w-72 opacity-70" />
-                  )}
-                  <div className={cn("relative", isFull && "flex shrink-0 items-center gap-4")}>
-                    <span
-                      className={cn(
-                        "inline-flex h-12 w-12 items-center justify-center rounded-2xl",
-                        isDark ? "bg-white/10 text-brass" : "bg-accent/10 text-accent"
-                      )}
-                    >
-                      <Icon size={24} weight="regular" />
-                    </span>
-                    <h3 className={cn("text-xl font-semibold", !isFull && "mt-6")}>{cap.title}</h3>
-                  </div>
-                  <div className="relative">
-                    <p
-                      className={cn(
-                        "text-sm leading-relaxed",
-                        isDark ? "max-w-md text-fg-inverted-muted" : "text-fg-muted",
-                        isFull ? "mt-4 md:mt-0" : "mt-3"
-                      )}
-                    >
-                      {cap.body}
-                    </p>
-                    {cap.note && <p className="mt-2 text-xs italic text-fg-muted">{cap.note}</p>}
-                  </div>
+              <Reveal key={slug} delay={i * 0.05} className="h-full">
+                <SpotTrack className="card-lift group relative h-full overflow-hidden rounded-[1.75rem] border border-border bg-bg-elevated text-fg shadow-soft">
+                  <Link href={href} className="flex h-full flex-col rounded-[1.75rem] p-2 outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2">
+                    <div className="relative aspect-[16/9] overflow-hidden rounded-[1.25rem] bg-ink-2">
+                      <Image
+                        src={photo.src}
+                        alt={photo.alt}
+                        fill
+                        sizes="(min-width: 1024px) 400px, (min-width: 640px) 50vw, 100vw"
+                        {...blurProps(photo.src)}
+                        style={photo.position ? { objectPosition: photo.position } : undefined}
+                        className="object-cover grayscale-[35%] transition-[transform,filter] duration-700 ease-out group-hover:scale-[1.06] group-hover:grayscale-0 motion-reduce:transition-none"
+                      />
+                      <div
+                        aria-hidden="true"
+                        className="absolute inset-0 bg-gradient-to-t from-bg-inverted/75 via-bg-inverted/10 to-transparent"
+                      />
+
+                      <span className="mono-figure absolute left-3 top-3 rounded-full border border-white/20 bg-black/35 px-2.5 py-1 text-[11px] text-white backdrop-blur-md">
+                        {String(i + 1).padStart(2, "0")}
+                      </span>
+                      <span className="absolute right-3 top-3 flex h-9 w-9 items-center justify-center rounded-full bg-white text-accent-strong opacity-0 shadow-soft transition-[opacity,transform] duration-300 group-hover:rotate-45 group-hover:opacity-100 group-focus-visible:opacity-100 motion-reduce:transition-none">
+                        <ArrowUpRight size={15} weight="bold" />
+                      </span>
+
+                      <span className="absolute bottom-3 left-3 flex h-10 w-10 items-center justify-center rounded-xl border border-white/20 bg-black/35 text-white backdrop-blur-md transition-colors duration-300 group-hover:border-transparent group-hover:bg-accent">
+                        <Icon size={20} weight="regular" />
+                      </span>
+                    </div>
+
+                    <div className="flex flex-1 flex-col px-3 pb-3 pt-4">
+                      <h3 className="text-lg font-semibold leading-snug transition-colors duration-200 group-hover:text-accent-strong">
+                        {cap.title}
+                      </h3>
+                      <p className="mt-1.5 text-sm leading-relaxed text-fg-muted">{cap.summary}</p>
+                      <span className="mt-auto flex items-center gap-2 pt-4 text-xs font-semibold uppercase tracking-[0.14em] text-accent">
+                        <span className="h-px w-5 bg-accent transition-[width] duration-300 group-hover:w-9 motion-reduce:transition-none" />
+                        Explore
+                      </span>
+                    </div>
+                  </Link>
                   <span className="spot-glow" aria-hidden="true" />
                 </SpotTrack>
               </Reveal>

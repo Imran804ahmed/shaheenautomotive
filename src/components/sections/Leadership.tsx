@@ -3,162 +3,193 @@ import { Quotes, UserCircle } from "@phosphor-icons/react/dist/ssr";
 import { Container } from "@/components/ui/Container";
 import { Reveal, RevealGroup, RevealItem } from "@/components/ui/Reveal";
 import { SectionHeading } from "@/components/ui/SectionHeading";
-import { Tilt } from "@/components/ui/Tilt";
-import { Gear } from "@/components/ui/Gear";
 import type { LeadershipMember } from "@/content/company";
 import { cn } from "@/lib/cn";
+import { blurProps } from "@/lib/image-meta";
 
 function PlaceholderBadge() {
   return (
-    <span className="absolute left-3 top-3 z-10 inline-flex items-center rounded-full border border-dashed border-brass/50 bg-bg-inverted/70 px-2.5 py-1 text-[9px] font-semibold uppercase tracking-wider text-brass backdrop-blur-sm">
+    <span className="absolute left-3 top-3 z-10 inline-flex items-center rounded-full border border-dashed border-brass/50 bg-black/60 px-2.5 py-1 text-[9px] font-semibold uppercase tracking-wider text-brass backdrop-blur-sm">
       Placeholder
     </span>
   );
 }
 
-/** The lead card: editorial split layout, large portrait, full bio, optional quote, brass "featured" ring and 3D tilt. */
-function FeaturedCard({ member }: { member: LeadershipMember }) {
+/** Portrait in an inset frame. The studio portraits sit on charcoal, so the frame matches it while loading. */
+function Portrait({
+  member,
+  sizes,
+  className,
+  iconSize,
+}: {
+  member: LeadershipMember;
+  sizes: string;
+  className?: string;
+  iconSize: number;
+}) {
   return (
-    <Reveal from="scale">
-      <div className="group relative mx-auto max-w-4xl">
-        {/* soft brass halo behind the card, blooms in on hover — same device as the CTA banner glow */}
-        <div
-          aria-hidden="true"
-          className="pointer-events-none absolute -inset-4 -z-10 rounded-[2.5rem] bg-[radial-gradient(60%_60%_at_30%_20%,rgb(227_166_58/0.22),transparent_70%)] opacity-0 blur-xl transition-opacity duration-700 group-hover:opacity-100"
+    <div className={cn("relative overflow-hidden bg-[#2b2d2f]", className)}>
+      {member.photo ? (
+        <Image
+          src={member.photo}
+          alt={member.photoAlt}
+          fill
+          sizes={sizes}
+          {...blurProps(member.photo)}
+          className="object-cover object-[center_18%] transition-transform duration-700 ease-[var(--ease-out-expo)] group-hover:scale-[1.04] motion-reduce:transition-none"
+        />
+      ) : (
+        <div className="flex h-full w-full items-center justify-center bg-[#e9ebed]">
+          <UserCircle size={iconSize} weight="thin" className="text-steel" />
+        </div>
+      )}
+      <div className="pointer-events-none absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-black/35 to-transparent" />
+      {member.isPlaceholder && <PlaceholderBadge />}
+    </div>
+  );
+}
+
+/** Green rule along the card's bottom edge that draws in on hover. */
+function HoverRule() {
+  return (
+    <span
+      aria-hidden="true"
+      className="absolute inset-x-0 bottom-0 h-[3px] origin-left scale-x-0 bg-accent transition-transform duration-500 ease-[var(--ease-out-expo)] group-hover:scale-x-100 motion-reduce:transition-none"
+    />
+  );
+}
+
+/** Lead card (two sit side by side): framed portrait over name, title, bio and optional quote. */
+function FeaturedCard({ member, delay = 0 }: { member: LeadershipMember; delay?: number }) {
+  return (
+    <Reveal delay={delay} className="h-full">
+      <article className="card-lift group relative flex h-full flex-col overflow-hidden rounded-[1.75rem] border border-border bg-white p-2 shadow-soft">
+        <Portrait
+          member={member}
+          sizes="(min-width: 768px) 420px, (min-width: 420px) 384px, 95vw"
+          iconSize={48}
+          className="aspect-[3/4] rounded-[1.35rem]"
         />
 
-        <Tilt max={4}>
-          <div className="card-lift relative flex flex-col overflow-hidden rounded-[2rem] border border-brass/30 bg-white/[0.05] shadow-deep ring-1 ring-brass/20 md:min-h-[26rem] md:flex-row">
-            <Gear className="pointer-events-none absolute -right-20 -top-20 h-64 w-64 opacity-[0.08] sm:h-80 sm:w-80" />
-
-            <div className="relative aspect-[4/5] w-full shrink-0 overflow-hidden sm:aspect-[4/3] md:aspect-auto md:w-[42%]">
-              {member.photo ? (
-                <Image
-                  src={member.photo}
-                  alt={member.photoAlt}
-                  fill
-                  sizes="(min-width: 768px) 40vw, 90vw"
-                  className="object-cover object-[center_20%] transition-transform duration-700 ease-[var(--ease-out-expo)] group-hover:scale-105"
-                />
-              ) : (
-                <div className="flex h-full w-full flex-col items-center justify-center gap-3 bg-[radial-gradient(60%_60%_at_50%_20%,rgb(227_166_58/0.14),transparent_70%)] px-6 text-center">
-                  <UserCircle size={44} weight="thin" className="text-fg-inverted-muted" />
-                  <p className="text-xs leading-relaxed text-fg-inverted-muted">
-                    Photo placeholder — add the {member.title.toLowerCase()}&rsquo;s portrait
-                  </p>
-                </div>
-              )}
-              <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-bg-inverted/60 via-transparent to-transparent md:hidden" />
-              <div className="pointer-events-none absolute inset-0 hidden bg-gradient-to-r from-transparent via-transparent to-bg-inverted/50 md:block" />
-              {member.isPlaceholder && <PlaceholderBadge />}
-              <span className="spot-glow" aria-hidden="true" />
-            </div>
-
-            <div className="relative flex flex-1 flex-col justify-center p-6 sm:p-10 lg:p-12">
-              <Quotes
-                weight="fill"
-                className="pointer-events-none absolute -top-2 right-6 h-28 w-28 text-brass/[0.07] sm:h-36 sm:w-36"
-                aria-hidden="true"
-              />
-              <p className="relative inline-flex w-fit items-center gap-2.5 text-xs font-semibold uppercase tracking-[0.18em] text-brass">
-                <span className="h-px w-8 bg-brass" />
-                Leadership
-              </p>
-              <h3 className="relative mt-4 text-2xl font-semibold tracking-tight text-fg-inverted sm:text-3xl lg:text-4xl">
+        <div className="flex flex-1 flex-col px-4 pb-6 pt-6 sm:px-6 sm:pb-8">
+          <div className="flex flex-wrap items-start justify-between gap-x-4 gap-y-3">
+            <div className="min-w-0">
+              <h3 className="font-display text-2xl font-semibold tracking-tight text-fg sm:text-[1.75rem]">
                 {member.name}
               </h3>
-              <p className="relative mt-1.5 text-xs font-semibold uppercase tracking-[0.16em] text-brass">
+              <p className="mt-2 text-xs font-semibold uppercase tracking-[0.16em] text-accent">
                 {member.title}
               </p>
-              <p className="relative mt-5 max-w-md text-base leading-relaxed text-fg-inverted-muted">
-                {member.bio}
-              </p>
-
-              {member.quote && (
-                <div className="relative mt-6 flex gap-2.5 border-l-2 border-brass/40 pl-4">
-                  <Quotes size={16} weight="fill" className="mt-0.5 shrink-0 text-brass/70" />
-                  <p className="max-w-md text-sm italic leading-relaxed text-fg-inverted-muted">{member.quote}</p>
-                </div>
-              )}
             </div>
+            <span className="mt-1 shrink-0 rounded-full border border-accent/20 bg-accent-soft px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.14em] text-accent-strong">
+              Leadership
+            </span>
           </div>
-        </Tilt>
+
+          <span aria-hidden="true" className="mt-5 h-px w-full bg-border" />
+
+          <p className="mt-5 text-[15px] leading-relaxed text-fg-muted">{member.bio}</p>
+
+          {member.quote && (
+            <div className="mt-6 flex gap-2.5 border-l-2 border-accent pl-4">
+              <Quotes size={16} weight="fill" className="mt-0.5 shrink-0 text-accent/70" />
+              <p className="text-sm italic leading-relaxed text-fg-muted">{member.quote}</p>
+            </div>
+          )}
+        </div>
+
+        <HoverRule />
+      </article>
+    </Reveal>
+  );
+}
+
+/** Tile used for the board and the management team: framed portrait with name and title beneath. */
+function GridCard({ member }: { member: LeadershipMember }) {
+  return (
+    <RevealItem className="h-full">
+      <article className="card-lift group relative flex h-full flex-col overflow-hidden rounded-[1.25rem] border border-border bg-white p-1.5 shadow-soft">
+        <Portrait
+          member={member}
+          sizes="(min-width: 1024px) 220px, (min-width: 640px) 30vw, 45vw"
+          iconSize={30}
+          className="aspect-[4/5] rounded-[0.9rem]"
+        />
+        <div className="px-2 pb-3.5 pt-3.5 sm:px-2.5">
+          <h4 className="text-sm font-semibold leading-snug text-balance text-fg sm:text-[15px]">{member.name}</h4>
+          <p className="mt-1 flex items-start gap-1.5 text-[10px] font-semibold uppercase leading-snug tracking-[0.14em] text-accent">
+            <span aria-hidden="true" className="mt-[0.45em] h-1 w-1 shrink-0 rounded-full bg-accent" />
+            {member.title}
+          </p>
+        </div>
+        <HoverRule />
+      </article>
+    </RevealItem>
+  );
+}
+
+/** Sub-heading for the board / management grids: label, count and a hairline running to the edge. */
+function GroupHeading({ title, count }: { title: string; count: number }) {
+  return (
+    <Reveal className="mx-auto mt-16 max-w-6xl sm:mt-20">
+      <div className="flex items-center gap-4">
+        <h3 className="shrink-0 font-display text-xl font-semibold tracking-tight text-fg sm:text-2xl">
+          {title}
+        </h3>
+        <span aria-hidden="true" className="h-px flex-1 bg-border" />
+        <span className="mono-figure shrink-0 text-xs font-semibold text-accent">
+          {String(count).padStart(2, "0")}
+        </span>
       </div>
     </Reveal>
   );
 }
 
-/** Normal-weight tile used for every director after the featured one: photo with name/title caption overlaid on a scrim. */
-function GridCard({ member }: { member: LeadershipMember }) {
-  return (
-    <RevealItem>
-      <div className="group h-full">
-        <div className="card-lift relative aspect-[4/5] w-full overflow-hidden rounded-2xl border border-border-inverted bg-white/[0.03]">
-          {member.photo ? (
-            <Image
-              src={member.photo}
-              alt={member.photoAlt}
-              fill
-              sizes="(min-width: 1024px) 20vw, (min-width: 640px) 30vw, 45vw"
-              className="object-cover transition-transform duration-500 ease-[var(--ease-out-expo)] group-hover:scale-110"
-            />
-          ) : (
-            <div className="flex h-full w-full flex-col items-center justify-center gap-2 bg-[radial-gradient(60%_60%_at_50%_20%,rgb(227_166_58/0.12),transparent_70%)] px-3 text-center">
-              <UserCircle size={30} weight="thin" className="text-fg-inverted-muted" />
-            </div>
-          )}
-
-          <div className="pointer-events-none absolute inset-x-0 bottom-0 h-2/3 bg-gradient-to-t from-bg-inverted via-bg-inverted/55 to-transparent transition-opacity duration-300 group-hover:opacity-90" />
-
-          {member.isPlaceholder && <PlaceholderBadge />}
-
-          <div className="absolute inset-x-0 bottom-0 p-3.5 transition-transform duration-300 ease-[var(--ease-out-expo)] group-hover:-translate-y-0.5 sm:p-4">
-            <h4 className="truncate text-sm font-semibold text-fg-inverted">{member.name}</h4>
-            <p className="mt-0.5 truncate text-[10px] font-semibold uppercase tracking-[0.12em] text-brass">
-              {member.title}
-            </p>
-          </div>
-
-          <span className="spot-glow" aria-hidden="true" />
-        </div>
-      </div>
-    </RevealItem>
-  );
-}
-
-export function Leadership({ members }: { members: LeadershipMember[] }) {
-  const [featured, ...rest] = members;
-  if (!featured) return null;
+export function Leadership({
+  members,
+  management = [],
+}: {
+  members: LeadershipMember[];
+  management?: LeadershipMember[];
+}) {
+  const featured = members.slice(0, 2);
+  const rest = members.slice(2);
+  if (featured.length === 0) return null;
 
   return (
-    <section className="surface-ink rounded-[2.5rem] py-20 shadow-deep sm:rounded-[3.5rem] sm:py-28">
+    <section className="bg-gradient-to-b from-[#eceef0] to-white py-section">
       <Container>
-        <SectionHeading
-          onDark
-          eyebrow="Leadership"
-          title="Our leadership."
-          body="Four decades of precision manufacturing, guided by hands-on leadership from the shop floor to the boardroom."
-        />
+        <div className="mx-auto max-w-6xl">
+          <SectionHeading
+            eyebrow="Leadership"
+            title="Our leadership."
+            body="Four decades of precision manufacturing, guided by hands-on leadership from the shop floor to the boardroom."
+          />
+        </div>
 
-        <div className="mt-10 sm:mt-14">
-          <FeaturedCard member={featured} />
+        <div className="mx-auto mt-10 grid max-w-sm gap-6 sm:mt-14 md:max-w-3xl md:grid-cols-2 lg:gap-8">
+          {featured.map((member, i) => (
+            <FeaturedCard key={member.slug} member={member} delay={i * 0.08} />
+          ))}
         </div>
 
         {rest.length > 0 && (
           <>
-            <Reveal className="mt-16 sm:mt-20">
-              <p className="inline-flex items-center gap-2.5 text-xs font-semibold uppercase tracking-[0.18em] text-fg-inverted-muted">
-                <span className="h-px w-8 bg-border-inverted" />
-                Board of directors
-              </p>
-            </Reveal>
-
-            <RevealGroup
-              className={cn(
-                "mt-6 grid grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-5 lg:grid-cols-5"
-              )}
-            >
+            <GroupHeading title="Board of Directors" count={rest.length} />
+            <RevealGroup className="mx-auto mt-6 grid max-w-6xl grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-5 lg:grid-cols-5">
               {rest.map((member) => (
+                <GridCard key={member.slug} member={member} />
+              ))}
+            </RevealGroup>
+          </>
+        )}
+
+        {management.length > 0 && (
+          <>
+            <GroupHeading title="Management Team" count={management.length} />
+            {/* Four per row on desktop, narrowed so each tile matches the five-column board tiles; the trailing pair is centred. */}
+            <RevealGroup className="mx-auto mt-6 grid max-w-6xl grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-5 lg:max-w-[calc((min(100%,72rem)_-_5rem)_*_0.8_+_3.75rem)] lg:grid-cols-4 lg:[&>*:nth-child(4n+1):nth-last-child(2)]:col-start-2">
+              {management.map((member) => (
                 <GridCard key={member.slug} member={member} />
               ))}
             </RevealGroup>

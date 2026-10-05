@@ -1,21 +1,20 @@
 import type { Metadata } from "next";
+import { Eyebrow } from "@/components/ui/Eyebrow";
 import { ParallaxImage } from "@/components/ui/ParallaxImage";
 import { PageHeader } from "@/components/sections/PageHeader";
-import { CtaBanner } from "@/components/sections/CtaBanner";
+import { blurProps } from "@/lib/image-meta";
 import { Leadership } from "@/components/sections/Leadership";
 import { Container } from "@/components/ui/Container";
 import { Reveal, RevealGroup, RevealItem } from "@/components/ui/Reveal";
-import { StatCounter } from "@/components/ui/StatCounter";
 import { Target, Compass } from "@phosphor-icons/react/dist/ssr";
 import {
   history,
   vision,
   mission,
   aboutPillars,
-  aboutStats,
   industriesServed,
-  facilityPhotos,
   leadership,
+  managementTeam,
 } from "@/content/company";
 
 export const metadata: Metadata = {
@@ -31,16 +30,19 @@ export default function AboutPage() {
       <PageHeader
         eyebrow="About us"
         title="Four decades of precision manufacturing."
-        intro="Shaheen Automotive (Pvt.) Ltd. designs and manufactures sheet metal, formed pipe and bent rod components for the automotive and home appliance industries."
+        intro="Shaheen Automotive (Pvt.) Ltd. designs and manufactures jack assemblies, sheet metal, bent rod and formed pipe components for the automotive and home appliance industries."
+        image={{
+          src: "/images/facility/floor/press-line-operators.jpg",
+          position: "center 60%",
+        }}
+        flat
       />
 
-      <section className="bg-bg py-20 sm:py-24">
+      <section className="bg-bg py-section-sm">
         <Container className="grid gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:gap-16">
           <Reveal>
             <div className="lg:sticky lg:top-24">
-              <p className="text-xs font-semibold uppercase tracking-[0.18em] text-accent">
-                Since {history.founded}
-              </p>
+              <Eyebrow>Since {history.founded}</Eyebrow>
               <h2 className="mt-3 text-display-md font-semibold tracking-tight text-fg">
                 From {history.foundedAs} to {history.currentName}
               </h2>
@@ -56,22 +58,9 @@ export default function AboutPage() {
         </Container>
       </section>
 
-      <Leadership members={leadership} />
+      <Leadership members={leadership} management={managementTeam} />
 
-      <section className="rounded-[2.5rem] bg-bg-elevated shadow-soft sm:rounded-[3.5rem] py-20 sm:py-24">
-        <Container className="grid grid-cols-2 gap-6 sm:grid-cols-4">
-          {aboutStats.map((s, i) => (
-            <Reveal key={s.label} delay={i * 0.06}>
-              <p className="stat-figure text-3xl sm:text-4xl">
-                <StatCounter value={s.value} />
-              </p>
-              <p className="stat-label mt-3 leading-snug">{s.label}</p>
-            </Reveal>
-          ))}
-        </Container>
-      </section>
-
-      <section className="bg-bg py-20 sm:py-24">
+      <section className="bg-bg py-section-sm">
         <Container className="grid gap-6 md:grid-cols-2">
           <Reveal>
             <div className="h-full rounded-sm border border-border bg-bg-elevated shadow-soft p-8">
@@ -90,7 +79,7 @@ export default function AboutPage() {
         </Container>
       </section>
 
-      <section className="rounded-[2.5rem] bg-bg-elevated shadow-soft sm:rounded-[3.5rem] py-20 sm:py-24">
+      <section className="rounded-section bg-bg-elevated shadow-soft py-section-sm">
         <Container>
           <Reveal>
             <h2 className="max-w-xl text-balance text-display-md font-semibold tracking-tight text-fg">
@@ -108,14 +97,15 @@ export default function AboutPage() {
         </Container>
       </section>
 
-      <section className="bg-bg py-20 sm:py-24">
+      <section className="bg-bg py-section-sm">
         <Container className="grid gap-10 lg:grid-cols-[1fr_1fr] lg:items-center">
           <Reveal from="left">
             <ParallaxImage
-              src={facilityPhotos[0].src}
-              alt={facilityPhotos[0].alt}
-              sizes="(min-width: 1024px) 45vw, 90vw"
-              className="aspect-[4/3] rounded-[2rem] border border-border bg-bg-inverted shadow-lift"
+              src="/images/facility/floor/komatsu-200-press.jpg"
+              alt="Komatsu 200-tonne straight-side power press, P.P. 53, on the SAPL press shop floor"
+              sizes="(min-width: 1024px) 28rem, 90vw"
+              blurDataURL={blurProps("/images/facility/floor/komatsu-200-press.jpg").blurDataURL}
+              className="mx-auto aspect-[4/5] max-w-md rounded-[2rem] border border-border bg-bg-inverted shadow-lift lg:mx-0"
             />
           </Reveal>
           <Reveal delay={0.08} from="right">
@@ -131,11 +121,6 @@ export default function AboutPage() {
           </Reveal>
         </Container>
       </section>
-
-      <CtaBanner
-        heading="Looking for a long-term manufacturing partner?"
-        body="Tell us about your programme and volume, and our team will assess feasibility against our current capacity."
-      />
     </>
   );
 }

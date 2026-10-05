@@ -1,84 +1,85 @@
-import Image from "next/image";
+import Link from "next/link";
+import { Eyebrow } from "@/components/ui/Eyebrow";
+import { ArrowUpRight } from "@phosphor-icons/react/dist/ssr";
+import { BackdropImage } from "@/components/ui/BackdropImage";
 import { Button } from "@/components/ui/Button";
 import { Container } from "@/components/ui/Container";
-import { ParallaxImage } from "@/components/ui/ParallaxImage";
-import { Reveal, RevealGroup, RevealItem } from "@/components/ui/Reveal";
-import type { FloorArea } from "@/content/company";
+import { Reveal } from "@/components/ui/Reveal";
+import { InViewVideo } from "@/components/ui/InViewVideo";
 
 /** Home-page teaser for /facility: the machines and people behind the parts. */
-export function ShopFloor({ areas }: { areas: FloorArea[] }) {
-  const [lead, ...rest] = areas;
-
+export function ShopFloor() {
   return (
-    <section className="surface-ink overflow-hidden rounded-[2.5rem] py-20 sm:rounded-[3.5rem] sm:py-28">
-      <Container className="grid items-center gap-12 lg:grid-cols-12 lg:gap-14">
+    <section className="surface-ink overflow-hidden py-section-sm">
+      {/* parts-store photo behind the copy, lit the same way as the home hero: dark on the copy side, opening up to the right */}
+      <div aria-hidden="true" className="absolute inset-0 -z-10">
+        <BackdropImage src="/images/facility/storage/parts-store.webp" />
+        <div className="scrim-hero" />
+      </div>
+      <Container className="grid items-center gap-10 lg:grid-cols-12 lg:gap-14">
         <div className="lg:col-span-5">
           <Reveal>
-            <p className="mb-4 inline-flex items-center gap-2.5 text-xs font-semibold uppercase tracking-[0.18em] text-brass">
-              <span className="h-px w-8 bg-brass" />
+            <Eyebrow tone="brassSoft" className="mb-4">
               On the Shop Floor
-            </p>
-            <h2 className="text-balance text-display-md font-semibold text-fg-inverted">
-              The machines and people <span className="text-brass-gradient">behind every part.</span>
+            </Eyebrow>
+            <h2 className="text-balance text-display-md font-semibold text-white">
+              The machines and people{" "}
+              <span className="text-brass-gradient">behind every part.</span>
             </h2>
-            <p className="mt-4 text-base leading-relaxed text-fg-inverted-muted sm:text-lg">
-              Every part we ship is pressed and welded here, by our own operators on our own machines.
+            <p className="mt-4 max-w-md text-base leading-relaxed text-white/85 sm:text-lg">
+              Every part we ship is pressed and welded here, by our own
+              operators on our own machines.
             </p>
           </Reveal>
 
-          <RevealGroup className="mt-10 divide-y divide-white/10 border-y border-white/10">
-            {areas.map((area) => (
-              <RevealItem key={area.key} className="flex gap-5 py-5">
-                <span className="mono-figure pt-0.5 text-sm text-brass">{area.number}</span>
-                <div>
-                  <h3 className="text-lg font-semibold tracking-tight text-fg-inverted">{area.label}</h3>
-                  <p className="mt-1.5 text-sm leading-relaxed text-fg-inverted-muted">{area.body}</p>
-                </div>
-              </RevealItem>
-            ))}
-          </RevealGroup>
-
-          <Reveal className="mt-10">
+          <Reveal className="mt-8">
             <Button href="/facility" variant="brass">
               Inside the Plant
             </Button>
           </Reveal>
         </div>
 
-        <div className="grid grid-cols-2 gap-3 sm:gap-4 lg:col-span-7">
-          <Reveal from="scale" className="col-span-2">
-            <figure className="relative">
-              <ParallaxImage
-                src={lead.cover}
-                alt={lead.coverAlt}
-                sizes="(min-width: 1024px) 55vw, 100vw"
-                className="aspect-[16/10] rounded-[1.75rem] ring-1 ring-white/10"
-              />
-              <figcaption className="absolute bottom-4 left-4 rounded-full bg-black/55 px-3 py-1.5 text-xs font-semibold text-white backdrop-blur">
-                {lead.label}
-              </figcaption>
-            </figure>
-          </Reveal>
-
-          {rest.map((area, i) => (
-            <Reveal key={area.key} delay={0.08 * (i + 1)}>
-              <figure className="group relative aspect-[4/5] overflow-hidden rounded-[1.5rem] ring-1 ring-white/10">
-                <Image
-                  src={area.cover}
-                  alt={area.coverAlt}
-                  fill
-                  sizes="(min-width: 1024px) 27vw, 50vw"
-                  className="object-cover transition-transform duration-700 ease-out group-hover:scale-[1.05]"
-                />
-                <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
-                <figcaption className="absolute bottom-4 left-4 rounded-full bg-black/55 px-3 py-1.5 text-xs font-semibold text-white backdrop-blur">
-                  {area.label}
-                </figcaption>
-              </figure>
-            </Reveal>
-          ))}
-        </div>
+        <Reveal from="scale" className="lg:col-span-7">
+          <VideoCard />
+        </Reveal>
       </Container>
     </section>
+  );
+}
+
+/** Looping 30s cut of the operators across the press shop, pipe bending, welding floor, QA/QC lab and warehouse, framed like the site's photo tiles: thin white border, glowing edge and arrow on hover. */
+function VideoCard() {
+  return (
+    <Link
+      href="/facility"
+      className="group block rounded-[1.75rem] bg-white/80 p-px shadow-[0_24px_50px_-20px_rgb(0_0_0/0.6)] transition-[transform,box-shadow] duration-500 ease-out hover:-translate-y-1 hover:shadow-[0_28px_60px_-18px_rgb(23_112_63/0.6)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-glow motion-reduce:transition-none motion-reduce:hover:translate-y-0"
+    >
+      <div className="rounded-[calc(1.75rem-1px)] bg-bg-inverted/80 p-1.5 backdrop-blur-md">
+        <figure className="relative aspect-[16/9] overflow-hidden rounded-[1.35rem] bg-accent-strong ring-1 ring-white/20">
+          <InViewVideo
+            src="/videos/shop-floor.mp4"
+            poster="/videos/shop-floor-poster.jpg"
+            label="SAPL operators running the press lines, bending tubes on hydraulic pipe benders and MIG welding parts, followed by the QA/QC lab and the SAPL warehouse"
+            className="transition-transform duration-700 ease-out group-hover:scale-[1.03]"
+          />
+          <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-bg-inverted/85 via-bg-inverted/10 to-transparent" />
+          <span
+            aria-hidden="true"
+            className="absolute inset-x-6 top-0 h-[2px] origin-center scale-x-0 rounded-full bg-gradient-to-r from-transparent via-glow to-transparent transition-transform duration-700 group-hover:scale-x-100"
+          />
+          <span
+            aria-hidden="true"
+            className="absolute right-3 top-3 flex h-9 w-9 items-center justify-center rounded-full bg-bg-inverted/50 text-white ring-1 ring-white/20 backdrop-blur-md transition-[transform,background-color] duration-300 group-hover:rotate-45 group-hover:bg-accent group-hover:ring-glow/50"
+          >
+            <ArrowUpRight size={15} weight="bold" />
+          </span>
+          <figcaption className="absolute inset-x-0 bottom-0 flex items-end gap-3 p-5 sm:p-6">
+            <span className="text-lg font-semibold leading-tight text-white sm:text-xl">
+              Our people on the shop floor
+            </span>
+          </figcaption>
+        </figure>
+      </div>
+    </Link>
   );
 }

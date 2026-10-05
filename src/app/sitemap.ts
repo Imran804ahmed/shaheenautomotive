@@ -13,7 +13,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/facility",
     "/products",
     "/quality",
-    "/customers",
     "/gallery",
     "/contact",
   ];

@@ -1,4 +1,5 @@
 import { Button } from "@/components/ui/Button";
+import { Eyebrow } from "@/components/ui/Eyebrow";
 import { Container } from "@/components/ui/Container";
 import { Reveal } from "@/components/ui/Reveal";
 import { GalleryGrid } from "@/components/sections/GalleryGrid";
@@ -6,14 +7,12 @@ import type { GalleryPhoto } from "@/content/company";
 
 export function GalleryPreview({ photos }: { photos: GalleryPhoto[] }) {
   return (
-    <section className="surface-ink overflow-hidden rounded-[2.5rem] py-20 sm:rounded-[3.5rem] sm:py-28">
+    <section className="surface-ink overflow-hidden rounded-section py-section">
       <Container>
         <Reveal className="mx-auto mb-12 max-w-2xl text-center">
-          <p className="mb-4 inline-flex items-center gap-2.5 text-xs font-semibold uppercase tracking-[0.18em] text-brass">
-            <span className="h-px w-8 bg-brass" />
+          <Eyebrow tone="brass" centered className="mb-4">
             Gallery
-            <span className="h-px w-8 bg-brass" />
-          </p>
+          </Eyebrow>
           <h2 className="text-balance text-display-md font-semibold text-fg-inverted">
             Precision parts, <span className="text-brass-gradient">up close.</span>
           </h2>

@@ -1,14 +1,14 @@
 import type { Metadata } from "next";
 import { PageHeader } from "@/components/sections/PageHeader";
 import { GalleryGrid } from "@/components/sections/GalleryGrid";
-import { CtaBanner } from "@/components/sections/CtaBanner";
 import { Container } from "@/components/ui/Container";
 import { galleryPhotos } from "@/content/company";
+import { withBlur } from "@/lib/image-meta";
 
 export const metadata: Metadata = {
   title: "Gallery",
   description:
-    "Photographs of sheet metal, hinge and jack components manufactured by Shaheen Automotive for automotive OEMs in Pakistan.",
+    "Photographs of Shaheen Automotive's plant in Pakistan: the press shop, welding and finishing lines, QA & QC lab and stores.",
   alternates: { canonical: "/gallery" },
 };
 
@@ -17,17 +17,20 @@ export default function GalleryPage() {
     <>
       <PageHeader
         eyebrow="Gallery"
-        title="Gallery"
-        intro="Stamped panels, hinge assemblies and jack components from our press, welding and finishing shops."
+        title="A look inside our plant."
+        intro="The press shop, welding and finishing lines, QA & QC lab and stores where every Shaheen Automotive part is made."
+        image={{
+          src: "/images/facility/floor/press-shop-hall.jpg",
+          position: "center 55%",
+        }}
+        flat
       />
 
       <section className="bg-bg py-16">
         <Container>
-          <GalleryGrid photos={galleryPhotos} showFilters />
+          <GalleryGrid photos={withBlur(galleryPhotos)} />
         </Container>
       </section>
-
-      <CtaBanner />
     </>
   );
 }

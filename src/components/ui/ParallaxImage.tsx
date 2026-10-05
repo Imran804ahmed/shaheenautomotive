@@ -15,12 +15,15 @@ export function ParallaxImage({
   sizes,
   className,
   priority,
+  blurDataURL,
 }: {
   src: string;
   alt: string;
   sizes: string;
   className?: string;
+  /** above the fold: fetch eagerly at high priority */
   priority?: boolean;
+  blurDataURL?: string;
 }) {
   const ref = useRef<HTMLDivElement>(null);
   const reduce = useReducedMotion();
@@ -33,7 +36,15 @@ export function ParallaxImage({
         style={reduce ? undefined : { y, scale: 1.16 }}
         className="absolute inset-0 will-change-transform"
       >
-        <Image src={src} alt={alt} fill sizes={sizes} priority={priority} className="object-cover" />
+        <Image
+          src={src}
+          alt={alt}
+          fill
+          sizes={sizes}
+          {...(priority && { loading: "eager", fetchPriority: "high" })}
+          {...(blurDataURL && { placeholder: "blur", blurDataURL })}
+          className="object-cover"
+        />
       </motion.div>
     </div>
   );

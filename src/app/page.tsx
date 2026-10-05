@@ -7,8 +7,6 @@ import { ProcessTimeline } from "@/components/sections/ProcessTimeline";
 import { ShopFloor } from "@/components/sections/ShopFloor";
 import { ProductsShowcase } from "@/components/sections/ProductsShowcase";
 import { QualityEvidence } from "@/components/sections/QualityEvidence";
-import { GalleryPreview } from "@/components/sections/GalleryPreview";
-import { CtaBanner } from "@/components/sections/CtaBanner";
 import {
   heroStats,
   clients,
@@ -16,12 +14,10 @@ import {
   processSteps,
   productCategories,
   awardPhotos,
-  galleryPhotos,
-  floorAreas,
 } from "@/content/company";
 
 export const metadata: Metadata = {
-  title: "Sheet Metal, Pipe & Rod Component Manufacturer in Pakistan",
+  title: "Jack, Sheet Metal, Rod & Pipe Component Manufacturer in Pakistan",
   alternates: { canonical: "/" },
 };
 
@@ -33,11 +29,9 @@ export default function Home() {
       <ClientsStrip clients={clients} />
       <CapabilitiesGrid capabilities={capabilities} />
       <ProcessTimeline steps={processSteps} />
-      <GalleryPreview photos={galleryPhotos.slice(0, 8)} />
       <ProductsShowcase categories={productCategories} />
-      <ShopFloor areas={floorAreas} />
-      <QualityEvidence awards={awardPhotos.slice(0, 5)} />
-      <CtaBanner />
+      <ShopFloor />
+      <QualityEvidence awards={awardPhotos} />
     </>
   );
 }

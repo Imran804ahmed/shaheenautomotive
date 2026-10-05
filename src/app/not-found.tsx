@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/Button";
 
 export default function NotFound() {
   return (
-    <section className="surface-ink -mt-[var(--header-h)] flex min-h-[80vh] items-center rounded-b-[2.5rem] pb-20 pt-[calc(var(--header-h)+5rem)] sm:rounded-b-[3.5rem]">
+    <section className="surface-ink -mt-[var(--header-h)] flex min-h-[80vh] items-center rounded-b-section pb-20 pt-[calc(var(--header-h)+5rem)]">
       <Container className="text-center">
         <p className="mono-figure text-sm text-brass">404</p>
         <h1 className="mt-3 text-display-lg font-semibold text-fg-inverted">
@@ -15,7 +15,7 @@ export default function NotFound() {
         <div className="mt-8 flex flex-wrap justify-center gap-3 sm:gap-4">
           <Button href="/" variant="brass">Back to home</Button>
           <Button href="/contact" variant="onDark" showArrow={false}>
-            Request a quote
+            Contact us
           </Button>
         </div>
       </Container>

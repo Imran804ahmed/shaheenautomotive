@@ -48,7 +48,6 @@ export function ImageCycle({
           alt={img.alt}
           fill
           sizes={sizes}
-          priority={false}
           aria-hidden={i !== index}
           className={`object-cover transition-[opacity,transform] duration-1000 ease-out ${i === index ? "opacity-100" : "opacity-0"} ${className}`}
         />

@@ -1,14 +1,12 @@
 "use client";
 
-import { useRef, useEffect } from "react";
 import { motion, useReducedMotion } from "motion/react";
 import { Container } from "@/components/ui/Container";
 import { Button } from "@/components/ui/Button";
+import { BackdropImage } from "@/components/ui/BackdropImage";
 import { HlsBackground } from "@/components/ui/HlsBackground";
 import { siteConfig } from "@/content/site";
-import { gsap } from "@/lib/gsap";
 import { dist, dur, ease } from "@/lib/motion";
-import { HeroScene } from "@/components/sections/HeroScene";
 
 /** One headline word, rising out of a clipping mask. */
 function Word({ children, index, className }: { children: React.ReactNode; index: number; className?: string }) {
@@ -28,24 +26,12 @@ function Word({ children, index, className }: { children: React.ReactNode; index
   );
 }
 
-const headline: { word: string; accent?: boolean }[] = "Sheet metal, pipe and rod components, engineered for OEM production lines."
+const headline: { word: string; accent?: boolean }[] = "Jacks, Sheet Metal, Rods and Pipes, engineered for OEM production lines."
   .split(" ")
   .map((word) => ({ word, accent: word === "engineered" }));
 
 export function Hero() {
   const reduce = useReducedMotion();
-  const root = useRef<HTMLElement>(null);
-
-  // Scroll-scrubbed depth: copy and scene drift at different speeds as the hero leaves.
-  useEffect(() => {
-    const mm = gsap.matchMedia();
-    mm.add("(prefers-reduced-motion: no-preference)", () => {
-      const scrollTrigger = { trigger: root.current, start: "top top", end: "bottom top", scrub: 0.6 };
-      gsap.to("[data-hero-copy]", { y: 70, ease: "none", scrollTrigger });
-      gsap.to("[data-hero-scene]", { y: -60, ease: "none", scrollTrigger });
-    }, root);
-    return () => mm.revert();
-  }, []);
   const enter = (delay: number) => ({
     initial: reduce ? (false as const) : { opacity: 0, y: dist(22) },
     animate: { opacity: 1, y: 0 },
@@ -53,12 +39,24 @@ export function Hero() {
   });
 
   return (
-    <section ref={root} className="surface-ink -mt-[var(--header-h)] overflow-hidden rounded-b-[2.5rem] pb-32 sm:rounded-b-[3.5rem] sm:pb-40">
-      {siteConfig.heroVideo.src && (
-        <HlsBackground src={siteConfig.heroVideo.src} poster={siteConfig.heroVideo.poster || undefined} />
-      )}
-      <Container className="grid items-center gap-14 pt-[calc(var(--header-h)+2.5rem)] sm:gap-16 sm:pt-[calc(var(--header-h)+3rem)] lg:grid-cols-[1.05fr_0.95fr] lg:gap-12 xl:gap-10 lg:pt-[calc(var(--header-h)+4.5rem)]">
-        <div data-hero-copy className="@container">
+    <section className="relative isolate -mt-[var(--header-h)] flex min-h-[100dvh] items-center overflow-hidden rounded-b-section bg-bg-inverted pb-24 sm:pb-32">
+      {/* full-bleed plant exterior, kept bright; only the copy side is darkened */}
+      <div aria-hidden="true" className="absolute inset-0 -z-10">
+        <div className="absolute inset-0">
+          <BackdropImage src="/images/facility/exterior/shaheen-plant-exterior.webp" position="62% center" priority />
+        </div>
+        {siteConfig.heroVideo.src && (
+          <div className="absolute inset-0 isolate">
+            <HlsBackground src={siteConfig.heroVideo.src} poster={siteConfig.heroVideo.poster || undefined} />
+          </div>
+        )}
+        {/* dark on the copy side, opening up towards the right */}
+        <div className="scrim-hero" />
+        <div className="absolute inset-x-0 bottom-0 h-1/4 bg-gradient-to-t from-bg-inverted via-bg-inverted/50 to-transparent" />
+      </div>
+
+      <Container className="w-full pt-[calc(var(--header-h)+2.5rem)] sm:pt-[calc(var(--header-h)+3rem)] lg:pt-[calc(var(--header-h)+4.5rem)]">
+        <div className="@container max-w-3xl">
           <motion.p
             {...enter(0)}
             className="inline-flex items-center gap-2.5 rounded-full border border-white/15 bg-white/5 px-4 py-1.5 text-xs font-medium text-fg-inverted-muted backdrop-blur"
@@ -84,16 +82,12 @@ export function Hero() {
           </motion.p>
           <motion.div {...enter(0.22)} className="mt-9 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center sm:gap-4">
             <Button href="/contact" variant="brass" className="w-full sm:w-auto">
-              Request a Quote
+              Contact Us
             </Button>
             <Button href="/capabilities" variant="onDark" showArrow={false} className="w-full sm:w-auto">
               Explore Capabilities
             </Button>
           </motion.div>
-        </div>
-
-        <div data-hero-scene>
-          <HeroScene />
         </div>
       </Container>
     </section>

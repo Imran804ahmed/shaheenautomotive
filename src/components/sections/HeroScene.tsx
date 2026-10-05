@@ -64,7 +64,8 @@ export function HeroScene() {
             src={facilityPhotos[0].src}
             alt={facilityPhotos[0].alt}
             fill
-            priority
+            loading="eager"
+            fetchPriority="high"
             sizes="(min-width: 1024px) 42vw, 90vw"
             className="object-cover"
           />

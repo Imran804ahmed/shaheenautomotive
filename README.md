@@ -52,11 +52,10 @@ public/images/           All imagery extracted from the source PPTX (brand, clie
 
 ## Before you launch: things that still need real information
 
-The source PowerPoint did not contain a public-facing address, phone number, or contact email, and its ISO / "Future Plans" content was inconsistent or time-sensitive. Rather than invent any of this, the site ships with clearly labelled placeholders. Fix all of the following before going live:
+The source PowerPoint's ISO / "Future Plans" content was inconsistent or time-sensitive. Rather than invent any of this, the site ships with clearly labelled placeholders. Fix all of the following before going live:
 
 ### 1. `src/content/site.ts`
 - `domain` / `baseUrl` — set to your real production domain (used for canonical URLs, sitemap, Open Graph).
-- `contact.email`, `contact.phone`, `contact.addressLine1/2`, `contact.city` — real business contact details.
 - `contact.mapEmbedUrl` — optional, if you want an embedded map on the Contact page.
 - `social.linkedin` — optional.
 - `rfqFormEndpoint` — see "RFQ form" below.
@@ -104,5 +103,6 @@ Both are plain, typed TypeScript objects; editing a string value and re-running 
 
 - All interactive components are keyboard-navigable with visible focus states (see `:focus-visible` in `globals.css`).
 - Motion respects `prefers-reduced-motion` throughout (see `src/components/ui/Reveal.tsx`, `StatCounter.tsx`, and the reduced-motion block in `globals.css`).
-- Images use `next/image` with `unoptimized: true` (required for static export) and explicit `sizes` attributes.
+- Images use `next/image` with explicit `sizes`. Because a static export has no image optimizer, `npm run images` (also run automatically before `npm run build`) pre-renders every original in `public/images/` into `public/img-opt/<path>-<width>.webp` at each width in `src/lib/image-config.json` (plus AVIF for the full-bleed backdrops listed there), strips EXIF/GPS metadata, and records dimensions and blur placeholders in `src/lib/image-manifest.json`. The custom loader in `src/lib/image-loader.ts` points `next/image` srcsets at those files. To add an image, drop the original into `public/images/` and reference it by that path; never reference `/img-opt/` directly.
+- Page hero backdrops use `BackdropImage` (a `<picture>` with AVIF + WebP) and load eagerly at high fetch priority as the LCP element; everything below the fold lazy-loads with a blur-up placeholder.
 - There is exactly one marquee on the site (the client logo strip on the homepage) and no scroll-hijacking.

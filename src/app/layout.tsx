@@ -26,11 +26,11 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.baseUrl),
   title: {
-    default: `${siteConfig.companyLegalName} | Sheet Metal, Pipe & Rod Component Manufacturer`,
+    default: `${siteConfig.companyLegalName} | Jack, Sheet Metal, Rod & Pipe Component Manufacturer`,
     template: `%s | ${siteConfig.siteName}`,
   },
   description:
-    "Shaheen Automotive (Pvt.) Ltd. designs and manufactures sheet metal, formed pipe and bent rod components for automotive and home appliance OEMs in Pakistan, since 1983.",
+    "Shaheen Automotive (Pvt.) Ltd. designs and manufactures jack assemblies, sheet metal, bent rod and formed pipe components for automotive and home appliance OEMs in Pakistan, since 1983.",
   keywords: [
     "sheet metal stamping Pakistan",
     "pipe bending manufacturer Pakistan",
@@ -46,16 +46,16 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     siteName: siteConfig.siteName,
-    title: `${siteConfig.companyLegalName} | Sheet Metal, Pipe & Rod Component Manufacturer`,
+    title: `${siteConfig.companyLegalName} | Jack, Sheet Metal, Rod & Pipe Component Manufacturer`,
     description:
-      "Sheet metal, formed pipe and bent rod components for automotive and home appliance OEMs, manufacturing in Pakistan since 1983.",
+      "Shaheen Automotive (Pvt.) Ltd. designs and manufactures jack assemblies, sheet metal, bent rod and formed pipe components for the automotive and home appliance industries.",
     images: ["/images/facility/hydraulic-press-operator.jpeg"],
   },
   twitter: {
     card: "summary_large_image",
-    title: `${siteConfig.companyLegalName} | Sheet Metal, Pipe & Rod Component Manufacturer`,
+    title: `${siteConfig.companyLegalName} | Jack, Sheet Metal, Rod & Pipe Component Manufacturer`,
     description:
-      "Sheet metal, formed pipe and bent rod components for automotive and home appliance OEMs, manufacturing in Pakistan since 1983.",
+      "Shaheen Automotive (Pvt.) Ltd. designs and manufactures jack assemblies, sheet metal, bent rod and formed pipe components for the automotive and home appliance industries.",
   },
 };
 
@@ -73,7 +73,8 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
           Skip to content
         </a>
         <Header />
-        <main id="main-content" className="flex-1">
+        {/* clip (not hidden): side-entering reveals can't widen the page, and sticky columns keep working */}
+        <main id="main-content" className="flex-1 overflow-x-clip">
           {children}
         </main>
         <Footer />

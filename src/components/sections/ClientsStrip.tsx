@@ -6,7 +6,7 @@ export function ClientsStrip({ clients }: { clients: Client[] }) {
   return (
     <section className="bg-bg py-14 sm:py-16">
       <Container>
-        <p className="text-center text-xs font-semibold uppercase tracking-[0.18em] text-fg-muted">
+        <p className="text-center text-xs font-bold uppercase tracking-[0.18em] text-fg-muted">
           OEM and industry relationships referenced in company materials
         </p>
         <div className="mt-8">

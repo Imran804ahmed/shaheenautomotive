@@ -7,9 +7,9 @@ import { RfqForm } from "@/components/forms/RfqForm";
 import { siteConfig } from "@/content/site";
 
 export const metadata: Metadata = {
-  title: "Request a Quote",
+  title: "Contact Us",
   description:
-    "Send Shaheen Automotive your part drawing or specification for a sheet metal, formed pipe or bent rod component quotation.",
+    "Send Shaheen Automotive your part drawing or specification for a sheet metal, bent rod or formed pipe component quotation.",
   alternates: { canonical: "/contact" },
 };
 
@@ -18,8 +18,13 @@ export default function ContactPage() {
     <>
       <PageHeader
         eyebrow="Contact"
-        title="Request a quote."
+        title="Contact us."
         intro="Tell us about the part and we'll come back with feasibility, process and a quotation. The more detail you share up front, the faster we can respond."
+        image={{
+          src: "/images/facility/exterior/shaheen-plant-exterior.webp",
+          position: "62% center",
+        }}
+        flat
       />
 
       <section className="py-16 sm:py-20">
@@ -27,7 +32,7 @@ export default function ContactPage() {
           <Reveal className="min-w-0 space-y-8">
             <div>
               <h2 className="text-lg font-semibold tracking-tight text-fg">Contact details</h2>
-              <ul className="mt-5 space-y-4">
+              <ul className="mt-5 space-y-2">
                 <li className="flex items-start gap-3 text-sm text-fg-muted">
                   <MapPin size={18} className="mt-0.5 shrink-0 text-steel" />
                   <span className="min-w-0 wrap-anywhere">
@@ -39,11 +44,13 @@ export default function ContactPage() {
                 </li>
                 <li className="flex items-center gap-3 text-sm text-fg-muted">
                   <Phone size={18} className="shrink-0 text-steel" />
-                  <span className="min-w-0 wrap-anywhere">{siteConfig.contact.phone}</span>
+                  <a href={siteConfig.contact.phoneHref} className="inline-flex min-h-11 min-w-0 items-center wrap-anywhere hover:text-fg">
+                    {siteConfig.contact.phone}
+                  </a>
                 </li>
                 <li className="flex items-center gap-3 text-sm text-fg-muted">
                   <EnvelopeSimple size={18} className="shrink-0 text-steel" />
-                  <a href={`mailto:${siteConfig.contact.email}`} className="min-w-0 wrap-anywhere hover:text-fg">
+                  <a href={`mailto:${siteConfig.contact.email}`} className="inline-flex min-h-11 min-w-0 items-center wrap-anywhere hover:text-fg">
                     {siteConfig.contact.email}
                   </a>
                 </li>

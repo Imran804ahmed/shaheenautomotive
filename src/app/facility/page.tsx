@@ -1,13 +1,13 @@
 import type { Metadata } from "next";
 import { PageHeader } from "@/components/sections/PageHeader";
 import { GalleryGrid } from "@/components/sections/GalleryGrid";
-import { CtaBanner } from "@/components/sections/CtaBanner";
 import { Container } from "@/components/ui/Container";
 import { ParallaxImage } from "@/components/ui/ParallaxImage";
 import { Reveal } from "@/components/ui/Reveal";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { equipmentPressShop, floorAreas, floorCategories, floorPhotos } from "@/content/company";
 import { cn } from "@/lib/cn";
+import { blurProps, withBlur } from "@/lib/image-meta";
 
 export const metadata: Metadata = {
   title: "Inside the Plant",
@@ -25,7 +25,7 @@ export default function FacilityPage() {
         intro="Our press shop, welding bays and spot welding lines, and the operators who run them every shift."
       />
 
-      <section className="surface-paper bg-bg py-20 sm:py-28">
+      <section className="surface-paper bg-bg py-section">
         <Container className="space-y-16 sm:space-y-24 lg:space-y-28">
           {floorAreas.map((area, i) => (
             <div key={area.key} id={area.key} className="grid scroll-mt-28 items-center gap-8 sm:gap-10 lg:grid-cols-2 lg:gap-16">
@@ -33,7 +33,10 @@ export default function FacilityPage() {
                 <ParallaxImage
                   src={area.cover}
                   alt={area.coverAlt}
-                  sizes="(min-width: 1024px) 50vw, 100vw"
+                  sizes="(min-width: 1280px) 720px, (min-width: 1024px) 50vw, 100vw"
+                  // no photo in this page's header, so the first area cover is the LCP image
+                  priority={i === 0}
+                  blurDataURL={blurProps(area.cover).blurDataURL}
                   className="aspect-[4/3] rounded-[2rem] shadow-lift ring-1 ring-border"
                 />
               </Reveal>
@@ -60,7 +63,7 @@ export default function FacilityPage() {
         </Container>
       </section>
 
-      <section className="rounded-[2.5rem] bg-bg-elevated py-20 shadow-soft sm:rounded-[3.5rem] sm:py-28">
+      <section className="rounded-section bg-bg-elevated py-section shadow-soft">
         <Container>
           <SectionHeading
             eyebrow="On the floor"
@@ -68,11 +71,9 @@ export default function FacilityPage() {
             body="Tap any photo to see it full size."
             className="mx-auto mb-12 text-center"
           />
-          <GalleryGrid photos={floorPhotos} categories={floorCategories} showFilters />
+          <GalleryGrid photos={withBlur(floorPhotos)} categories={floorCategories} showFilters />
         </Container>
       </section>
-
-      <CtaBanner />
     </>
   );
 }

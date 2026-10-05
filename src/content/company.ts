@@ -82,8 +82,14 @@ export type Award = {
   year?: string;
   /** Short OEM name for badges, e.g. "Toyota". */
   oem?: string;
+  /** Badge label for non-OEM issuers (trade bodies etc.); not counted as an OEM. */
+  issuer?: string;
   image?: string;
   imageCaption?: string;
+  /** "award" = performance / appreciation award; "recognition" = convention participation or training certificate. */
+  category?: "award" | "recognition";
+  /** Shown in the home-page recognition strip (keep it to five). */
+  featured?: boolean;
 };
 
 // Awards named explicitly in the "Certifications & Awards" slide text.
@@ -95,44 +101,142 @@ export const namedAwards: Award[] = [
   { title: "Special Effort in Development Award", awardedBy: "Pak Suzuki Motor Co. Ltd.", year: "2012-2014" },
 ];
 
-// Physical award / trophy photographs from the profile. Captions describe
-// only what is legible in each photograph; they are shown as a photo record
-// of recognition received, independent of the exact bullet list above.
+// Physical award / trophy / certificate photographs, in chronological order.
+// Captions describe only what is legible in each photograph; they are shown as
+// a photo record of recognition received, independent of the list above.
 export const awardPhotos: Award[] = [
   {
-    title: "Vendor Special Award",
-    awardedBy: "Pak Suzuki Motor Co. Ltd., for special efforts in development",
-    year: "1998-2000",
-    oem: "Suzuki",
-    image: "/images/awards/enhanced/pak-suzuki-vendor-special-1998-2000.jpg",
+    title: "PAPS 2000 Participation Plaque",
+    awardedBy: "PAAPAM and Export Promotion Bureau, Government of Pakistan, Pakistan Auto Parts Show, Karachi, 18-22 January 2000",
+    year: "2000",
+    issuer: "PAAPAM / EPB",
+    image: "/images/awards/paapam-paps-participation-2000.jpg",
+    category: "recognition",
   },
   {
-    title: "Vendor Performance Award",
-    awardedBy: "Hyundai / Kia (Dewan Farooque Motors Ltd.), for timely development of components",
-    year: "2000-01",
-    oem: "Hyundai / Kia",
-    image: "/images/awards/enhanced/kia-vendor-performance.jpg",
+    title: "Supplier Participation Plaque",
+    awardedBy: "Indus Motor Company Ltd. (Toyota / Daihatsu), presented 29 November 2004",
+    year: "2004",
+    oem: "Toyota",
+    image: "/images/awards/indus-motor-participation-2004.jpg",
+    category: "recognition",
+  },
+  {
+    title: "Participation Shield",
+    awardedBy: "Indus Motor Company Ltd., Vendors & Suppliers Convention 2006",
+    year: "2006",
+    oem: "Toyota",
+    image: "/images/awards/indus-motor-participation-shield-2006.jpg",
+    category: "recognition",
   },
   {
     title: "Delivery Award",
-    awardedBy: "Indus Motor Company Ltd., Suppliers Convention",
+    awardedBy: "Indus Motor Company Ltd., Suppliers Convention 2008, 19 April 2008",
     year: "2008",
     oem: "Toyota",
-    image: "/images/awards/enhanced/indus-motor-delivery-2008.jpg",
+    image: "/images/awards/indus-motor-delivery-2008.jpg",
+    category: "award",
+    featured: true,
+  },
+  {
+    title: "Participation Shield",
+    awardedBy: "Indus Motor Company Ltd., Suppliers Convention 2008, 19 April 2008",
+    year: "2008",
+    oem: "Toyota",
+    image: "/images/awards/indus-motor-participation-shield-2008.jpg",
+    category: "recognition",
+  },
+  {
+    title: "Vendor Appreciation Award",
+    awardedBy: "Pak Suzuki Motor Co. Ltd., for efforts in timely development of components (Vendor Conference 2011)",
+    year: "2010",
+    oem: "Suzuki",
+    image: "/images/awards/pak-suzuki-vendor-appreciation-2010.jpg",
+    category: "award",
+  },
+  {
+    title: "Special Appreciation Award",
+    awardedBy: "Pak Suzuki Motor Co. Ltd., for timely supply of 2-wheeler components during crisis",
+    year: "2012",
+    oem: "Suzuki",
+    image: "/images/awards/pak-suzuki-special-appreciation-2012.jpg",
+    category: "award",
+    featured: true,
+  },
+  {
+    title: "Special Appreciation Award",
+    awardedBy: "Pak Suzuki Motor Co. Ltd., for speedy development of components during crisis",
+    year: "2013",
+    oem: "Suzuki",
+    image: "/images/awards/pak-suzuki-special-appreciation-2013.jpg",
+    category: "award",
+  },
+  {
+    title: "Certificate of Appreciation",
+    awardedBy: "Hinopak Motors Ltd., Vendors' Convention, 24-25 September 2013",
+    year: "2013",
+    oem: "Hino",
+    image: "/images/awards/hinopak-certificate-of-appreciation-2013.jpg",
+    category: "recognition",
+    featured: true,
   },
   {
     title: "Overall Performance Award",
-    awardedBy: "Indus Motor Company, Suppliers Convention",
+    awardedBy: "Indus Motor Company, Suppliers Convention 2014",
     year: "2014",
     oem: "Toyota",
-    image: "/images/awards/enhanced/indus-motor-overall-performance-2014.jpg",
+    image: "/images/awards/indus-motor-overall-performance-2014.jpg",
+    category: "award",
+    featured: true,
+  },
+  {
+    title: "Vendors' Convention Award",
+    awardedBy: "Hinopak Motors Ltd., in honour of participation, Karachi, 25 November 2016",
+    year: "2016",
+    oem: "Hino",
+    image: "/images/awards/hinopak-vendors-convention-2016.jpg",
+    category: "recognition",
+  },
+  {
+    title: "Factory Management Training Certificate",
+    awardedBy: "Pak Suzuki Motor Co. Ltd., Supply Chain Function, Karachi, 19 April 2017",
+    year: "2017",
+    oem: "Suzuki",
+    image: "/images/awards/pak-suzuki-factory-management-training-2017.jpg",
+    category: "recognition",
+  },
+  {
+    title: "Supplier Conference Participation Award",
+    awardedBy: "Pak Suzuki Motor Co. Ltd., Supplier Conference 2018, held 18 March 2019",
+    year: "2018",
+    oem: "Suzuki",
+    image: "/images/awards/pak-suzuki-supplier-conference-2018.jpg",
+    category: "recognition",
+  },
+  {
+    title: "Supplier Conference Participation Award",
+    awardedBy: "Pak Suzuki Motor Co. Ltd., Supplier Conference 2019, Marriott Hotel Karachi, 27 February 2020",
+    year: "2019",
+    oem: "Suzuki",
+    image: "/images/awards/pak-suzuki-supplier-conference-2019.jpg",
+    category: "recognition",
+  },
+  {
+    title: "Certificate of Participation",
+    awardedBy: "Pak Suzuki Motor Co. Ltd., Supplier Conference 2024, Baku, Azerbaijan, 18 April 2024",
+    year: "2024",
+    oem: "Suzuki",
+    image: "/images/awards/pak-suzuki-supplier-conference-2024.jpg",
+    category: "recognition",
   },
   {
     title: "Timely Development Award",
-    awardedBy: "Toyota Indus Motor Company, Suppliers Conference",
+    awardedBy: "Indus Motor Company (Toyota), Suppliers Conference 2024",
     year: "2024",
     oem: "Toyota",
-    image: "/images/awards/enhanced/toyota-timely-development-2024.jpg",
+    image: "/images/awards/toyota-timely-development-2024.jpg",
+    category: "award",
+    featured: true,
   },
 ];
 
@@ -187,6 +291,8 @@ export type Capability = {
   slug: string;
   title: string;
   body: string;
+  /** one-line version for the home page cards */
+  summary: string;
   note?: string;
 };
 
@@ -195,32 +301,38 @@ export const capabilities: Capability[] = [
     slug: "design-tooling",
     title: "Jigs, Fixtures & Tooling Design",
     body: "In-house jig and tool design capability, from simple jigs to more complex fixtures, built to suit each customer's product and process requirements.",
+    summary: "In-house design of jigs, fixtures and tooling for each customer's parts.",
   },
   {
     slug: "press-shop",
     title: "Sheet Metal Stamping",
     body: "A sheet metal parts process facility manufacturing automotive components to production quality, across a mechanical, hydraulic and pneumatic press fleet.",
+    summary: "Automotive parts stamped on mechanical, hydraulic and pneumatic presses.",
   },
   {
     slug: "pipe-shop",
     title: "Pipe Bending & Flaring",
     body: "Skilled labor and automated NC / CNC pipe bending equipment producing formed pipe parts with high efficiency across a wide diameter range.",
+    summary: "NC / CNC pipe bending across a wide diameter range.",
   },
   {
     slug: "welding",
     title: "Welding & Assembly",
     body: "A range of welding processes, including machine welding, applied in production to suit the standards and practices required by each customer.",
+    summary: "A range of welding processes, including machine welding.",
   },
   {
     slug: "surface-finishing",
     title: "Galvanizing & Powder Coating",
     body: "A hot-dip galvanizing process and powder coating capability operated under quality control to ASTM standards.",
+    summary: "Hot-dip galvanizing and powder coating to ASTM standards.",
     note: "Current operating status of this facility should be reconfirmed before publishing without qualification.",
   },
   {
     slug: "inspection",
     title: "Dimensional Inspection",
     body: "FARO measurement solutions for manual and automated inspection of individual parts, sub-components and final assemblies.",
+    summary: "FARO measurement of parts, sub-components and assemblies.",
   },
 ];
 
@@ -294,7 +406,6 @@ export type ProductProgram = {
   logo: string;
   summary: string;
   namedParts: string[];
-  photos: ProductPhoto[];
   hasVerifiedExamples: boolean;
 };
 
@@ -313,13 +424,6 @@ export const productPrograms: ProductProgram[] = [
       "Qtr Wheel House",
       "Panel Room Partition",
     ],
-    photos: [
-      { src: "/images/products/toyota/toyota-component-4-hinges.jpeg", alt: "Sheet metal hinge component manufactured for a Toyota Indus Motor programme" },
-      { src: "/images/products/toyota/toyota-component-6.jpeg", alt: "Formed pipe / bent rod component manufactured for a Toyota Indus Motor programme" },
-      { src: "/images/products/toyota/toyota-component-1.jpeg", alt: "Stamped sheet metal bracket manufactured for a Toyota Indus Motor programme" },
-      { src: "/images/products/toyota/toyota-component-2.jpeg", alt: "Formed sheet metal rail component manufactured for a Toyota Indus Motor programme" },
-      { src: "/images/products/toyota/toyota-component-3.jpeg", alt: "Stamped sheet metal shield component manufactured for a Toyota Indus Motor programme" },
-    ],
     hasVerifiedExamples: true,
   },
   {
@@ -335,13 +439,6 @@ export const productPrograms: ProductProgram[] = [
       "Pipe Comp Water Inlet",
       "Carrier Spare Wheel",
       "Gear Shifter",
-    ],
-    photos: [
-      { src: "/images/products/suzuki/suzuki-component-3-jack.jpeg", alt: "Jack assembly component manufactured for a Pak Suzuki programme" },
-      { src: "/images/products/suzuki/suzuki-component-5-pipe.jpeg", alt: "Formed pipe component manufactured for a Pak Suzuki programme" },
-      { src: "/images/products/suzuki/suzuki-component-1.jpeg", alt: "Stamped sheet metal mounting plate manufactured for a Pak Suzuki programme" },
-      { src: "/images/products/suzuki/suzuki-component-2.jpeg", alt: "Formed bracket with lever component manufactured for a Pak Suzuki programme" },
-      { src: "/images/products/suzuki/suzuki-component-4.jpeg", alt: "Bent rod bracket component manufactured for a Pak Suzuki programme" },
     ],
     hasVerifiedExamples: true,
   },
@@ -359,76 +456,189 @@ export const productPrograms: ProductProgram[] = [
       "Bracket Bend",
       "Side Stand",
     ],
-    photos: [
-      { src: "/images/products/yamaha/yamaha-component-1-lever.png", alt: "Bent rod stand lever component manufactured for a Yamaha motorcycle programme" },
-      { src: "/images/products/yamaha/yamaha-component-2-stand.jpeg", alt: "Bent rod main-stand component manufactured for a Yamaha motorcycle programme" },
-      { src: "/images/products/yamaha/yamaha-component-3-brackets.jpeg", alt: "Assorted stamped and welded bracket components manufactured for a Yamaha motorcycle programme" },
-    ],
     hasVerifiedExamples: true,
   },
 ];
 
 export type ProductCategory = {
-  slug: "sheet-metal-parts" | "formed-pipe-parts" | "bent-rod-parts";
+  slug: "jack-assemblies" | "sheet-metal-parts" | "formed-pipe-parts" | "bent-rod-parts";
   title: string;
   shortTitle: string;
   summary: string;
   processTags: string[];
+  /** optional photo backdrop for the category page hero */
+  heroImage?: { src: string; position?: string };
 };
 
 export const productCategories: ProductCategory[] = [
   {
+    slug: "jack-assemblies",
+    title: "Jacks",
+    shortTitle: "Jacks",
+    summary:
+      "Zinc-plated scissor jacks and jack assembly parts, stamped, formed and assembled in-house, including jack assembly parts supplied to Pak Suzuki programmes.",
+    processTags: ["Stamping & forming", "Lead-screw assembly", "Zinc-plated finish", "Dimensional inspection"],
+    heroImage: { src: "/images/facility/floor/enhanced/jack-assembly-hero.jpg", position: "center 85%" },
+  },
+  {
     slug: "sheet-metal-parts",
-    title: "Sheet Metal Parts",
+    title: "Sheet Metal",
     shortTitle: "Sheet Metal",
     summary:
       "Stamped and formed sheet metal components, produced across a mechanical, hydraulic and pneumatic press fleet ranging from 15 to 300 tons, for automotive and home appliance OEMs.",
     processTags: ["Stamping", "Progressive & line dies", "Welded assemblies", "Dimensional inspection"],
-  },
-  {
-    slug: "formed-pipe-parts",
-    title: "Formed Pipe Parts",
-    shortTitle: "Formed Pipe",
-    summary:
-      "NC and CNC pipe bending and hydraulic pipe flaring, producing formed pipe components across a ø10-ø38 mm diameter range for automotive applications.",
-    processTags: ["NC / CNC bending", "Pipe flaring", "Welding & assembly", "Dimensional inspection"],
+    heroImage: { src: "/images/facility/floor/enhanced/press-shop-hall.jpg", position: "60% 65%" },
   },
   {
     slug: "bent-rod-parts",
-    title: "Bent Rod Parts",
-    shortTitle: "Bent Rod",
+    title: "Rods",
+    shortTitle: "Rods",
     summary:
       "Bent rod components and assemblies, including stands, brackets and structural rod parts, primarily supplied to motorcycle OEM programmes.",
     processTags: ["Rod bending", "Bracket welding", "Surface finishing", "Dimensional inspection"],
+    heroImage: { src: "/images/products/hero/bent-rods-bin.webp", position: "60% center" },
+  },
+  {
+    slug: "formed-pipe-parts",
+    title: "Pipes",
+    shortTitle: "Pipes",
+    summary:
+      "NC and CNC pipe bending and hydraulic pipe flaring, producing formed pipe components across a ø10-ø38 mm diameter range for automotive applications.",
+    processTags: ["NC / CNC bending", "Pipe flaring", "Welding & assembly", "Dimensional inspection"],
+    heroImage: { src: "/images/facility/floor/pipe-bending-cell.jpg", position: "70% center" },
   },
 ];
 
 // Photo galleries per product category. Photographs are grouped by the
-// manufacturing form visible in the image itself (a stamped flat panel vs.
-// a bent tube vs. a bent solid rod), not by matching to a specific named
-// part, since the source deck does not pair individual photos with individual
-// part names.
+// manufacturing form visible in the image itself (a scissor jack vs. a
+// stamped panel vs. a bent tube vs. a bent solid rod), not by matching to a
+// specific named part, since the source deck does not pair individual photos
+// with individual part names. Pipe and jack galleries add shop-floor shots
+// where there are few product photographs.
 export const categoryPhotos: Record<ProductCategory["slug"], ProductPhoto[]> = {
-  "sheet-metal-parts": [
-    { src: "/images/products/toyota/toyota-component-1.jpeg", alt: "Stamped sheet metal shield component, Toyota programme" },
-    { src: "/images/products/toyota/toyota-component-2.jpeg", alt: "Formed sheet metal rail component, Toyota programme" },
-    { src: "/images/products/toyota/toyota-component-3.jpeg", alt: "Stamped sheet metal shield component, Toyota programme" },
-    { src: "/images/products/toyota/toyota-component-4-hinges.jpeg", alt: "Stamped sheet metal hinge components, Toyota programme" },
-    { src: "/images/products/suzuki/suzuki-component-1.jpeg", alt: "Stamped sheet metal mounting plate, Pak Suzuki programme" },
-    { src: "/images/products/yamaha/yamaha-component-3-brackets.jpeg", alt: "Stamped and welded bracket components, Yamaha programme" },
+  "jack-assemblies": [
+    { src: "/images/products/showcase/showcase-1.jpg", alt: "Zinc-plated scissor jack assembly with lead screw" },
+    { src: "/images/products/showcase/showcase-31.jpg", alt: "Yellow zinc scissor jack with riveted saddle, lead screw and clevis drive end" },
+    { src: "/images/products/showcase/showcase-33.jpg", alt: "Zinc-plated scissor jack with formed saddle, black lead screw and eye drive end" },
+    { src: "/images/products/showcase/showcase-35.jpg", alt: "Zinc-plated scissor jack with formed saddle and hex drive end" },
+    { src: "/images/products/showcase/showcase-37.jpg", alt: "Zinc-plated scissor jack with slotted saddle and flat drive end" },
+    { src: "/images/products/showcase/showcase-32.jpg", alt: "Yellow zinc scissor jack from an angled view" },
+    { src: "/images/products/showcase/showcase-34.jpg", alt: "Zinc-plated scissor jack with box saddle, black lead screw and eye drive end" },
+    { src: "/images/products/showcase/showcase-36.jpg", alt: "Zinc-plated scissor jack with slotted box saddle and hex drive end" },
   ],
-  "formed-pipe-parts": [
-    { src: "/images/products/toyota/toyota-component-6.jpeg", alt: "Formed pipe / bent rod component, Toyota programme" },
-    { src: "/images/products/suzuki/suzuki-component-5-pipe.jpeg", alt: "Formed pipe water inlet component, Pak Suzuki programme" },
+  "sheet-metal-parts": [
+    { src: "/images/products/showcase/showcase-9.jpg", alt: "Stamped sheet metal panel with punched mounting holes" },
+    { src: "/images/products/showcase/showcase-21.jpg", alt: "Deep-drawn frame bracket with large central cut-out and flanged edges" },
+    { src: "/images/products/showcase/showcase-25.jpg", alt: "Ribbed support plate with flanged opening and embossed weld-nut boss" },
+    { src: "/images/products/showcase/showcase-2.jpg", alt: "Zinc-plated hood hinge arm with pivot bracket" },
+    { src: "/images/products/showcase/showcase-17.jpg", alt: "Deep-drawn channel bracket with ribbed flanges and pierced holes" },
+    { src: "/images/products/showcase/showcase-28.jpg", alt: "Zinc-coated long reinforcement rail with pierced holes and ribbed side flanges" },
+    { src: "/images/products/showcase/showcase-7.jpg", alt: "Stamped side member rail with pierced holes and formed end flanges" },
+    { src: "/images/products/showcase/showcase-13.jpg", alt: "Stamped mounting plate with a central round opening and four bolt holes" },
+    { src: "/images/products/showcase/showcase-15.jpg", alt: "Formed sheet metal bracket with stepped ribs and pierced mounting tabs" },
+    { src: "/images/products/showcase/showcase-19.jpg", alt: "Deep-formed curved panel with flanged edges and pierced holes" },
+    { src: "/images/products/showcase/showcase-23.jpg", alt: "Stamped skid plate with ribbed side flanges, formed tabs and a central boss" },
+    { src: "/images/products/showcase/showcase-29.jpg", alt: "Long stamped cross member with embossed ribs and pierced holes" },
+    { src: "/images/products/studio/coated-tank-strap.jpg", alt: "Black-coated formed steel tank strap with mounting studs" },
+    { src: "/images/products/studio/stamped-brackets.jpg", alt: "Pair of stamped zinc-plated brackets with pierced holes and folded tabs" },
+    { src: "/images/products/studio/pierced-side-rail.jpg", alt: "Long stamped rail with embossed flanges, slots and pierced holes" },
+    { src: "/images/products/studio/curved-reinforcement.jpg", alt: "Curved stamped reinforcement with embossed ribs and mounting holes" },
+    { src: "/images/products/studio/skid-plate.jpg", alt: "Stamped under guard plate with ribbed body and hole pattern" },
+    { src: "/images/products/studio/skid-plate-studs.jpg", alt: "Stamped guard plate with welded mounting studs" },
+    { src: "/images/products/studio/coated-tank-strap-alt.jpg", alt: "Black-coated formed steel tank strap with mounting studs, alternate view" },
+    { src: "/images/products/studio/cross-member-panel.jpg", alt: "Stamped cross member panel with formed openings and pierced holes" },
+    { src: "/images/products/studio/channel-rail.jpg", alt: "Tapered stamped channel rail with stiffening beads" },
+    { src: "/images/products/studio/heat-shield-panel.jpg", alt: "Stamped heat shield panel with welded studs, flanged openings and a four-bolt port" },
+    { src: "/images/products/studio/shield-bracket-nuts.jpg", alt: "Deep-formed shield bracket with projection-welded nuts" },
+    { src: "/images/products/studio/shield-bracket-reverse.jpg", alt: "Deep-formed shield bracket with embossed ribs, reverse side" },
   ],
   "bent-rod-parts": [
-    { src: "/images/products/yamaha/yamaha-component-1-lever.png", alt: "Bent rod stand lever component, Yamaha programme" },
-    { src: "/images/products/yamaha/yamaha-component-2-stand.jpeg", alt: "Bent rod main-stand component, Yamaha programme" },
-    { src: "/images/products/suzuki/suzuki-component-4.jpeg", alt: "Bent rod bracket component, Pak Suzuki programme" },
-    { src: "/images/products/suzuki/suzuki-component-3-jack.jpeg", alt: "Bent rod jack assembly component, Pak Suzuki programme" },
-    { src: "/images/products/suzuki/suzuki-component-2.jpeg", alt: "Formed rod bracket with lever, Pak Suzuki programme" },
+    { src: "/images/products/studio/bent-rods.jpg", alt: "Zinc-plated bent rod hooks and a jack handle with rubber grip" },
+    { src: "/images/facility/floor/bent-rod-parts-bin.jpg", alt: "Steel bin filled with finished bent rod parts with flattened, pierced ends" },
+  ],
+  "formed-pipe-parts": [
+    { src: "/images/products/studio/zinc-coolant-pipe.jpg", alt: "Zinc-plated branched coolant pipe with formed ends and brackets" },
+    { src: "/images/products/studio/yellow-zinc-branched-pipe.jpg", alt: "Yellow zinc branched coolant pipe with welded clamp brackets" },
+    { src: "/images/products/studio/zinc-flanged-pipe.jpg", alt: "Zinc-plated formed pipe with a two-hole flange and welded bracket" },
+    { src: "/images/products/studio/black-coolant-pipe.jpg", alt: "Black formed coolant pipe with a welded mounting clip" },
+    { src: "/images/products/studio/pipe-assembly.jpg", alt: "Yellow zinc coolant pipe assembly joined by welded brackets" },
+    { src: "/images/products/studio/pipe-assembly-alt.jpg", alt: "Yellow zinc-plated pipe assembly with clamp brackets" },
+    { src: "/images/products/studio/formed-pipe-flange.jpg", alt: "Black formed pipe with a two-hole mounting flange" },
+    { src: "/images/products/studio/formed-pipe-flange-reverse.jpg", alt: "Black formed pipe with two-hole mounting flange, reverse view" },
+    { src: "/images/products/studio/welded-tube-bracket.jpg", alt: "Black tubular bracket with welded cross members" },
+    { src: "/images/products/studio/tube-frame-tabs.jpg", alt: "Black square tube frame with welded, pierced mounting tabs" },
+    { src: "/images/products/studio/double-loop-tube-frame.jpg", alt: "Black double-loop tube frame with flattened, pierced mounting ends" },
+    { src: "/images/products/studio/tube-grab-rail.jpg", alt: "Black tube grab rail with flattened, pierced ends" },
   ],
 };
+
+// Filterable product gallery on /products: one tab per product family.
+// Studio product photographs (no older OEM snapshots); Rods adds one
+// shop-floor shot of finished parts, as it has a single studio photo. The first
+// photo in each family becomes the large feature tile when that tab is
+// selected, so each family leads with a high-resolution shot.
+export const productGalleryCategories: PhotoCategory[] = productCategories.map((c) => ({
+  key: c.slug,
+  label: c.title,
+}));
+
+// studio product shots, exported from the full-resolution originals
+const studioShot = (file: string, category: ProductCategory["slug"], caption: string, alt: string): GalleryPhoto => ({
+  src: `/images/products/studio/${file}.jpg`,
+  category,
+  caption,
+  alt,
+});
+
+export const productGalleryPhotos: GalleryPhoto[] = [
+  // jack assemblies
+  { src: "/images/products/showcase/showcase-1.jpg", category: "jack-assemblies", caption: "Scissor Jack Assembly", alt: "Zinc-plated scissor jack assembly with lead screw" },
+  { src: "/images/products/showcase/showcase-31.jpg", category: "jack-assemblies", caption: "Scissor Jack, Yellow Zinc", alt: "Yellow zinc scissor jack with riveted saddle, lead screw and clevis drive end" },
+  { src: "/images/products/showcase/showcase-33.jpg", category: "jack-assemblies", caption: "Scissor Jack with Formed Saddle", alt: "Zinc-plated scissor jack with formed saddle, black lead screw and eye drive end" },
+  { src: "/images/products/showcase/showcase-35.jpg", category: "jack-assemblies", caption: "Scissor Jack with Hex Drive", alt: "Zinc-plated scissor jack with formed saddle and hex drive end" },
+  { src: "/images/products/showcase/showcase-37.jpg", category: "jack-assemblies", caption: "Scissor Jack with Slotted Saddle", alt: "Zinc-plated scissor jack with slotted saddle and flat drive end" },
+  { src: "/images/products/showcase/showcase-32.jpg", category: "jack-assemblies", caption: "Scissor Jack, Angled View", alt: "Yellow zinc scissor jack from an angled view" },
+
+  // sheet metal parts
+  studioShot("cross-member-panel", "sheet-metal-parts", "Cross Member Panel", "Stamped cross member panel with formed openings and pierced holes"),
+  studioShot("pierced-side-rail", "sheet-metal-parts", "Pierced Side Rail", "Long stamped rail with embossed flanges, slots and pierced holes"),
+  studioShot("curved-reinforcement", "sheet-metal-parts", "Curved Reinforcement", "Curved stamped reinforcement with embossed ribs and mounting holes"),
+  studioShot("skid-plate", "sheet-metal-parts", "Under Guard Plate", "Stamped under guard plate with ribbed body and hole pattern"),
+  studioShot("skid-plate-studs", "sheet-metal-parts", "Guard Plate with Studs", "Stamped guard plate with welded mounting studs"),
+  studioShot("channel-rail", "sheet-metal-parts", "Channel Rail", "Tapered stamped channel rail with stiffening beads"),
+  studioShot("channel-rail-reverse", "sheet-metal-parts", "Channel Rail, Reverse", "Tapered stamped channel rail, reverse side"),
+  studioShot("stamped-brackets", "sheet-metal-parts", "Stamped Brackets", "Pair of stamped zinc-plated brackets with pierced holes and folded tabs"),
+  studioShot("coated-tank-strap", "sheet-metal-parts", "Coated Tank Strap", "Black-coated formed steel strap with mounting studs"),
+  studioShot("coated-tank-strap-alt", "sheet-metal-parts", "Coated Tank Strap, Alternate View", "Black-coated formed steel strap with mounting studs, alternate view"),
+  studioShot("heat-shield-panel", "sheet-metal-parts", "Heat Shield Panel", "Stamped heat shield panel with welded studs, flanged openings and a four-bolt port"),
+  studioShot("shield-bracket-nuts", "sheet-metal-parts", "Shield Bracket with Weld Nuts", "Deep-formed shield bracket with projection-welded nuts"),
+  studioShot("shield-bracket-reverse", "sheet-metal-parts", "Shield Bracket, Reverse", "Deep-formed shield bracket with embossed ribs, reverse side"),
+  { src: "/images/products/showcase/showcase-21.jpg", category: "sheet-metal-parts", caption: "Frame Bracket with Cut-Out", alt: "Deep-drawn frame bracket with large central cut-out and flanged edges" },
+  { src: "/images/products/showcase/showcase-9.jpg", category: "sheet-metal-parts", caption: "Stamped Sheet Metal Panel", alt: "Stamped sheet metal panel with punched mounting holes" },
+  { src: "/images/products/showcase/showcase-25.jpg", category: "sheet-metal-parts", caption: "Ribbed Support Plate", alt: "Ribbed support plate with flanged opening and embossed weld-nut boss" },
+  { src: "/images/products/showcase/showcase-2.jpg", category: "sheet-metal-parts", caption: "Hood Hinge Assembly", alt: "Zinc-plated hood hinge arm with pivot bracket" },
+  { src: "/images/products/showcase/showcase-17.jpg", category: "sheet-metal-parts", caption: "Channel Bracket", alt: "Deep-drawn channel bracket with ribbed flanges and pierced holes" },
+  { src: "/images/products/showcase/showcase-28.jpg", category: "sheet-metal-parts", caption: "Long Reinforcement Rail", alt: "Zinc-coated long reinforcement rail with pierced holes and ribbed side flanges" },
+
+  // bent rod parts
+  studioShot("bent-rods", "bent-rod-parts", "Bent Rod Hooks & Jack Handle", "Zinc-plated bent rod hooks and a jack handle with rubber grip"),
+  { src: "/images/facility/floor/bent-rod-parts-bin.jpg", category: "bent-rod-parts", caption: "Finished Bent Rods", alt: "Steel bin filled with finished bent rod parts with flattened, pierced ends" },
+
+  // formed pipe parts
+  studioShot("zinc-coolant-pipe", "formed-pipe-parts", "Branched Coolant Pipe", "Zinc-plated branched coolant pipe with formed ends and brackets"),
+  studioShot("yellow-zinc-branched-pipe", "formed-pipe-parts", "Branched Coolant Pipe, Yellow Zinc", "Yellow zinc branched coolant pipe with welded clamp brackets"),
+  studioShot("zinc-flanged-pipe", "formed-pipe-parts", "Flanged Coolant Pipe", "Zinc-plated formed pipe with a two-hole flange and welded bracket"),
+  studioShot("black-coolant-pipe", "formed-pipe-parts", "Formed Coolant Pipe", "Black formed coolant pipe with a welded mounting clip"),
+  studioShot("pipe-assembly", "formed-pipe-parts", "Coolant Pipe Assembly", "Yellow zinc coolant pipe assembly joined by welded brackets"),
+  studioShot("pipe-assembly-alt", "formed-pipe-parts", "Coolant Pipe Assembly, Alternate View", "Yellow zinc-plated pipe assembly with clamp brackets"),
+  studioShot("formed-pipe-flange", "formed-pipe-parts", "Formed Pipe with Flange", "Black formed pipe with a two-hole mounting flange"),
+  studioShot("formed-pipe-flange-reverse", "formed-pipe-parts", "Formed Pipe with Flange, Reverse", "Black formed pipe with two-hole mounting flange, reverse view"),
+  studioShot("welded-tube-bracket", "formed-pipe-parts", "Welded Tube Bracket", "Black tubular bracket with welded cross members"),
+  studioShot("tube-frame-tabs", "formed-pipe-parts", "Square Tube Frame with Tabs", "Black square tube frame with welded, pierced mounting tabs"),
+  studioShot("double-loop-tube-frame", "formed-pipe-parts", "Double-Loop Tube Frame", "Black double-loop tube frame with flattened, pierced mounting ends"),
+  studioShot("tube-grab-rail", "formed-pipe-parts", "Tube Grab Rail", "Black tube grab rail with flattened, pierced ends"),
+
+];
 
 // ---------------------------------------------------------------------------
 // Customers
@@ -502,105 +712,134 @@ export type LeadershipMember = {
 
 export const leadership: LeadershipMember[] = [
   {
-    slug: "director",
-    name: "Director Name",
-    title: "Director",
-    bio: "Add a 2-3 sentence introduction here: the Director's role at Shaheen Automotive, their background, and what they focus on.",
+    slug: "ceo",
+    name: "Mazhar Saeed Bhatti",
+    title: "Founder & CEO",
+    bio: "Add a 2-3 sentence introduction here: the CEO's role at Shaheen Automotive, their background, and what they focus on.",
     quote: undefined,
-    photo: "/images/leadership/director.jpg",
-    photoAlt: "Portrait of the Director of Shaheen Automotive (Pvt.) Ltd.",
-    isPlaceholder: true,
+    photo: "/images/leadership/director-main.jpg",
+    photoAlt: "Portrait of Mazhar Saeed Bhatti, Founder & CEO of Shaheen Automotive (Pvt.) Ltd.",
+    isPlaceholder: false,
   },
   {
-    slug: "director-2",
-    name: "Director Name 2",
-    title: "Director",
-    bio: "Add a 2-3 sentence introduction here.",
+    slug: "ceo-2",
+    name: "Azhar Saeed Bhatti (Late)",
+    title: "Founder",
+    bio: "Add a 2-3 sentence introduction here: the CEO's role at Shaheen Automotive, their background, and what they focus on.",
     quote: undefined,
-    photo: "/images/leadership/director-2.jpg",
-    photoAlt: "Portrait of a Director of Shaheen Automotive (Pvt.) Ltd.",
-    isPlaceholder: true,
-  },
-  {
-    slug: "director-3",
-    name: "Director Name 3",
-    title: "Director",
-    bio: "Add a 2-3 sentence introduction here.",
-    quote: undefined,
-    photo: "/images/leadership/director-3.jpg",
-    photoAlt: "Portrait of a Director of Shaheen Automotive (Pvt.) Ltd.",
-    isPlaceholder: true,
-  },
-  {
-    slug: "director-4",
-    name: "Director Name 4",
-    title: "Director",
-    bio: "Add a 2-3 sentence introduction here.",
-    quote: undefined,
-    photo: "/images/leadership/director-4.jpg",
-    photoAlt: "Portrait of a Director of Shaheen Automotive (Pvt.) Ltd.",
-    isPlaceholder: true,
+    photo: "/images/leadership/azhar-saeed-bhatti.jpg",
+    photoAlt: "Portrait of Azhar Saeed Bhatti, Founder of Shaheen Automotive (Pvt.) Ltd.",
+    isPlaceholder: false,
   },
   {
     slug: "director-5",
-    name: "Director Name 5",
-    title: "Director",
+    name: "Nasir Mazhar",
+    title: "Director Technical",
     bio: "Add a 2-3 sentence introduction here.",
     quote: undefined,
-    photo: "/images/leadership/director-5.jpg",
-    photoAlt: "Portrait of a Director of Shaheen Automotive (Pvt.) Ltd.",
-    isPlaceholder: true,
+    photo: "/images/leadership/board-5-new.jpg",
+    photoAlt: "Portrait of Nasir Mazhar, Director Technical of Shaheen Automotive (Pvt.) Ltd.",
+    isPlaceholder: false,
   },
   {
-    slug: "director-6",
-    name: "Director Name 6",
-    title: "Director",
+    slug: "director-3",
+    name: "Fahad Mazhar",
+    title: "Managing Director",
     bio: "Add a 2-3 sentence introduction here.",
     quote: undefined,
-    photo: "/images/leadership/director-6.jpg",
-    photoAlt: "Portrait of a Director of Shaheen Automotive (Pvt.) Ltd.",
-    isPlaceholder: true,
+    photo: "/images/leadership/board-3.jpg",
+    photoAlt: "Portrait of Fahad Mazhar, Managing Director of Shaheen Automotive (Pvt.) Ltd.",
+    isPlaceholder: false,
   },
   {
-    slug: "director-7",
-    name: "Director Name 7",
-    title: "Director",
+    slug: "director-4",
+    name: "Bilal Azhar",
+    title: "Director IT & HSE",
     bio: "Add a 2-3 sentence introduction here.",
     quote: undefined,
-    photo: "/images/leadership/director-7.jpg",
-    photoAlt: "Portrait of a Director of Shaheen Automotive (Pvt.) Ltd.",
-    isPlaceholder: true,
+    photo: "/images/leadership/board-4.jpg",
+    photoAlt: "Portrait of Bilal Azhar, Director IT & HSE of Shaheen Automotive (Pvt.) Ltd.",
+    isPlaceholder: false,
   },
   {
-    slug: "director-8",
-    name: "Director Name 8",
-    title: "Director",
+    slug: "director-2",
+    name: "Salman Azhar",
+    title: "Director Marketing & Finance",
     bio: "Add a 2-3 sentence introduction here.",
     quote: undefined,
-    photo: "/images/leadership/director-8.jpg",
-    photoAlt: "Portrait of a Director of Shaheen Automotive (Pvt.) Ltd.",
-    isPlaceholder: true,
+    photo: "/images/leadership/board-2.jpg",
+    photoAlt: "Portrait of Salman Azhar, Director Marketing & Finance of Shaheen Automotive (Pvt.) Ltd.",
+    isPlaceholder: false,
   },
   {
-    slug: "director-9",
-    name: "Director Name 9",
-    title: "Director",
+    slug: "director-1",
+    name: "Asad Mazhar",
+    title: "Director HR, Corporate & Legal Affairs",
     bio: "Add a 2-3 sentence introduction here.",
     quote: undefined,
-    photo: "/images/leadership/director-9.jpg",
-    photoAlt: "Portrait of a Director of Shaheen Automotive (Pvt.) Ltd.",
-    isPlaceholder: true,
+    photo: "/images/leadership/board-1.jpg",
+    photoAlt: "Portrait of Asad Mazhar, Director HR, Corporate & Legal Affairs of Shaheen Automotive (Pvt.) Ltd.",
+    isPlaceholder: false,
+  },
+];
+
+/** Management team: shown as its own grid after the board of directors. Same fields as `leadership`; `bio` is not displayed. */
+export const managementTeam: LeadershipMember[] = [
+  {
+    slug: "management-1",
+    name: "Muhammad Abbas",
+    title: "General Manager (Plant)",
+    bio: "",
+    photo: "/images/leadership/management-1.jpg",
+    photoAlt: "Portrait of Muhammad Abbas, General Manager (Plant) of Shaheen Automotive (Pvt.) Ltd.",
+    isPlaceholder: false,
   },
   {
-    slug: "director-10",
-    name: "Director Name 10",
-    title: "Director",
-    bio: "Add a 2-3 sentence introduction here.",
-    quote: undefined,
-    photo: "/images/leadership/director-10.jpg",
-    photoAlt: "Portrait of a Director of Shaheen Automotive (Pvt.) Ltd.",
-    isPlaceholder: true,
+    slug: "management-6",
+    name: "Naveed Ali",
+    title: "Senior Manager QA/QC",
+    bio: "",
+    photo: "/images/leadership/management-6.jpg",
+    photoAlt: "Portrait of Naveed Ali, Senior Manager QA/QC of Shaheen Automotive (Pvt.) Ltd.",
+    isPlaceholder: false,
   },
+   {
+    slug: "management-3",
+    name: "Imran Hussain",
+    title: "Manager Tool & Dies",
+    bio: "",
+    photo: "/images/leadership/management-3.jpg",
+    photoAlt: "Portrait of Imran Hussain, Manager Tool & Dies of Shaheen Automotive (Pvt.) Ltd.",
+    isPlaceholder: false,
+  },
+  {
+    slug: "management-4",
+    name: "Mohsin Abrar",
+    title: "Manager Design & Development",
+    bio: "",
+    photo: "/images/leadership/management-4.jpg",
+    photoAlt: "Portrait of Mohsin Abrar, Manager Design & Development of Shaheen Automotive (Pvt.) Ltd.",
+    isPlaceholder: false,
+  },
+  {
+    slug: "management-5",
+    name: "Murad Muhammad Khan",
+    title: "Deputy Manager Production",
+    bio: "",
+    photo: "/images/leadership/management-5.jpg",
+    photoAlt: "Portrait of Murad Muhammad Khan, Deputy Manager Production of Shaheen Automotive (Pvt.) Ltd.",
+    isPlaceholder: false,
+  },
+  {
+    slug: "management-2",
+    name: "Abdul Salam Qureshi",
+    title: "Manager Finance & Accounts, HR / Admin",
+    bio: "",
+    photo: "/images/leadership/management-2.jpg",
+    photoAlt: "Portrait of Abdul Salam Qureshi, Manager Finance & Accounts, HR / Admin of Shaheen Automotive (Pvt.) Ltd.",
+    isPlaceholder: false,
+  },
+
 ];
 
 export const brand = {
@@ -614,60 +853,49 @@ export const brand = {
 // Gallery
 // ---------------------------------------------------------------------------
 export type PhotoCategory = { key: string; label: string };
-export type GalleryCategory = { key: "sheet-metal" | "hinges" | "jacks"; label: string };
+export type GalleryCategory = { key: "press-shop" | "cnc-machining" | "welding-finishing" | "quality-stores"; label: string };
 
 export const galleryCategories: GalleryCategory[] = [
-  { key: "sheet-metal", label: "Sheet Metal Panels" },
-  { key: "hinges", label: "Hinges" },
-  { key: "jacks", label: "Jack Assemblies" },
+  { key: "press-shop", label: "Press Shop" },
+  { key: "cnc-machining", label: "CNC Machining" },
+  { key: "welding-finishing", label: "Welding & Finishing" },
+  { key: "quality-stores", label: "Quality & Stores" },
 ];
 
-export type GalleryPhoto = { src: string; alt: string; caption: string; category: string };
+export type GalleryPhoto = {
+  src: string;
+  alt: string;
+  caption: string;
+  category: string;
+  /** blur-up placeholder, attached server-side with withBlur() from @/lib/image-meta */
+  blurDataURL?: string;
+};
 
-const galleryPhoto = (n: number, category: GalleryCategory["key"], caption: string, alt: string): GalleryPhoto => ({
-  src: `/images/products/showcase/showcase-${n}.jpg`,
+/** Plant photography reused from /images/facility/floor. */
+const galleryPhoto = (file: string, category: GalleryCategory["key"], caption: string, alt: string): GalleryPhoto => ({
+  src: `/images/facility/floor/${file}.jpg`,
   category,
   caption,
   alt,
 });
 
 export const galleryPhotos: GalleryPhoto[] = [
-  galleryPhoto(1, "jacks", "Scissor Jack Assembly", "Zinc-plated scissor jack assembly with lead screw"),
-  galleryPhoto(9, "sheet-metal", "Stamped Sheet Metal Panel", "Stamped sheet metal panel with punched mounting holes"),
-  galleryPhoto(2, "hinges", "Hood Hinge Assembly", "Zinc-plated hood hinge arm with pivot bracket"),
-  galleryPhoto(5, "hinges", "Hinge Assembly — Yellow Zinc", "Yellow zinc hinge arm with pivot pin and base bracket"),
-  galleryPhoto(10, "sheet-metal", "Bracket Panel with Weld Nuts", "Sheet metal bracket panel with projection-welded nuts"),
-  galleryPhoto(3, "hinges", "Hood Hinge — Alternate View", "Zinc-plated hood hinge assembly from an alternate angle"),
-  galleryPhoto(7, "sheet-metal", "Reinforcement Panel", "Formed sheet metal reinforcement panel"),
-  galleryPhoto(4, "hinges", "Hinge Arm with Mounting Bracket", "Formed hinge arm with welded mounting bracket"),
-  galleryPhoto(6, "hinges", "Hinge Arm and Base Plate", "Yellow zinc hinge arm and base plate"),
-  galleryPhoto(8, "sheet-metal", "Reinforcement Panel — Reverse", "Sheet metal reinforcement panel, reverse side"),
-  galleryPhoto(31, "jacks", "Scissor Jack — Yellow Zinc", "Yellow zinc scissor jack with riveted saddle, lead screw and clevis drive end"),
-  galleryPhoto(33, "jacks", "Scissor Jack with Formed Saddle", "Zinc-plated scissor jack with formed saddle, black lead screw and eye drive end"),
-  galleryPhoto(35, "jacks", "Scissor Jack with Hex Drive", "Zinc-plated scissor jack with formed saddle and hex drive end"),
-  galleryPhoto(32, "jacks", "Scissor Jack — Yellow Zinc, Angled View", "Yellow zinc scissor jack from an angled view"),
-  galleryPhoto(34, "jacks", "Scissor Jack with Formed Saddle — Angled View", "Zinc-plated scissor jack with eye drive end from an angled view"),
-  galleryPhoto(36, "jacks", "Scissor Jack with Hex Drive — Angled View", "Zinc-plated scissor jack with hex drive end from an angled view"),
-  galleryPhoto(37, "jacks", "Scissor Jack with Slotted Saddle", "Zinc-plated scissor jack with slotted saddle and flat drive end"),
-  galleryPhoto(11, "sheet-metal", "Mounting Panel with Weld Nuts", "Formed sheet metal mounting panel with embossed ribs and projection-welded nuts"),
-  galleryPhoto(13, "sheet-metal", "Flanged Mounting Plate", "Flanged stamped mounting plate with central cut-out and four bolt holes"),
-  galleryPhoto(15, "sheet-metal", "Bracket with Welded Stud", "Formed sheet metal bracket with welded stud and slotted mounting tabs"),
-  galleryPhoto(17, "sheet-metal", "Channel Bracket", "Deep-drawn channel bracket with ribbed flanges and pierced holes"),
-  galleryPhoto(19, "sheet-metal", "Reinforcement Bracket with Weld Nuts", "Formed reinforcement bracket with weld nuts and spot-welded patch plate"),
-  galleryPhoto(12, "sheet-metal", "Mounting Panel — Reverse", "Sheet metal mounting panel, reverse side showing weld nut flanges"),
-  galleryPhoto(14, "sheet-metal", "Flanged Mounting Plate — Alternate View", "Flanged stamped mounting plate from an alternate angle"),
-  galleryPhoto(16, "sheet-metal", "Bracket with Welded Stud — Reverse", "Formed sheet metal bracket with welded stud, reverse side"),
-  galleryPhoto(18, "sheet-metal", "Channel Bracket with Weld Nut", "Deep-drawn channel bracket with projection-welded nut"),
-  galleryPhoto(20, "sheet-metal", "Reinforcement Bracket — Alternate View", "Formed reinforcement bracket with weld nuts from an alternate angle"),
-  galleryPhoto(21, "sheet-metal", "Frame Bracket with Cut-Out", "Deep-drawn frame bracket with large central cut-out and flanged edges"),
-  galleryPhoto(23, "sheet-metal", "Formed Mounting Plate", "Stamped mounting plate with U-shaped embossing, extruded hole and folded tabs"),
-  galleryPhoto(25, "sheet-metal", "Ribbed Support Plate", "Ribbed support plate with flanged opening and embossed weld-nut boss"),
-  galleryPhoto(28, "sheet-metal", "Long Reinforcement Rail", "Zinc-coated long reinforcement rail with pierced holes and ribbed side flanges"),
-  galleryPhoto(30, "sheet-metal", "Channel Strip with Weld Nuts", "Formed channel strip with projection-welded hex nuts and embossed stiffeners"),
-  galleryPhoto(22, "sheet-metal", "Frame Bracket — Reverse", "Deep-drawn frame bracket with central cut-out, reverse side"),
-  galleryPhoto(24, "sheet-metal", "Formed Mounting Plate — Alternate View", "Stamped mounting plate with U-shaped embossing from an alternate angle"),
-  galleryPhoto(27, "sheet-metal", "Ribbed Support Plate with Weld Nut", "Ribbed support plate with projection-welded square nut"),
-  galleryPhoto(29, "sheet-metal", "Channel Strip — Reverse", "Formed channel strip with embossed stiffeners, reverse side"),
+  galleryPhoto("press-shop-hall", "press-shop", "The Press Shop", "Wide view of the press shop hall with rows of presses, operators and stacks of sheet metal blanks"),
+  galleryPhoto("cnc-machining-bay", "cnc-machining", "CNC Machining Bay", "Row of CNC vertical machining centres on a green epoxy floor, with a DMTG XD-40A in front"),
+  galleryPhoto("welding-and-spot-welding-shop", "welding-finishing", "Welding and Spot Welding Shop", "Welding shop with MIG welding benches and a row of spot welding machines"),
+  galleryPhoto("qa-qc-lab", "quality-stores", "QA & QC Lab", "Entrance to the QA & QC lab beside the production office, with racks of finished parts outside"),
+  galleryPhoto("komatsu-press", "press-shop", "Komatsu 200 Press", "Komatsu straight-side press with a die set in the bed and die racks alongside"),
+  galleryPhoto("primed-steel-frames", "welding-finishing", "Primed Steel Frames", "Rows of welded steel frames finished in red primer on the shop floor"),
+  galleryPhoto("warehouse-bay", "quality-stores", "Warehouse Bay", "Warehouse bay with stacked SAPL part bins, wire cages of formed parts and a delivery truck"),
+  galleryPhoto("chin-fong-press", "press-shop", "Chin Fong Press No. 42", "Chin Fong straight-side press, machine number 42, with a die set in the bed"),
+  galleryPhoto("cnc-machining-centre", "cnc-machining", "DMTG XD-40A Machining Centre", "DMTG XD-40A vertical machining centre, CNC 1, with its control panel beside a second machining centre"),
+  galleryPhoto("surface-activation-tank", "welding-finishing", "Surface Activation Tank", "Motor-driven perforated barrel sitting in a surface activation tank"),
+  galleryPhoto("storage-hall-bins", "quality-stores", "Storage Hall", "Storage hall with colour-coded steel bins in front of parts racks"),
+  galleryPhoto("straight-side-press-front", "press-shop", "Cowlishaw Walker Press", "Cowlishaw Walker straight-side press flanked by bins of formed parts"),
+  galleryPhoto("surface-activation-line", "welding-finishing", "Barrel Tanks", "Two barrel tanks against the wall under caustic hazard and surface activation signs"),
+  galleryPhoto("storage-area", "quality-stores", "Storage Area", "Entrance to the storage area with steel bins and part trolleys"),
+  galleryPhoto("heavy-press", "press-shop", "Heavy Press", "Large straight-side press with its bolster exposed, cordoned off with safety tape"),
+  galleryPhoto("bent-rod-parts-bin", "quality-stores", "Bent Rod Parts", "Steel bin filled with bent rod parts with flattened, pierced ends"),
 ];
 
 // ---------------------------------------------------------------------------
@@ -687,24 +915,24 @@ export const floorAreas: FloorArea[] = [
     label: "Press Shop",
     number: "01",
     body: "Lines of mechanical power presses pierce, trim and form sheet metal and pipe parts. Operators load every stroke by hand and stack finished parts at the station for the next operation.",
-    cover: "/images/facility/floor/press-line.jpg",
-    coverAlt: "Operators running a line of mechanical power presses in the SAPL press shop",
+    cover: "/images/facility/floor/enhanced/press-line-ppe.jpg",
+    coverAlt: "Operators in hard hats and safety vests running a line of mechanical power presses in the SAPL press shop",
   },
   {
     key: "mig-welding",
     label: "MIG Welding",
     number: "02",
     body: "Welders join formed pipe assemblies on dedicated fixtures that hold every tube in position, so each assembly is welded to the same geometry, batch after batch.",
-    cover: "/images/facility/floor/mig-welding-arc.jpg",
-    coverAlt: "Welder behind a hand shield MIG welding a pipe assembly held in a fixture",
+    cover: "/images/facility/floor/enhanced/mig-welding-fixture.jpg",
+    coverAlt: "Welder in a cap and safety glasses MIG welding a pipe assembly on a fixture",
   },
   {
     key: "spot-welding",
     label: "Spot Welding",
     number: "03",
     body: "Water-cooled pedestal spot welders fix brackets and tabs to pipe and sheet metal parts, each station set up for the part it runs.",
-    cover: "/images/facility/floor/spot-welding-sparks.jpg",
-    coverAlt: "Gloved operator spot welding a bracket between the electrodes of a pedestal welder",
+    cover: "/images/facility/floor/enhanced/welding-and-spot-welding-shop.jpg",
+    coverAlt: "Welding shop with MIG welding benches and a row of pedestal spot welding machines",
   },
 ];
 
@@ -726,7 +954,6 @@ const floorPhoto = (file: string, category: string, caption: string, alt: string
 });
 
 export const floorPhotos: GalleryPhoto[] = [
-  floorPhoto("press-line", "press-shop", "Power Press Line", "Operators running a line of mechanical power presses in the SAPL press shop"),
   floorPhoto("mig-welding-sparks", "mig-welding", "Welding a Pipe Assembly", "Sparks flying as a welder MIG welds a pipe assembly held in a fixture"),
   floorPhoto("spot-welding-sparks", "spot-welding", "Spot Welding a Bracket", "Gloved operator spot welding a bracket between the electrodes of a pedestal welder"),
   floorPhoto("mig-welding-fixture", "mig-welding", "Pipe Assembly on the Fixture", "Welder in a cap and safety glasses welding a pipe assembly on a fixture"),
