@@ -215,11 +215,11 @@
     "hash": "bbd9392efdc1522c",
     "blurDataURL": "data:image/webp;base64,UklGRs4AAABXRUJQVlA4WAoAAAAQAAAACQAACQAAQUxQSGUAAAAAAAVULt6dK04AAQEv66KdqdvYBABll5WTZiVVqsRRI6fz/9StHE3eSHHf//z39tFJoZtz0vf3tEEZPqHJX5mmuYEkAEPLPiEVq5WwRzqU21kAC7Jc48TG1hQAAQA0Fn3BNVIAAQBWUDggQgAAAPABAJ0BKgoACgADgFolqAJ0AQKe4Jx2gAD+v7sAmsccESZPVBycEBmf5JfLq9UO5L7d8+2bvv/i0P8pHa/wVydAAA=="
   },
-  "/images/clients/agriauto.png": {
+  "/images/clients/agriauto-industries.png": {
     "width": 480,
     "height": 200,
-    "hash": "414f52067fdc94d8",
-    "blurDataURL": "data:image/webp;base64,UklGRoYAAABXRUJQVlA4WAoAAAAQAAAACQAAAwAAQUxQSCkAAAAAAAAABDFMDgABAAABAHp7focAAQAAAgCNraWPAAEAAAEACkdJDAABAABWUDggNgAAAHABAJ0BKgoABAADgFolpAACHOo0AP4FjaLw+N9EhTFa+tT1Ceu4h1kitB2xy/8fz+VkAAAAAA=="
+    "hash": "a40de9eac1cf1652",
+    "blurDataURL": "data:image/webp;base64,UklGRpoAAABXRUJQVlA4WAoAAAAQAAAACQAAAwAAQUxQSCkAAAAAAAAAAAAAAAAAAAEAZJ1STD9INwAAMsGVSFhLUTwAAAgDAAAEAwICAABWUDggSgAAANABAJ0BKgoABAADgFolsAJ0AOnzUUjAAP5BCEhAwuG4Of/MkQCSgaMXPFQci7qxNOTV4Va4HsRJ/4Jjuu1S+41NW+w18//kAAAA"
   },
   "/images/clients/changan.png": {
     "width": 480,
@@ -233,11 +233,17 @@
     "hash": "ade9c378fa9e2e1b",
     "blurDataURL": "data:image/webp;base64,UklGRoYAAABXRUJQVlA4WAoAAAAQAAAACQAAAwAAQUxQSCkAAAABYBvJdpOTa8E2pEh4G3kyhoz+ExUREQlGUMZ32p7jj2Db1K/584ChBABWUDggNgAAANABAJ0BKgoABAADgFoloAJ0ANz2vcAAAPabawIthI6tfWfMD2i8lLn/ac3OdVTyn1O0lpAAAA=="
   },
-  "/images/clients/kia.png": {
+  "/images/clients/honda.png": {
     "width": 480,
     "height": 200,
-    "hash": "cb8bfdfe1c8c69c9",
-    "blurDataURL": "data:image/webp;base64,UklGRpAAAABXRUJQVlA4WAoAAAAQAAAACQAAAwAAQUxQSCkAAAAAAAAAAAAAAAAAAAEADIN/WCcTAAACAFjMoIhGJgABAAEFAAEAAAAAAABWUDggQAAAALABAJ0BKgoABAADgFolsAJ0AN0YW4AA4ll52MPykqK9QfGC6p1/ydkiiS6mJu948r7l28XlS0j/eV91zP/EAAA="
+    "hash": "08750c6195b33922",
+    "blurDataURL": "data:image/webp;base64,UklGRpQAAABXRUJQVlA4WAoAAAAQAAAACQAAAwAAQUxQSCgAAAABYBTbVptLL1b6lkEGaEzTmKxiIiISCGtHAEl+v44EqM+R+dWsaWgAVlA4IEYAAADQAQCdASoKAAQAA4BaJbACdAELX5EEAADfy6gDHY6vA2qcDPJFPDzdl4qiJ4qPoVd/yWQO5j/VvBIvWGjmoT/UlwX+4AAA"
+  },
+  "/images/clients/kia-logo.png": {
+    "width": 480,
+    "height": 200,
+    "hash": "e288ff5b28873c5e",
+    "blurDataURL": "data:image/webp;base64,UklGRmgAAABXRUJQVlA4WAoAAAAQAAAACQAAAwAAQUxQSCkAAAAAAAAAAQoBAAEAAABHSkd+ag2UZwAAYY16YoRLWUkAAAEEAgUHBQAAAABWUDggGAAAADABAJ0BKgoABAADgFolpAADcAD+9eDAAA=="
   },
   "/images/clients/nissan.png": {
     "width": 480,
@@ -250,6 +256,12 @@
     "height": 200,
     "hash": "6cc907161b9ab266",
     "blurDataURL": "data:image/webp;base64,UklGRqQAAABXRUJQVlA4WAoAAAAQAAAACQAAAwAAQUxQSCkAAAAAAAAAAFJRAAAAAAABABno3REAAQAAAQAQsaIJAAEAAAEAGE5MEgABAABWUDggVAAAAPABAJ0BKgoABAADgFolsAJ0TIABUILBAAD+gtdb/wJLlwieTZ8UU2iIhrZ+do27INelL/HdpOrrNbR3Hvybgl7LU8R/RTX+JxTsHG3/6f/Y3gIAAA=="
+  },
+  "/images/clients/thal-boshoku.png": {
+    "width": 480,
+    "height": 200,
+    "hash": "b490c981b9153a83",
+    "blurDataURL": "data:image/webp;base64,UklGRpgAAABXRUJQVlA4WAoAAAAQAAAACQAAAwAAQUxQSCkAAAAAAAACADtzVwAAAAAAAD+lhWYAAQAAAwBzkoo/AAIAAAEAMVk9DgEAAABWUDggSAAAADACAJ0BKgoABAADgFolsAJ0ugAC/367jB0AAP7pH4S/ERaAO2/GdUjV1VB+xFbU8elitt/wcmKjbw/kv6GE46JieI/RW/AAAA=="
   },
   "/images/clients/toyota.png": {
     "width": 480,

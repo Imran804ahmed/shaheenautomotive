@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { blurProps, imageSize } from "@/lib/image-meta";
+import { blurProps } from "@/lib/image-meta";
 import { ArrowUpRight, Trophy } from "@phosphor-icons/react/dist/ssr";
 import { Container } from "@/components/ui/Container";
 import { Reveal } from "@/components/ui/Reveal";
@@ -64,15 +64,17 @@ export function QualityEvidence({ awards }: { awards: Award[] }) {
                   />
                   {award.image && (
                     <div className="absolute inset-0 flex items-center justify-center p-5 pb-7">
-                      <Image
-                        src={award.image}
-                        alt={`${award.title}, ${award.awardedBy}`}
-                        // real aspect ratio, so the framed print doesn't jump when it loads
-                        {...(imageSize(award.image) ?? { width: 800, height: 800 })}
-                        sizes="(min-width: 1280px) 240px, (min-width: 1024px) 20vw, 260px"
-                        {...blurProps(award.image)}
-                        className="h-auto max-h-full w-auto max-w-full rounded-xl shadow-[0_18px_30px_-12px_rgb(0_0_0/0.45)] ring-1 ring-black/5 transition-transform duration-700 ease-out group-hover:scale-[1.04] motion-reduce:transition-none"
-                      />
+                      {/* fixed 3:4 print so every card matches; wide photos (certificates) sit whole on a mat matched to their light-grey studio backdrop instead of being cropped */}
+                      <div className="relative aspect-[3/4] h-full max-w-full overflow-hidden rounded-xl bg-[linear-gradient(to_bottom,rgb(221_228_234),rgb(229_236_240))] shadow-[0_18px_30px_-12px_rgb(0_0_0/0.45)] ring-1 ring-black/5 transition-transform duration-700 ease-out group-hover:scale-[1.04] motion-reduce:transition-none">
+                        <Image
+                          src={award.image}
+                          alt={`${award.title}, ${award.awardedBy}`}
+                          fill
+                          sizes="(min-width: 1280px) 240px, (min-width: 1024px) 20vw, 260px"
+                          {...blurProps(award.image)}
+                          className="object-contain"
+                        />
+                      </div>
                     </div>
                   )}
                   <span className="spot-glow" aria-hidden="true" />

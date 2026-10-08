@@ -187,8 +187,7 @@ export function Leadership({
         {management.length > 0 && (
           <>
             <GroupHeading title="Management Team" count={management.length} />
-            {/* Four per row on desktop, narrowed so each tile matches the five-column board tiles; the trailing pair is centred. */}
-            <RevealGroup className="mx-auto mt-6 grid max-w-6xl grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-5 lg:max-w-[calc((min(100%,72rem)_-_5rem)_*_0.8_+_3.75rem)] lg:grid-cols-4 lg:[&>*:nth-child(4n+1):nth-last-child(2)]:col-start-2">
+            <RevealGroup className="mx-auto mt-6 grid max-w-6xl grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-5 lg:grid-cols-5">
               {management.map((member) => (
                 <GridCard key={member.slug} member={member} />
               ))}

@@ -27,21 +27,25 @@ const awardGroups = [
 ];
 
 function AwardCard({ award }: { award: Award }) {
-  const slug = award.image?.split("/").pop()?.replace(/\.\w+$/, "");
-  // tighter, portrait-cropped renditions of the award photos made for this grid
-  const showcase = slug && `/images/awards/showcase/${slug}.webp`;
   return (
     <figure className="card-lift group flex h-full flex-col overflow-hidden rounded-[1.5rem] border border-border-inverted bg-bg-inverted shadow-soft">
-      <div className="relative aspect-[4/5] overflow-hidden">
-        {showcase && (
-          <Image
-            src={showcase}
-            alt={`${award.title}, ${award.awardedBy}`}
-            fill
-            sizes="(min-width: 1280px) 300px, (min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
-            {...blurProps(showcase)}
-            className="object-cover transition-transform duration-700 ease-out motion-safe:group-hover:scale-[1.04]"
-          />
+      {/* light display stage, as on the home page: every award is a whole 3:4 print, never cropped */}
+      <div className="relative aspect-[4/5] overflow-hidden bg-[radial-gradient(120%_75%_at_50%_0%,#ffffff,var(--color-bg)_70%)]">
+        <div aria-hidden="true" className="absolute inset-x-10 bottom-7 h-6 rounded-[50%] bg-black/15 blur-xl" />
+        {award.image && (
+          <div className="absolute inset-0 flex items-center justify-center p-6 pb-8">
+            {/* wide or square photos sit whole on a mat matched to their light-grey studio backdrop */}
+            <div className="relative aspect-[3/4] h-full max-w-full overflow-hidden rounded-xl bg-[linear-gradient(to_bottom,rgb(221_228_234),rgb(229_236_240))] shadow-[0_18px_30px_-12px_rgb(0_0_0/0.45)] ring-1 ring-black/5 transition-transform duration-700 ease-out motion-safe:group-hover:scale-[1.04]">
+              <Image
+                src={award.image}
+                alt={`${award.title}, ${award.awardedBy}`}
+                fill
+                sizes="(min-width: 1280px) 260px, (min-width: 1024px) 28vw, (min-width: 640px) 45vw, 85vw"
+                {...blurProps(award.image)}
+                className="object-contain"
+              />
+            </div>
+          </div>
         )}
         {award.year && (
           <span className="mono-figure absolute left-3 top-3 rounded-full bg-brass px-2.5 py-1 text-[11px] font-semibold text-brass-fg shadow-soft">

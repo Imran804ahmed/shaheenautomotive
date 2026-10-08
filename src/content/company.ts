@@ -655,9 +655,10 @@ export const clients: Client[] = [
   { name: "Yamaha", logo: "/images/clients/yamaha.png", hasVerifiedExamples: true },
   { name: "Hino Pak Motors", logo: "/images/clients/hino.png", hasVerifiedExamples: false },
   { name: "Nissan", logo: "/images/clients/nissan.png", hasVerifiedExamples: false },
-  { name: "Changan", logo: "/images/clients/changan.png", hasVerifiedExamples: false },
-  { name: "Kia", logo: "/images/clients/kia.png", hasVerifiedExamples: false },
-  { name: "Agriauto Stamping Company", logo: "/images/clients/agriauto.png", hasVerifiedExamples: false },
+  { name: "Kia", logo: "/images/clients/kia-logo.png", hasVerifiedExamples: false },
+  { name: "Agriauto Industries Limited", logo: "/images/clients/agriauto-industries.png", hasVerifiedExamples: false },
+  { name: "Honda", logo: "/images/clients/honda.png", hasVerifiedExamples: false },
+  { name: "Thal Boshoku Pakistan", logo: "/images/clients/thal-boshoku.png", hasVerifiedExamples: false },
 ];
 
 export const industriesServed = [
