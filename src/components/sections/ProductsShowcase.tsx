@@ -8,14 +8,6 @@ import { blurProps } from "@/lib/image-meta";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { categoryPhotos, type ProductCategory } from "@/content/company";
 
-// One headline figure per family, taken from the category summaries.
-const categorySpec: Record<ProductCategory["slug"], { value: string; label: string }> = {
-  "jack-assemblies": { value: "Scissor", label: "Jack type" },
-  "sheet-metal-parts": { value: "15–300 T", label: "Press fleet range" },
-  "formed-pipe-parts": { value: "ø10–38 mm", label: "Pipe diameter range" },
-  "bent-rod-parts": { value: "Motorcycle", label: "Primary OEM sector" },
-};
-
 export function ProductsShowcase({ categories }: { categories: ProductCategory[] }) {
   return (
     <section className="surface-paper bg-bg py-section">
@@ -23,8 +15,8 @@ export function ProductsShowcase({ categories }: { categories: ProductCategory[]
         <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
           <SectionHeading
             eyebrow="Products"
-            title="Jacks, Sheet Metal, Rods and Pipes"
-            body="Jacks and stamped, bent and formed components built in-house, from die to dimensional inspection, for automotive, motorcycle and appliance OEMs."
+            title="Jack and Hinges, Sheet Metal, Rods and Pipes"
+            body="Jacks, hinges and stamped, bent and formed components built in-house, from die to dimensional inspection, for automotive, motorcycle and appliance OEMs."
           />
           <Reveal delay={0.1} className="shrink-0">
             <Link
@@ -80,17 +72,7 @@ export function ProductsShowcase({ categories }: { categories: ProductCategory[]
                     </div>
 
                     <div className="flex min-w-0 flex-1 flex-col px-3 pb-3 pt-5 sm:px-4 sm:pb-4">
-                      <div className="flex flex-wrap items-end justify-between gap-x-3 gap-y-1 rounded-2xl border border-border bg-bg px-4 py-3.5">
-                        <div>
-                          <div className="stat-figure whitespace-nowrap text-[clamp(1.35rem,1.1rem+1vw,1.6rem)]">{categorySpec[cat.slug].value}</div>
-                          <div className="mt-1.5 text-[10px] font-semibold uppercase tracking-[0.16em] text-fg-muted">
-                            {categorySpec[cat.slug].label}
-                          </div>
-                        </div>
-                        <span className="mono-figure shrink-0 text-[11px] text-fg-muted">{photos.length} photos</span>
-                      </div>
-
-                      <p className="mt-5 text-sm leading-relaxed text-fg-muted xl:line-clamp-4">{cat.summary}</p>
+                      <p className="text-sm leading-relaxed text-fg-muted xl:line-clamp-4">{cat.summary}</p>
 
                       <ul className="mb-6 mt-5 flex flex-wrap gap-2">
                         {cat.processTags.slice(0, 3).map((tag) => (

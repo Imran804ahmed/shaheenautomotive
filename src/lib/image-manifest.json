@@ -1,4 +1,28 @@
 {
+  "/images/awards/changan-pioneer-vendor-2021.jpg": {
+    "width": 768,
+    "height": 1024,
+    "hash": "d9f33c265b89e8b3",
+    "blurDataURL": "data:image/webp;base64,UklGRkwAAABXRUJQVlA4IEAAAADwAQCdASoKAA0AA4BaJYwAAueK/Hi2tgAA/uGJh+6y/lczoTLvrqLv7H0+csk9JXI6SCCprLkn9OpyvRs/QAAA"
+  },
+  "/images/awards/dewan-vendor-performance-2000-01.jpg": {
+    "width": 1024,
+    "height": 768,
+    "hash": "a9a3390614618ddb",
+    "blurDataURL": "data:image/webp;base64,UklGRkAAAABXRUJQVlA4IDQAAADQAQCdASoKAAgAA4BaJQBOgCFsLgstoAD2u+T5iLnYC/9YrfEnTdktGUwzVXcweL7lZAAA"
+  },
+  "/images/awards/dewan-vendors-convention-2006.jpg": {
+    "width": 768,
+    "height": 1024,
+    "hash": "00553a484036eb19",
+    "blurDataURL": "data:image/webp;base64,UklGRkAAAABXRUJQVlA4IDQAAADwAQCdASoKAA0AA4BaJYwC7AEO/1gNEoAA/uceIwjOLPy4YwjVfkCUXagK7dfITWZ2AAAA"
+  },
+  "/images/awards/edb-pak-suzuki-vendor-registration-2004.jpg": {
+    "width": 768,
+    "height": 1024,
+    "hash": "4e675715e8876438",
+    "blurDataURL": "data:image/webp;base64,UklGRkQAAABXRUJQVlA4IDgAAABwAQCdASoKAA0AA4BaJZwAAg2UMAD+63KVkvj16tn8xl4i1wFBjUxoXBPZSZR+GBVs15jLl0uEAA=="
+  },
   "/images/awards/hinopak-certificate-of-appreciation-2013.jpg": {
     "width": 1195,
     "height": 896,
@@ -41,11 +65,35 @@
     "hash": "41e8fcd3e742529f",
     "blurDataURL": "data:image/webp;base64,UklGRkgAAABXRUJQVlA4IDwAAADwAQCdASoKAA0AA4BaJYwCdADW6QrCXUAA/vI70vG0P3jbo8uw/uwkjNoGdiTHqEAxwO6ShmuVYuS5AAA="
   },
+  "/images/awards/indus-motor-participation-shield-2009.jpg": {
+    "width": 768,
+    "height": 1024,
+    "hash": "32a204c94d2294e6",
+    "blurDataURL": "data:image/webp;base64,UklGRkIAAABXRUJQVlA4IDYAAADQAQCdASoKAA0AA4BaJQBdgCHga8nRoAD+6tZDCJteL4ZTCXoe7Rq498K64QP33LpcTMdoAAA="
+  },
+  "/images/awards/indus-motor-performance-excellence-quality-2001.jpg": {
+    "width": 768,
+    "height": 1024,
+    "hash": "31f603e51acd894f",
+    "blurDataURL": "data:image/webp;base64,UklGRk4AAABXRUJQVlA4IEIAAACwAQCdASoKAA0AA4BaJQAAS6UCkSAAAP7uJSxfLi5lf5Q4VOJ3pPkuhOd5sNdNRUeiXvnlGoX/MwuYMf+5PfbYAAA="
+  },
+  "/images/awards/nexus-chevrolet-vendor-conference-2006.jpg": {
+    "width": 1024,
+    "height": 768,
+    "hash": "41b1b6dcdb7ddd9f",
+    "blurDataURL": "data:image/webp;base64,UklGRj4AAABXRUJQVlA4IDIAAADQAQCdASoKAAgAA4BaJZwAAxeeHwxrAAD+6yR5MjB6m+yhnQwXu1jIcYP10p0h7NAAAA=="
+  },
   "/images/awards/paapam-paps-participation-2000.jpg": {
     "width": 896,
     "height": 1195,
     "hash": "4dc7defa0d764267",
     "blurDataURL": "data:image/webp;base64,UklGRkwAAABXRUJQVlA4IEAAAADQAQCdASoKAA0AA4BaJYwAAlwnIG+9sAD+VbX1cdLmYxRwoX+ZtQzTYwSReR6FjAeGmNcm+gKSdFAfurzIA4AA"
+  },
+  "/images/awards/pak-suzuki-appreciation-yield-improvement-2013.jpg": {
+    "width": 1024,
+    "height": 768,
+    "hash": "e81656693c79b5cd",
+    "blurDataURL": "data:image/webp;base64,UklGRi4AAABXRUJQVlA4ICIAAABQAQCdASoKAAgAA4BaJZwABAAAAP7wfP+5MGej8/sKwAAA"
   },
   "/images/awards/pak-suzuki-factory-management-training-2017.jpg": {
     "width": 896,
@@ -83,11 +131,23 @@
     "hash": "9dd39ab13cb1e97a",
     "blurDataURL": "data:image/webp;base64,UklGRk4AAABXRUJQVlA4IEIAAADQAQCdASoKAA0AA4BaJQBOgBug0MlggAD+sj/MBxZ5mALpxAHmfPjK0o42bTBgfXUEUIv3DoykBO+QTHBNjqoQAAA="
   },
+  "/images/awards/pak-suzuki-value-engineering-training-2015.jpg": {
+    "width": 1024,
+    "height": 768,
+    "hash": "0d57ecc8856cf399",
+    "blurDataURL": "data:image/webp;base64,UklGRkgAAABXRUJQVlA4IDwAAADQAQCdASoKAAgAA4BaJZQCw7DHfaIyAAD5Ui/Bst2f58GsZgbq6o3QPghr0vazWvk4JBHvahD0RZ8cgAA="
+  },
   "/images/awards/pak-suzuki-vendor-appreciation-2010.jpg": {
     "width": 896,
     "height": 1195,
     "hash": "ac31ffdf711892e8",
     "blurDataURL": "data:image/webp;base64,UklGRl4AAABXRUJQVlA4IFIAAADwAQCdASoKAA0AA4BaJQBOgCIft0/8gIAA/rgNh9Ibmd4hAPzP9eKCVn2anGHFXr3uOOOQaOmkFPHljkcUuCJ7tRjs0Vm5wLd8KE4wUzWkgAAA"
+  },
+  "/images/awards/pak-suzuki-vendor-special-award-1998-2000.jpg": {
+    "width": 768,
+    "height": 1024,
+    "hash": "46b3a32b6ac067ce",
+    "blurDataURL": "data:image/webp;base64,UklGRkoAAABXRUJQVlA4ID4AAADwAQCdASoKAA0AA4BaJQBOgCFr5o6B3IAA/so4uwiaLby3jPaycVyIf1xQCY+AZkQpWx9vHBtbfZXFKFgAAA=="
   },
   "/images/awards/showcase/hinopak-certificate-of-appreciation-2013.webp": {
     "width": 960,
@@ -275,6 +335,12 @@
     "hash": "4aafb5849fd442b6",
     "blurDataURL": "data:image/webp;base64,UklGRo4AAABXRUJQVlA4WAoAAAAQAAAACQAAAwAAQUxQSCcAAAABYFvbtoz9Z3qRikUzkXKUoAOVaDUigmAYBYi+H6jX+1w9pOmejw4AVlA4IEAAAADQAQCdASoKAAQAA4BaJbACdADc+ikSgADylfZrdk1n4DvTrr/7AUESGPzmpq1707OIHgPeshdX86ULX0oTgAAA"
   },
+  "/images/facility/exterior/sapl-plant-front.jpg": {
+    "width": 1264,
+    "height": 842,
+    "hash": "d2dc3c896ca2b239",
+    "blurDataURL": "data:image/webp;base64,UklGRkgAAABXRUJQVlA4IDwAAADQAQCdASoKAAcAA4BaJZQCdADhhrUKkAD+tsd/tLk65mHqEYYIfG1LqUQ0N3GcmemWNDVT7KdysQm+AAA="
+  },
   "/images/facility/exterior/shaheen-plant-exterior.webp": {
     "width": 1264,
     "height": 842,
@@ -317,6 +383,12 @@
     "hash": "0bc746cc6c0d13d0",
     "blurDataURL": "data:image/webp;base64,UklGRlIAAABXRUJQVlA4IEYAAAAQAgCdASoKAAcAA4BaJQBOgMWb3wDXm1wAAPynb0aPzMjuyQNls7NcHxdFxKZnZX6qLJCLH28Kiq02toJ7Z60iTm2SDgAA"
   },
+  "/images/facility/floor/cnc-pipe-bender-operator.jpg": {
+    "width": 1264,
+    "height": 843,
+    "hash": "37739b421649b3b7",
+    "blurDataURL": "data:image/webp;base64,UklGRlAAAABXRUJQVlA4IEQAAADwAQCdASoKAAcAA4BaJYwC7ADHz+Nu3gAA/LKCJGwLFZnYcbAqMhd/3aZdDPzud3y+sQqxxX55//oyzhM11afZagAAAA=="
+  },
   "/images/facility/floor/enhanced/jack-assembly-hero.jpg": {
     "width": 843,
     "height": 1264,
@@ -352,6 +424,12 @@
     "height": 1202,
     "hash": "83a6681c3146b7cd",
     "blurDataURL": "data:image/webp;base64,UklGRlIAAABXRUJQVlA4IEYAAADwAQCdASoKAAcAA4BaJbACdAD0SBm0r8AA/sYHA0ee7Onf3C2sgjWACdcOfhv+6eMtUNX3Ft8jsQUBkFyIvWK3oSxHGWwA"
+  },
+  "/images/facility/floor/faro-arm-inspection.jpg": {
+    "width": 896,
+    "height": 1191,
+    "hash": "2f3f824e352c9f7f",
+    "blurDataURL": "data:image/webp;base64,UklGRmYAAABXRUJQVlA4IFoAAACwAQCdASoKAA0AA4BaJYwAAp11atMAAP7iSNkC+F9i9/vAH2aVJxnPeEPQXum8+Osmj6eSU2XOOrEYM3OVtxiSKp+mEcNd4QGekVcrEXlO4A2QT9AB8gb9AAA="
   },
   "/images/facility/floor/heavy-press.jpg": {
     "width": 1336,
@@ -652,6 +730,12 @@
     "height": 1676,
     "hash": "7925c49435c8e015",
     "blurDataURL": "data:image/webp;base64,UklGRkwAAABXRUJQVlA4IEAAAADwAQCdASoKAA4AA4BaJZQC7AED/RfOEAAA/ujxKiTIZR69YxiXWnJpsIRKsP1+UOahilhXXcpaweEDbMvkTYAA"
+  },
+  "/images/leadership/board-4-new.jpg": {
+    "width": 880,
+    "height": 1189,
+    "hash": "b6f61c92283448fd",
+    "blurDataURL": "data:image/webp;base64,UklGRkoAAABXRUJQVlA4ID4AAAAwAgCdASoKAA0AA4BaJZwAD4AO6827Vq57IAD+zxaSy/ggkKranUjm9Uh457mVbe64hMDOozySdF2a80AAAA=="
   },
   "/images/leadership/board-4.jpg": {
     "width": 1200,

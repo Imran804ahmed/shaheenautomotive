@@ -6,7 +6,7 @@ import { Container } from "@/components/ui/Container";
 import { Reveal } from "@/components/ui/Reveal";
 import { Button } from "@/components/ui/Button";
 import { PageHeader } from "@/components/sections/PageHeader";
-import { productCategories, categoryPhotos, productPrograms } from "@/content/company";
+import { productCategories, categoryPhotos } from "@/content/company";
 
 type RouteParams = { slug: string };
 
@@ -68,15 +68,7 @@ export default async function ProductCategoryPage({
 
       <section className="bg-bg py-section-sm">
         <Container>
-          <Reveal>
-            <h2 className="text-2xl font-semibold tracking-tight text-fg sm:text-3xl">
-              Component examples
-            </h2>
-            <p className="mt-2 max-w-xl text-sm leading-relaxed text-fg-muted">
-              Photographed components from our OEM production programmes and shop floor, grouped here by product family.
-            </p>
-          </Reveal>
-          <div className="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {photos.map((photo) => (
               <Reveal key={photo.src} className="overflow-hidden rounded-sm border border-border bg-bg-elevated shadow-soft">
                 <div className="relative aspect-[4/3] w-full">
@@ -88,39 +80,6 @@ export default async function ProductCategoryPage({
                     {...blurProps(photo.src)}
                     className="object-cover"
                   />
-                </div>
-              </Reveal>
-            ))}
-          </div>
-        </Container>
-      </section>
-
-      <section className="rounded-section bg-bg-elevated py-section-sm shadow-soft">
-        <Container>
-          <Reveal>
-            <h2 className="text-2xl font-semibold tracking-tight text-fg sm:text-3xl">
-              Named parts referenced in our company profile
-            </h2>
-            <p className="mt-2 max-w-2xl text-sm leading-relaxed text-fg-muted">
-              These part names are drawn directly from SAPL&apos;s company profile across our OEM programmes. Exact
-              part-to-photograph pairing has not been re-confirmed since the profile was produced, so names are
-              listed independently of the photographs above.
-            </p>
-          </Reveal>
-          <div className="mt-6 grid gap-4 sm:gap-6 md:grid-cols-3">
-            {productPrograms.map((program) => (
-              <Reveal key={program.oemSlug}>
-                <div className="rounded-sm border border-border bg-bg p-6">
-                  <div className="-ml-3 flex h-12 items-center">
-                    <Image src={program.logo} alt={program.oemName} width={480} height={200} sizes="115px" className="h-12 w-auto" />
-                  </div>
-                  <ul className="mt-4 space-y-2">
-                    {program.namedParts.map((part) => (
-                      <li key={part} className="text-sm text-fg-muted">
-                        {part}
-                      </li>
-                    ))}
-                  </ul>
                 </div>
               </Reveal>
             ))}

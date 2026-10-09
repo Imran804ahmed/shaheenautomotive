@@ -71,7 +71,7 @@ export function HeroScene() {
           />
           <div className="absolute inset-0 bg-gradient-to-t from-bg-inverted/80 via-transparent to-transparent" />
           <p className="absolute bottom-5 right-6 hidden text-xs font-medium text-fg-inverted/85 sm:block">
-            Press shop floor, Shaheen Automotive
+            Press Shop floor, Shaheen Automotive
           </p>
         </div>
 

@@ -143,9 +143,24 @@ export function Footer() {
                 loading="lazy"
                 referrerPolicy="no-referrer-when-downgrade"
                 allowFullScreen
-                // inverted greyscale sits with the dark footer; full colour returns on hover
-                className="block h-64 w-full border-0 [filter:grayscale(1)_invert(0.9)_contrast(0.9)] transition-[filter] duration-500 group-hover:[filter:none] motion-reduce:transition-none sm:h-80"
+                // kept in full colour so Google's red pin stays easy to spot
+                className="block h-64 w-full border-0 sm:h-80"
               />
+              {/* the embed centres on the plant, so this pin's tip sits on the exact spot */}
+              <div
+                aria-hidden
+                className="pointer-events-none absolute left-1/2 top-1/2 flex -translate-x-1/2 -translate-y-full flex-col items-center"
+              >
+                <span className="mb-1 whitespace-nowrap rounded-md bg-accent px-2 py-0.5 text-[11px] font-semibold text-white shadow-md">
+                  {siteConfig.siteName}
+                </span>
+                <MapPin
+                  size={44}
+                  weight="fill"
+                  className="text-accent drop-shadow-[0_3px_4px_rgba(0,0,0,0.45)]"
+                />
+                <span className="absolute -bottom-1 size-3 animate-ping rounded-full bg-accent/60 motion-reduce:animate-none" />
+              </div>
               <a
                 href={siteConfig.contact.mapLinkUrl}
                 target="_blank"

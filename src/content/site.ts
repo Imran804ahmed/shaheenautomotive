@@ -20,7 +20,7 @@ export const siteConfig = {
     poster: "",
   },
 
-  tagline: "Jacks, Sheet Metal, Rods and Pipes for automotive and home appliance OEMs.",
+  tagline: "Jack and Hinges, Sheet Metal, Rods and Pipes for automotive and home appliance OEMs.",
 
   // ---- Contact details -------------------------------------------------
   contact: {
@@ -33,9 +33,9 @@ export const siteConfig = {
     city: "Karachi",
     country: "Pakistan",
     mapEmbedUrl:
-      "https://www.google.com/maps?q=DSU-36A+Pakistan+Steel+Industrial+Estate,+Bin+Qasim,+Karachi,+Pakistan&output=embed",
+      "https://www.google.com/maps?q=Shaheen+Automotive,+DSU-36A+Pakistan+Steel+Industrial+Estate,+Bin+Qasim,+Karachi,+Pakistan&z=16&output=embed",
     mapLinkUrl:
-      "https://www.google.com/maps/search/?api=1&query=DSU-36A+Pakistan+Steel+Industrial+Estate,+Bin+Qasim,+Karachi,+Pakistan",
+      "https://www.google.com/maps/search/?api=1&query=Shaheen+Automotive,+DSU-36A+Pakistan+Steel+Industrial+Estate,+Bin+Qasim,+Karachi,+Pakistan",
   },
 
   social: {
@@ -67,7 +67,7 @@ export const siteConfig = {
   productCategories: [
     {
       slug: "jack-assemblies",
-      label: "Jacks",
+      label: "Jack and Hinges",
     },
     {
       slug: "sheet-metal-parts",

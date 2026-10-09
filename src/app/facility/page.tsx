@@ -12,7 +12,7 @@ import { blurProps, withBlur } from "@/lib/image-meta";
 export const metadata: Metadata = {
   title: "Inside the Plant",
   description:
-    "Photographs of the Shaheen Automotive press shop, MIG welding and spot welding lines, and the operators who run them.",
+    "Photographs of the Shaheen Automotive Press Shop, MIG welding and spot welding lines, and the operators who run them.",
   alternates: { canonical: "/facility" },
 };
 
@@ -22,7 +22,7 @@ export default function FacilityPage() {
       <PageHeader
         eyebrow="Facility"
         title="Inside the plant"
-        intro="Our press shop, welding bays and spot welding lines, and the operators who run them every shift."
+        intro="Our Press Shop, welding bays and spot welding lines, and the operators who run them every shift."
       />
 
       <section className="surface-paper bg-bg py-section">

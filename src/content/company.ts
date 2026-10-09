@@ -92,13 +92,24 @@ export type Award = {
   featured?: boolean;
 };
 
-// Awards named explicitly in the "Certifications & Awards" slide text.
+// Full awards timeline, in chronological order: the awards named in the
+// "Certifications & Awards" slide text plus every photographed award below
+// (participation and training certificates are left out).
 export const namedAwards: Award[] = [
-  { title: "Overall Performance Award", awardedBy: "Toyota Indus Motor Company", year: "2014" },
+  { title: "Vendor Special Award", awardedBy: "Pak Suzuki Motor Co. Ltd.", year: "1998-2000" },
+  { title: "Vendor Performance Award", awardedBy: "Dewan Farooque Motors (Hyundai / Kia)", year: "2000-01" },
+  { title: "Performance Excellence Award, Quality", awardedBy: "Toyota Indus Motor Company", year: "2001" },
+  { title: "Delivery Award", awardedBy: "Toyota Indus Motor Company", year: "2008" },
+  { title: "Vendor Appreciation Award", awardedBy: "Pak Suzuki Motor Co. Ltd.", year: "2010" },
   { title: "Best Quality Performance Award", awardedBy: "Hino Pak Motors", year: "2012" },
-  { title: "Timely Development Award", awardedBy: "Toyota Indus Motor Company", year: "2024" },
   { title: "Zero Delay in Delivery Award", awardedBy: "Toyota Indus Motor Company", year: "2012" },
+  { title: "Special Appreciation Award", awardedBy: "Pak Suzuki Motor Co. Ltd.", year: "2012" },
   { title: "Special Effort in Development Award", awardedBy: "Pak Suzuki Motor Co. Ltd.", year: "2012-2014" },
+  { title: "Special Appreciation Award", awardedBy: "Pak Suzuki Motor Co. Ltd.", year: "2013" },
+  { title: "Appreciation Award, Yield Improvement", awardedBy: "Pak Suzuki Motor Co. Ltd.", year: "2013" },
+  { title: "Overall Performance Award", awardedBy: "Toyota Indus Motor Company", year: "2014" },
+  { title: "Pioneer Vendor Award", awardedBy: "Master Changan Motor Ltd.", year: "2021" },
+  { title: "Timely Development Award", awardedBy: "Toyota Indus Motor Company", year: "2024" },
 ];
 
 // Physical award / trophy / certificate photographs, in chronological order.
@@ -106,12 +117,36 @@ export const namedAwards: Award[] = [
 // a photo record of recognition received, independent of the list above.
 export const awardPhotos: Award[] = [
   {
+    title: "Vendor Special Award",
+    awardedBy: "Pak Suzuki Motor Co. Ltd., in recognition of special efforts in development",
+    year: "1998-2000",
+    oem: "Suzuki",
+    image: "/images/awards/pak-suzuki-vendor-special-award-1998-2000.jpg",
+    category: "award",
+  },
+  {
     title: "PAPS 2000 Participation Plaque",
     awardedBy: "PAAPAM and Export Promotion Bureau, Government of Pakistan, Pakistan Auto Parts Show, Karachi, 18-22 January 2000",
     year: "2000",
     issuer: "PAAPAM / EPB",
     image: "/images/awards/paapam-paps-participation-2000.jpg",
     category: "recognition",
+  },
+  {
+    title: "Vendor Performance Award",
+    awardedBy: "Dewan Farooque Motors Ltd. (Hyundai / Kia), for outstanding performance in timely development of components",
+    year: "2000-01",
+    oem: "Hyundai / Kia",
+    image: "/images/awards/dewan-vendor-performance-2000-01.jpg",
+    category: "award",
+  },
+  {
+    title: "Performance Excellence Award, Quality",
+    awardedBy: "Indus Motor Company Ltd. (Toyota / Daihatsu), Vendors & Suppliers Convention, Karachi, 8 September 2001",
+    year: "2001",
+    oem: "Toyota",
+    image: "/images/awards/indus-motor-performance-excellence-quality-2001.jpg",
+    category: "award",
   },
   {
     title: "Supplier Participation Plaque",
@@ -122,11 +157,35 @@ export const awardPhotos: Award[] = [
     category: "recognition",
   },
   {
+    title: "Vendor Registration Certificate",
+    awardedBy: "Engineering Development Board, Ministry of Industries & Production, with Pak Suzuki Motor Co. Ltd., registered local manufacturer of auto parts, 25 October 2004",
+    year: "2004",
+    oem: "Suzuki",
+    image: "/images/awards/edb-pak-suzuki-vendor-registration-2004.jpg",
+    category: "recognition",
+  },
+  {
+    title: "Third Vendor Conference Plaque",
+    awardedBy: "Nexus Automotive (Pvt) Ltd. (Chevrolet), in acknowledgement of participation, 7 January 2006",
+    year: "2006",
+    oem: "Chevrolet",
+    image: "/images/awards/nexus-chevrolet-vendor-conference-2006.jpg",
+    category: "recognition",
+  },
+  {
     title: "Participation Shield",
     awardedBy: "Indus Motor Company Ltd., Vendors & Suppliers Convention 2006",
     year: "2006",
     oem: "Toyota",
     image: "/images/awards/indus-motor-participation-shield-2006.jpg",
+    category: "recognition",
+  },
+  {
+    title: "Vendors' Convention Award",
+    awardedBy: "Dewan Farooque Motors Ltd. (Hyundai), Vendors' Convention 2006 \"Advancing Together\", Karachi, 17 May 2006",
+    year: "2006",
+    oem: "Hyundai / Kia",
+    image: "/images/awards/dewan-vendors-convention-2006.jpg",
     category: "recognition",
   },
   {
@@ -144,6 +203,14 @@ export const awardPhotos: Award[] = [
     year: "2008",
     oem: "Toyota",
     image: "/images/awards/indus-motor-participation-shield-2008.jpg",
+    category: "recognition",
+  },
+  {
+    title: "Participation Shield",
+    awardedBy: "Indus Motor Company Ltd., Suppliers Convention 2009 \"Peaks & Valleys\", 15 May 2009",
+    year: "2009",
+    oem: "Toyota",
+    image: "/images/awards/indus-motor-participation-shield-2009.jpg",
     category: "recognition",
   },
   {
@@ -172,6 +239,14 @@ export const awardPhotos: Award[] = [
     category: "award",
   },
   {
+    title: "Appreciation Award",
+    awardedBy: "Pak Suzuki Motor Co. Ltd., for support and cooperation in yield improvement activities",
+    year: "2013",
+    oem: "Suzuki",
+    image: "/images/awards/pak-suzuki-appreciation-yield-improvement-2013.jpg",
+    category: "award",
+  },
+  {
     title: "Certificate of Appreciation",
     awardedBy: "Hinopak Motors Ltd., Vendors' Convention, 24-25 September 2013",
     year: "2013",
@@ -188,6 +263,14 @@ export const awardPhotos: Award[] = [
     image: "/images/awards/indus-motor-overall-performance-2014.jpg",
     category: "award",
     featured: true,
+  },
+  {
+    title: "Value Analysis & Value Engineering Training Certificate",
+    awardedBy: "Pak Suzuki Motor Co. Ltd., Supply Chain Division, VA/VE Section, Cost Control Department, Mövenpick Hotel Karachi, 18 May 2015",
+    year: "2015",
+    oem: "Suzuki",
+    image: "/images/awards/pak-suzuki-value-engineering-training-2015.jpg",
+    category: "recognition",
   },
   {
     title: "Vendors' Convention Award",
@@ -222,6 +305,14 @@ export const awardPhotos: Award[] = [
     category: "recognition",
   },
   {
+    title: "Pioneer Vendor Award",
+    awardedBy: "Master Changan Motor Ltd., presented to Shaheen Automotive (Pvt.) Ltd., 17 June 2021",
+    year: "2021",
+    oem: "Changan",
+    image: "/images/awards/changan-pioneer-vendor-2021.jpg",
+    category: "award",
+  },
+  {
     title: "Certificate of Participation",
     awardedBy: "Pak Suzuki Motor Co. Ltd., Supplier Conference 2024, Baku, Azerbaijan, 18 April 2024",
     year: "2024",
@@ -254,7 +345,7 @@ export type ProcessStep = {
 export const processSteps: ProcessStep[] = [
   {
     step: 1,
-    title: "Feasibility & quotation",
+    title: "Feasibility & Quotation",
     body: "We analyze the customer's requirement through in-depth research, supported by engineering tools, and submit the best possible proposal.",
   },
   {
@@ -269,7 +360,7 @@ export const processSteps: ProcessStep[] = [
   },
   {
     step: 4,
-    title: "Trial production",
+    title: "Trial Production",
     body: "A line verification process is performed in the presence of the customer's team to confirm the facility is ready for mass production.",
   },
   {
@@ -279,7 +370,7 @@ export const processSteps: ProcessStep[] = [
   },
   {
     step: 6,
-    title: "Mass production",
+    title: "Mass Production",
     body: "Parts are delivered on time against customer orders, with consistent quality assurance throughout the production run.",
   },
 ];
@@ -358,7 +449,7 @@ export const equipmentDesignDev: Equipment[] = [
 ];
 
 export const equipmentPressShop: Equipment[] = [
-  { name: "Hydraulic press", qty: "2", detail: "150 and 250 tons" },
+  { name: "Hydraulic press", qty: "3", detail: "150 and 500 tons" },
   { name: "Mechanical press", qty: "21", detail: "15-100 tons" },
   { name: "Pneumatic press", qty: "32", detail: "25-300 tons" },
 ];
@@ -386,9 +477,8 @@ export const equipmentInspection: Equipment[] = [
 ];
 
 export const pressShopTotal = {
-  machines:
-    equipmentPressShop.reduce((sum, e) => sum + Number(e.qty ?? 0), 0),
-  tonnageRange: "15-300 tons",
+  machines: 60,
+  tonnageRange: "15-500 tons",
 };
 
 export const weldingShopTotal = {
@@ -473,11 +563,11 @@ export type ProductCategory = {
 export const productCategories: ProductCategory[] = [
   {
     slug: "jack-assemblies",
-    title: "Jacks",
-    shortTitle: "Jacks",
+    title: "Jack and Hinges",
+    shortTitle: "Jack and Hinges",
     summary:
-      "Zinc-plated scissor jacks and jack assembly parts, stamped, formed and assembled in-house, including jack assembly parts supplied to Pak Suzuki programmes.",
-    processTags: ["Stamping & forming", "Lead-screw assembly", "Zinc-plated finish", "Dimensional inspection"],
+      "Zinc-plated scissor jacks, jack assembly parts and hood hinges, stamped, formed and assembled in-house, including jack assembly parts supplied to Pak Suzuki programmes.",
+    processTags: ["Stamping & forming", "Lead-screw assembly", "Zinc-plated finish", "Dimensional Inspection"],
     heroImage: { src: "/images/facility/floor/enhanced/jack-assembly-hero.jpg", position: "center 85%" },
   },
   {
@@ -486,7 +576,7 @@ export const productCategories: ProductCategory[] = [
     shortTitle: "Sheet Metal",
     summary:
       "Stamped and formed sheet metal components, produced across a mechanical, hydraulic and pneumatic press fleet ranging from 15 to 300 tons, for automotive and home appliance OEMs.",
-    processTags: ["Stamping", "Progressive & line dies", "Welded assemblies", "Dimensional inspection"],
+    processTags: ["Stamping", "Progressive & line dies", "Welded assemblies", "Dimensional Inspection"],
     heroImage: { src: "/images/facility/floor/enhanced/press-shop-hall.jpg", position: "60% 65%" },
   },
   {
@@ -495,7 +585,7 @@ export const productCategories: ProductCategory[] = [
     shortTitle: "Rods",
     summary:
       "Bent rod components and assemblies, including stands, brackets and structural rod parts, primarily supplied to motorcycle OEM programmes.",
-    processTags: ["Rod bending", "Bracket welding", "Surface finishing", "Dimensional inspection"],
+    processTags: ["Rod bending", "Bracket welding", "Surface finishing", "Dimensional Inspection"],
     heroImage: { src: "/images/products/hero/bent-rods-bin.webp", position: "60% center" },
   },
   {
@@ -504,7 +594,7 @@ export const productCategories: ProductCategory[] = [
     shortTitle: "Pipes",
     summary:
       "NC and CNC pipe bending and hydraulic pipe flaring, producing formed pipe components across a ø10-ø38 mm diameter range for automotive applications.",
-    processTags: ["NC / CNC bending", "Pipe flaring", "Welding & assembly", "Dimensional inspection"],
+    processTags: ["NC / CNC bending", "Pipe flaring", "Welding & assembly", "Dimensional Inspection"],
     heroImage: { src: "/images/facility/floor/pipe-bending-cell.jpg", position: "70% center" },
   },
 ];
@@ -525,12 +615,15 @@ export const categoryPhotos: Record<ProductCategory["slug"], ProductPhoto[]> = {
     { src: "/images/products/showcase/showcase-32.jpg", alt: "Yellow zinc scissor jack from an angled view" },
     { src: "/images/products/showcase/showcase-34.jpg", alt: "Zinc-plated scissor jack with box saddle, black lead screw and eye drive end" },
     { src: "/images/products/showcase/showcase-36.jpg", alt: "Zinc-plated scissor jack with slotted box saddle and hex drive end" },
+    { src: "/images/products/showcase/showcase-4.jpg", alt: "Zinc-plated hood hinge with formed arm and pivot bracket" },
+    { src: "/images/products/showcase/showcase-5.jpg", alt: "Yellow zinc hood hinge with cranked arm and mounting bracket" },
+    { src: "/images/products/showcase/showcase-6.jpg", alt: "Yellow zinc hood hinge with long arm and pivot bracket" },
+    { src: "/images/products/showcase/showcase-2.jpg", alt: "Zinc-plated hood hinge arm with pivot bracket" },
   ],
   "sheet-metal-parts": [
     { src: "/images/products/showcase/showcase-9.jpg", alt: "Stamped sheet metal panel with punched mounting holes" },
     { src: "/images/products/showcase/showcase-21.jpg", alt: "Deep-drawn frame bracket with large central cut-out and flanged edges" },
     { src: "/images/products/showcase/showcase-25.jpg", alt: "Ribbed support plate with flanged opening and embossed weld-nut boss" },
-    { src: "/images/products/showcase/showcase-2.jpg", alt: "Zinc-plated hood hinge arm with pivot bracket" },
     { src: "/images/products/showcase/showcase-17.jpg", alt: "Deep-drawn channel bracket with ribbed flanges and pierced holes" },
     { src: "/images/products/showcase/showcase-28.jpg", alt: "Zinc-coated long reinforcement rail with pierced holes and ribbed side flanges" },
     { src: "/images/products/showcase/showcase-7.jpg", alt: "Stamped side member rail with pierced holes and formed end flanges" },
@@ -598,6 +691,10 @@ export const productGalleryPhotos: GalleryPhoto[] = [
   { src: "/images/products/showcase/showcase-35.jpg", category: "jack-assemblies", caption: "Scissor Jack with Hex Drive", alt: "Zinc-plated scissor jack with formed saddle and hex drive end" },
   { src: "/images/products/showcase/showcase-37.jpg", category: "jack-assemblies", caption: "Scissor Jack with Slotted Saddle", alt: "Zinc-plated scissor jack with slotted saddle and flat drive end" },
   { src: "/images/products/showcase/showcase-32.jpg", category: "jack-assemblies", caption: "Scissor Jack, Angled View", alt: "Yellow zinc scissor jack from an angled view" },
+  { src: "/images/products/showcase/showcase-4.jpg", category: "jack-assemblies", caption: "Hood Hinge", alt: "Zinc-plated hood hinge with formed arm and pivot bracket" },
+  { src: "/images/products/showcase/showcase-5.jpg", category: "jack-assemblies", caption: "Hood Hinge, Yellow Zinc", alt: "Yellow zinc hood hinge with cranked arm and mounting bracket" },
+  { src: "/images/products/showcase/showcase-6.jpg", category: "jack-assemblies", caption: "Hood Hinge, Long Arm", alt: "Yellow zinc hood hinge with long arm and pivot bracket" },
+  { src: "/images/products/showcase/showcase-2.jpg", category: "jack-assemblies", caption: "Hood Hinge Assembly", alt: "Zinc-plated hood hinge arm with pivot bracket" },
 
   // sheet metal parts
   studioShot("cross-member-panel", "sheet-metal-parts", "Cross Member Panel", "Stamped cross member panel with formed openings and pierced holes"),
@@ -616,7 +713,6 @@ export const productGalleryPhotos: GalleryPhoto[] = [
   { src: "/images/products/showcase/showcase-21.jpg", category: "sheet-metal-parts", caption: "Frame Bracket with Cut-Out", alt: "Deep-drawn frame bracket with large central cut-out and flanged edges" },
   { src: "/images/products/showcase/showcase-9.jpg", category: "sheet-metal-parts", caption: "Stamped Sheet Metal Panel", alt: "Stamped sheet metal panel with punched mounting holes" },
   { src: "/images/products/showcase/showcase-25.jpg", category: "sheet-metal-parts", caption: "Ribbed Support Plate", alt: "Ribbed support plate with flanged opening and embossed weld-nut boss" },
-  { src: "/images/products/showcase/showcase-2.jpg", category: "sheet-metal-parts", caption: "Hood Hinge Assembly", alt: "Zinc-plated hood hinge arm with pivot bracket" },
   { src: "/images/products/showcase/showcase-17.jpg", category: "sheet-metal-parts", caption: "Channel Bracket", alt: "Deep-drawn channel bracket with ribbed flanges and pierced holes" },
   { src: "/images/products/showcase/showcase-28.jpg", category: "sheet-metal-parts", caption: "Long Reinforcement Rail", alt: "Zinc-coated long reinforcement rail with pierced holes and ribbed side flanges" },
 
@@ -662,9 +758,9 @@ export const clients: Client[] = [
 ];
 
 export const industriesServed = [
-  "Automotive OEM, passenger cars",
-  "Automotive OEM, motorcycles",
-  "Home appliance manufacturing",
+  "Automotive OEM, Passenger Cars",
+  "Automotive OEM, Motorcycles",
+  "Home Appliance Manufacturing",
 ];
 
 // ---------------------------------------------------------------------------
@@ -716,7 +812,7 @@ export const leadership: LeadershipMember[] = [
     slug: "ceo",
     name: "Mazhar Saeed Bhatti",
     title: "Founder & CEO",
-    bio: "Add a 2-3 sentence introduction here: the CEO's role at Shaheen Automotive, their background, and what they focus on.",
+    bio: "",
     quote: undefined,
     photo: "/images/leadership/director-main.jpg",
     photoAlt: "Portrait of Mazhar Saeed Bhatti, Founder & CEO of Shaheen Automotive (Pvt.) Ltd.",
@@ -726,7 +822,7 @@ export const leadership: LeadershipMember[] = [
     slug: "ceo-2",
     name: "Azhar Saeed Bhatti (Late)",
     title: "Founder",
-    bio: "Add a 2-3 sentence introduction here: the CEO's role at Shaheen Automotive, their background, and what they focus on.",
+    bio: "",
     quote: undefined,
     photo: "/images/leadership/azhar-saeed-bhatti.jpg",
     photoAlt: "Portrait of Azhar Saeed Bhatti, Founder of Shaheen Automotive (Pvt.) Ltd.",
@@ -758,7 +854,7 @@ export const leadership: LeadershipMember[] = [
     title: "Director IT & HSE",
     bio: "Add a 2-3 sentence introduction here.",
     quote: undefined,
-    photo: "/images/leadership/board-4.jpg",
+    photo: "/images/leadership/board-4-new.jpg",
     photoAlt: "Portrait of Bilal Azhar, Director IT & HSE of Shaheen Automotive (Pvt.) Ltd.",
     isPlaceholder: false,
   },

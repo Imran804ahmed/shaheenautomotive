@@ -86,9 +86,7 @@ function FeaturedCard({ member, delay = 0 }: { member: LeadershipMember; delay?:
             </span>
           </div>
 
-          <span aria-hidden="true" className="mt-5 h-px w-full bg-border" />
-
-          <p className="mt-5 text-[15px] leading-relaxed text-fg-muted">{member.bio}</p>
+          {member.bio && <p className="mt-5 text-[15px] leading-relaxed text-fg-muted">{member.bio}</p>}
 
           {member.quote && (
             <div className="mt-6 flex gap-2.5 border-l-2 border-accent pl-4">
@@ -157,7 +155,7 @@ export function Leadership({
   if (featured.length === 0) return null;
 
   return (
-    <section className="bg-gradient-to-b from-[#eceef0] to-white py-section">
+    <section className="bg-bg py-section">
       <Container>
         <div className="mx-auto max-w-6xl">
           <SectionHeading
@@ -167,7 +165,7 @@ export function Leadership({
           />
         </div>
 
-        <div className="mx-auto mt-10 grid max-w-sm gap-6 sm:mt-14 md:max-w-3xl md:grid-cols-2 lg:gap-8">
+        <div className="mx-auto mt-10 grid max-w-sm gap-8 sm:mt-14 md:max-w-[52rem] md:grid-cols-2 md:gap-12 lg:gap-16">
           {featured.map((member, i) => (
             <FeaturedCard key={member.slug} member={member} delay={i * 0.08} />
           ))}

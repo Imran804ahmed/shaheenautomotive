@@ -222,33 +222,33 @@ export default function CapabilitiesPage() {
         <Container>
           <EquipmentTable
             id="design-tooling"
-            title="Design & development"
+            title="Design & Development"
             intro="Product and process design, and tooling development, run on industry-standard CAD, CAM and forming-simulation software, supported by a dedicated machine shop for jig and die manufacture."
             items={equipmentDesignDev}
           />
           <EquipmentTable
             id="press-shop"
-            title="Press shop"
+            title="Press Shop"
             intro="A fleet of hydraulic, mechanical and pneumatic presses covering a wide tonnage range, for stamping sheet metal parts from prototype through mass production."
             items={equipmentPressShop}
             totalNote={`${pressShopTotal.machines} presses · ${pressShopTotal.tonnageRange}`}
           />
           <EquipmentTable
             id="pipe-shop"
-            title="Pipe shop"
+            title="Pipe Shop"
             intro="NC and CNC pipe bending machines and hydraulic pipe flaring equipment, producing formed pipe components to automotive tolerances."
             items={equipmentPipeShop}
           />
           <EquipmentTable
             id="welding"
-            title="Welding shop"
+            title="Welding Shop"
             intro="CO₂, spot, ARC, gas and induction welding processes, matched to the joining requirements of each customer's component and applicable standards."
             items={equipmentWeldingShop}
             totalNote={`${weldingShopTotal.machines} welding machines across five processes`}
           />
           <EquipmentTable
             id="inspection"
-            title="Quality inspection"
+            title="Quality Inspection"
             intro="Dimensional inspection using a FARO Arm with laser scanner alongside conventional gauging equipment, applied at sample, trial and production stages."
             items={equipmentInspection}
           />

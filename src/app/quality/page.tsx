@@ -107,7 +107,7 @@ export default function QualityPage() {
       <section className="bg-bg py-section-sm">
         <Container>
           <RevealGroup className="grid grid-cols-1 gap-5 sm:gap-6 md:grid-cols-3">
-            {checkpoints.map((c, i) => (
+            {checkpoints.map((c) => (
               <RevealItem key={c.title} className="h-full">
                 <article className="group flex h-full flex-col overflow-hidden rounded-[1.75rem] border border-border bg-bg-elevated shadow-soft transition-[box-shadow,border-color,transform] duration-500 ease-out hover:-translate-y-1 hover:border-accent/30 hover:shadow-lift motion-reduce:hover:translate-y-0">
                   <div className="relative aspect-[4/3] overflow-hidden bg-bg">
@@ -126,9 +126,6 @@ export default function QualityPage() {
                     />
                     <span className="absolute left-4 top-4 rounded-full border border-white/20 bg-black/30 px-3 py-1 text-[11px] font-medium uppercase tracking-[0.14em] text-white backdrop-blur-md">
                       {c.stage}
-                    </span>
-                    <span className="mono-figure absolute bottom-3 right-5 text-5xl font-semibold leading-none text-white/90 drop-shadow-[0_2px_12px_rgb(0_0_0/0.4)]">
-                      {String(i + 1).padStart(2, "0")}
                     </span>
                     <span className="absolute bottom-4 left-4 inline-flex h-11 w-11 items-center justify-center rounded-2xl bg-accent text-accent-fg shadow-lift ring-4 ring-white/15">
                       <CheckCircle size={22} weight="bold" />
@@ -153,7 +150,7 @@ export default function QualityPage() {
         <Container className="grid gap-10 lg:grid-cols-2 lg:items-center">
           <Reveal>
             <h2 className="text-display-md font-semibold tracking-tight text-fg">
-              Dimensional inspection
+              Dimensional Inspection
             </h2>
             <p className="mt-4 max-w-md text-base leading-relaxed text-fg-muted">
               A FARO Arm with laser scanner supports manual and automated inspection of individual parts, sub-components and final assemblies, alongside conventional gauging equipment.
@@ -200,8 +197,8 @@ export default function QualityPage() {
                 <Trophy size={22} weight="duotone" />
               </span>
               <div>
-                <p className="mono-figure text-lg font-semibold text-fg">2000 – 2024</p>
-                <p className="text-xs text-fg-muted">Toyota, Suzuki, Hino</p>
+                <p className="mono-figure text-lg font-semibold text-fg">1998 – 2024</p>
+                <p className="text-xs text-fg-muted">Toyota, Suzuki, Hino, Hyundai / Kia, Changan, Chevrolet</p>
               </div>
             </div>
           </Reveal>
@@ -209,8 +206,8 @@ export default function QualityPage() {
           {awardGroups.map((group) => (
             <div key={group.title} className="mt-12">
               <Reveal className="flex items-baseline justify-between gap-4 border-b border-border pb-3">
-                <h3 className="text-xs font-semibold uppercase tracking-[0.16em] text-fg-muted">{group.title}</h3>
-                <span className="mono-figure text-xs text-fg-muted">{String(group.items.length).padStart(2, "0")}</span>
+                <h3 className="text-base font-semibold uppercase tracking-[0.14em] text-fg sm:text-lg">{group.title}</h3>
+                <span className="mono-figure text-sm text-fg-muted">{String(group.items.length).padStart(2, "0")}</span>
               </Reveal>
               <RevealGroup className="mt-6 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
                 {group.items.map((award) => (
@@ -223,8 +220,7 @@ export default function QualityPage() {
           ))}
 
           <Reveal className="mt-12">
-            <h3 className="text-xs font-semibold uppercase tracking-[0.16em] text-fg-muted">Also cited in the company profile</h3>
-            <ul className="mt-4 divide-y divide-border overflow-hidden rounded-[1.25rem] border border-border bg-bg">
+            <ul className="divide-y divide-border overflow-hidden rounded-[1.25rem] border border-border bg-bg">
               {namedAwards.map((a) => (
                 <li
                   key={a.title + a.year}

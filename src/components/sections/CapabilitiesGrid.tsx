@@ -34,12 +34,14 @@ const photos: Record<string, { src: string; alt: string; position?: string }> = 
     alt: "Operators in hard hats, safety glasses and high-visibility vests running a line of mechanical power presses",
   },
   inspection: {
-    src: "/images/facility/floor/checking-fixture.jpg",
-    alt: "Inspector clamping a stamped sheet metal panel into a checking fixture",
+    src: "/images/facility/floor/faro-arm-inspection.jpg",
+    alt: "Inspector in a Shaheen Automotive shirt measuring a checking fixture with a FARO Platinum Arm probe",
+    position: "50% 64%",
   },
   "pipe-shop": {
-    src: "/images/facility/floor/pipe-bender-loading.jpg",
-    alt: "Operator placing a steel tube into a hydraulic pipe bending machine",
+    src: "/images/facility/floor/cnc-pipe-bender-operator.jpg",
+    alt: "Operator in a green cap and gloves loading a steel tube into a CNC pipe bending machine",
+    position: "50% 40%",
   },
   welding: {
     src: "/images/facility/floor/mig-welding-pipe-assembly.jpg",
@@ -47,8 +49,8 @@ const photos: Record<string, { src: string; alt: string; position?: string }> = 
     position: "50% 31%",
   },
   "design-tooling": {
-    src: "/images/facility/floor/toggle-clamp.jpg",
-    alt: "Close-up of a red-handled toggle clamp on a checking fixture",
+    src: "/images/facility/floor/checking-fixture.jpg",
+    alt: "Inspector clamping a stamped sheet metal panel into a checking fixture",
   },
   "surface-finishing": {
     src: "/images/facility/floor/surface-activation-tank-front-v2.jpg",

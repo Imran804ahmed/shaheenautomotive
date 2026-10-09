@@ -8,7 +8,7 @@ import { withBlur } from "@/lib/image-meta";
 export const metadata: Metadata = {
   title: "Gallery",
   description:
-    "Photographs of Shaheen Automotive's plant in Pakistan: the press shop, welding and finishing lines, QA & QC lab and stores.",
+    "Photographs of Shaheen Automotive's plant in Pakistan: the Press Shop, welding and finishing lines, QA & QC lab and stores.",
   alternates: { canonical: "/gallery" },
 };
 
@@ -18,7 +18,7 @@ export default function GalleryPage() {
       <PageHeader
         eyebrow="Gallery"
         title="A look inside our plant."
-        intro="The press shop, welding and finishing lines, QA & QC lab and stores where every Shaheen Automotive part is made."
+        intro="The Press Shop, welding and finishing lines, QA & QC lab and stores where every Shaheen Automotive part is made."
         image={{
           src: "/images/facility/floor/press-shop-hall.jpg",
           position: "center 55%",

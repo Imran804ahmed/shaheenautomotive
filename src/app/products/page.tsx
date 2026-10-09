@@ -25,7 +25,7 @@ export default function ProductsPage() {
     <>
       <PageHeader
         eyebrow="Products"
-        title="Jacks, Sheet Metal, Rods and Pipes"
+        title="Jack and Hinges, Sheet Metal, Rods and Pipes"
         intro="Every category below links to verified component examples manufactured for our OEM customers, alongside the processes used to produce them."
         image={{
           src: "/images/products/hero/bent-rods-bin.webp",

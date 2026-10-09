@@ -22,6 +22,7 @@ export function Header() {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
   const [productsOpen, setProductsOpen] = useState(false);
+  const [mobileProductsOpen, setMobileProductsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const reduce = useReducedMotion();
   const { scrollY, scrollYProgress } = useScroll();
@@ -33,7 +34,10 @@ export function Header() {
     if (next !== scrolled) setScrolled(next);
   });
 
-  const closeMenu = () => setOpen(false);
+  const closeMenu = () => {
+    setOpen(false);
+    setMobileProductsOpen(false);
+  };
 
   // Escape closes the mobile menu
   useEffect(() => {
@@ -204,7 +208,7 @@ export function Header() {
 
         <button
           type="button"
-          onClick={() => setOpen((v) => !v)}
+          onClick={() => (open ? closeMenu() : setOpen(true))}
           className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-white/15 bg-white/5 text-white backdrop-blur transition-[background-color,transform] duration-150 hover:bg-white/10 active:scale-90 lg:hidden"
           aria-label={open ? "Close menu" : "Open menu"}
           aria-expanded={open}
@@ -244,6 +248,82 @@ export function Header() {
             >
               {siteConfig.nav.map((item, i) => {
                 const active = isActive(pathname, item.href);
+                const number = (
+                  <span className={cn("mono-figure text-xs", active ? "text-glow" : "text-white/35")}>
+                    {String(i + 1).padStart(2, "0")}
+                  </span>
+                );
+                const label = (
+                  <span
+                    className={cn(
+                      "text-[1.65rem] font-bold leading-none tracking-tight transition-colors",
+                      active ? "text-white" : "text-white/70 group-hover:text-white"
+                    )}
+                  >
+                    {item.label}
+                  </span>
+                );
+
+                if (item.label === "Products") {
+                  return (
+                    <motion.div key={item.href} variants={menuItem} className="border-b border-white/[0.07]">
+                      <button
+                        type="button"
+                        onClick={() => setMobileProductsOpen((v) => !v)}
+                        aria-expanded={mobileProductsOpen}
+                        aria-controls="mobile-products"
+                        className="group flex w-full items-baseline gap-4 py-4 text-left"
+                      >
+                        {number}
+                        {label}
+                        <CaretDown
+                          size={18}
+                          weight="bold"
+                          className={cn(
+                            "ml-auto self-center text-white/60 transition-transform duration-300",
+                            mobileProductsOpen && "rotate-180 text-glow"
+                          )}
+                        />
+                      </button>
+                      <AnimatePresence initial={false}>
+                        {mobileProductsOpen && (
+                          <motion.ul
+                            id="mobile-products"
+                            initial={reduce ? false : { height: 0, opacity: 0 }}
+                            animate={{ height: "auto", opacity: 1 }}
+                            exit={reduce ? { opacity: 0 } : { height: 0, opacity: 0 }}
+                            transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
+                            className="overflow-hidden"
+                          >
+                            {[{ slug: "", label: "All Products" }, ...productCategories].map((cat) => {
+                              const href = cat.slug ? `/products/${cat.slug}` : "/products";
+                              const current = pathname === href;
+                              return (
+                                <li key={href}>
+                                  <Link
+                                    href={href}
+                                    onClick={closeMenu}
+                                    aria-current={current ? "page" : undefined}
+                                    className={cn(
+                                      "flex min-h-11 items-center gap-3 rounded-xl py-2 pl-9 pr-3 text-base transition-colors hover:bg-white/[0.06] hover:text-white",
+                                      current ? "text-glow" : "text-white/75"
+                                    )}
+                                  >
+                                    <span className="h-px w-3 bg-current opacity-60" aria-hidden="true" />
+                                    <span className="flex-1">{cat.label}</span>
+                                    <ArrowUpRight size={14} weight="bold" className="opacity-50" />
+                                  </Link>
+                                </li>
+                              );
+                            })}
+                            <li aria-hidden="true" className="h-3" />
+                          </motion.ul>
+                        )}
+                      </AnimatePresence>
+                    </motion.div>
+                  );
+                }
+
                 return (
                   <motion.div key={item.href} variants={menuItem} className="border-b border-white/[0.07]">
                     <Link
@@ -252,33 +332,12 @@ export function Header() {
                       aria-current={active ? "page" : undefined}
                       className="group flex items-baseline gap-4 py-4"
                     >
-                      <span className={cn("mono-figure text-xs", active ? "text-glow" : "text-white/35")}>
-                        {String(i + 1).padStart(2, "0")}
-                      </span>
-                      <span
-                        className={cn(
-                          "text-[1.65rem] font-bold leading-none tracking-tight transition-colors",
-                          active ? "text-white" : "text-white/70 group-hover:text-white"
-                        )}
-                      >
-                        {item.label}
-                      </span>
+                      {number}
+                      {label}
                     </Link>
                   </motion.div>
                 );
               })}
-              <motion.div variants={menuItem} className="mt-6 flex flex-wrap gap-2">
-                {productCategories.map((cat) => (
-                  <Link
-                    key={cat.slug}
-                    href={`/products/${cat.slug}`}
-                    onClick={closeMenu}
-                    className="inline-flex min-h-11 items-center rounded-full border border-white/12 bg-white/5 px-4 text-sm text-white/75 transition-colors hover:border-glow/50 hover:text-white"
-                  >
-                    {cat.label}
-                  </Link>
-                ))}
-              </motion.div>
               <motion.div variants={menuItem} className="mt-auto pt-10">
                 <Link
                   href="/contact"

@@ -26,7 +26,7 @@ function Word({ children, index, className }: { children: React.ReactNode; index
   );
 }
 
-const headline: { word: string; accent?: boolean }[] = "Jacks, Sheet Metal, Rods and Pipes, engineered for OEM production lines."
+const headline: { word: string; accent?: boolean }[] = "Jack and Hinges, Sheet Metal, Rods and Pipes, engineered for OEM production lines."
   .split(" ")
   .map((word) => ({ word, accent: word === "engineered" }));
 
@@ -43,7 +43,7 @@ export function Hero() {
       {/* full-bleed plant exterior, kept bright; only the copy side is darkened */}
       <div aria-hidden="true" className="absolute inset-0 -z-10">
         <div className="absolute inset-0">
-          <BackdropImage src="/images/facility/exterior/shaheen-plant-exterior.webp" position="62% center" priority />
+          <BackdropImage src="/images/facility/exterior/sapl-plant-front.jpg" position="60% center" priority />
         </div>
         {siteConfig.heroVideo.src && (
           <div className="absolute inset-0 isolate">

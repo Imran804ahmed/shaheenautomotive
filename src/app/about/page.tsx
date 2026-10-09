@@ -58,9 +58,7 @@ export default function AboutPage() {
         </Container>
       </section>
 
-      <Leadership members={leadership} management={managementTeam} />
-
-      <section className="bg-bg py-section-sm">
+      <section className="bg-gradient-to-b from-[#eceef0] to-white py-section-sm">
         <Container className="grid gap-6 md:grid-cols-2">
           <Reveal>
             <div className="h-full rounded-sm border border-border bg-bg-elevated shadow-soft p-8">
@@ -78,6 +76,8 @@ export default function AboutPage() {
           </Reveal>
         </Container>
       </section>
+
+      <Leadership members={leadership} management={managementTeam} />
 
       <section className="rounded-section bg-bg-elevated shadow-soft py-section-sm">
         <Container>
@@ -109,7 +109,7 @@ export default function AboutPage() {
             />
           </Reveal>
           <Reveal delay={0.08} from="right">
-            <h2 className="text-display-md font-semibold tracking-tight text-fg">Industries served</h2>
+            <h2 className="text-display-md font-semibold tracking-tight text-fg">Industries Served</h2>
             <ul className="mt-6 space-y-4">
               {industriesServed.map((ind) => (
                 <li key={ind} className="flex items-start gap-3 border-t border-border pt-4 text-fg">
