@@ -58,7 +58,8 @@ function VideoCard() {
         <figure className="relative aspect-[16/9] overflow-hidden rounded-[1.35rem] bg-accent-strong ring-1 ring-white/20">
           <InViewVideo
             src="/videos/shop-floor.mp4"
-            poster="/videos/shop-floor-poster.jpg"
+            poster="/images/video/shop-floor-poster.jpg"
+            posterSizes="(min-width: 1280px) 690px, (min-width: 1024px) 55vw, 100vw"
             label="SAPL operators running the press lines, bending tubes on hydraulic pipe benders and MIG welding parts, followed by the QA/QC lab and the SAPL warehouse"
             className="transition-transform duration-700 ease-out group-hover:scale-[1.03]"
           />

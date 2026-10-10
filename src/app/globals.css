@@ -411,6 +411,31 @@ h3 {
   animation: page-in 0.5s var(--ease-out-expo) both;
 }
 
+/* above-the-fold entrances (home hero, page headers): plain CSS, so the copy
+   animates in on first paint instead of waiting for JS to hydrate */
+@keyframes enter-up {
+  from {
+    opacity: 0;
+    transform: translateY(var(--enter-y, 20px));
+  }
+}
+
+/* one headline word rising out of its clipping mask */
+@keyframes enter-word {
+  from {
+    transform: translateY(105%) rotate(3deg);
+  }
+}
+
+.enter-up {
+  animation: enter-up var(--enter-duration, 0.6s) var(--ease-out-expo) both;
+}
+
+.enter-word {
+  transform-origin: 0% 100%;
+  animation: enter-word 0.8s var(--ease-out-expo) both;
+}
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
@@ -428,6 +453,11 @@ h3 {
     transform: none;
   }
   .surface-ink::after {
+    animation: none;
+  }
+  /* shown in place straight away, delays included */
+  .enter-up,
+  .enter-word {
     animation: none;
   }
 }

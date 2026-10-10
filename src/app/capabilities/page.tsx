@@ -48,31 +48,35 @@ const icons: Record<
 
 const equipmentSections = new Set(["design-tooling", "press-shop", "pipe-shop", "welding", "inspection"]);
 
-// a finished part that shows each capability's output
-const productPhotos: Record<string, { src: string; alt: string }> = {
+// the same shop-floor photo each capability uses on the home page
+const productPhotos: Record<string, { src: string; alt: string; position?: string }> = {
   "design-tooling": {
-    src: "/images/products/studio/bent-rods.jpg",
-    alt: "Zinc-plated bent rod hooks and a jack handle with rubber grip",
+    src: "/images/facility/floor/checking-fixture.jpg",
+    alt: "Inspector clamping a stamped sheet metal panel into a checking fixture",
   },
   "press-shop": {
-    src: "/images/products/studio/stamped-brackets.jpg",
-    alt: "Pair of stamped zinc-plated brackets with pierced holes and folded tabs",
+    src: "/images/facility/floor/press-line-safety-gear.jpg",
+    alt: "Operators in hard hats, safety glasses and high-visibility vests running a line of mechanical power presses",
   },
   "pipe-shop": {
-    src: "/images/products/studio/formed-pipe-flange.jpg",
-    alt: "Black formed pipe with a two-hole mounting flange",
+    src: "/images/facility/floor/cnc-pipe-bender-operator.jpg",
+    alt: "Operator in a green cap and gloves loading a steel tube into a CNC pipe bending machine",
+    position: "50% 40%",
   },
   welding: {
-    src: "/images/products/studio/welded-tube-bracket.jpg",
-    alt: "Black tubular bracket with welded cross members",
+    src: "/images/facility/floor/mig-welding-pipe-assembly.jpg",
+    alt: "Welder in a hi-vis vest and welding helmet MIG welding a pipe assembly on a bench fixture, sparks flying",
+    position: "50% 31%",
   },
   "surface-finishing": {
-    src: "/images/products/studio/coated-tank-strap.jpg",
-    alt: "Black-coated formed steel strap with mounting studs",
+    src: "/images/facility/floor/surface-activation-tank-front-v2.jpg",
+    alt: "Motor-driven perforated barrels in a Shaheen surface activation tank, with racks of pipe parts in the foreground",
+    position: "50% 32%",
   },
   inspection: {
-    src: "/images/products/studio/tube-grab-rail.jpg",
-    alt: "Black tube grab rail with flattened, pierced ends",
+    src: "/images/facility/floor/faro-arm-inspection.jpg",
+    alt: "Inspector in a Shaheen Automotive shirt measuring a checking fixture with a FARO Platinum Arm probe",
+    position: "50% 64%",
   },
 };
 
@@ -169,6 +173,7 @@ export default function CapabilitiesPage() {
                             fill
                             sizes="(min-width: 1024px) 400px, (min-width: 640px) 50vw, 100vw"
                             {...blurProps(photo.src)}
+                            style={photo.position ? { objectPosition: photo.position } : undefined}
                             className="object-cover transition-transform duration-700 ease-[var(--ease-out-expo)] group-hover:scale-[1.06] motion-reduce:transition-none"
                           />
                           <div

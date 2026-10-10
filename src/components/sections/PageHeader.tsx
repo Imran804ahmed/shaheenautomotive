@@ -1,7 +1,6 @@
 import { BackdropImage } from "@/components/ui/BackdropImage";
 import { Eyebrow } from "@/components/ui/Eyebrow";
 import { Container } from "@/components/ui/Container";
-import { Reveal } from "@/components/ui/Reveal";
 import { Gear } from "@/components/ui/Gear";
 import { cn } from "@/lib/cn";
 
@@ -47,7 +46,8 @@ export function PageHeader({
         <Gear className="pointer-events-none absolute -right-24 top-4 h-72 w-72 opacity-70 motion-safe:animate-spin-slow sm:h-[26rem] sm:w-[26rem]" />
       )}
       <Container className="relative">
-        <Reveal>
+        {/* CSS entrance, so the page title paints without waiting for hydration */}
+        <div className="enter-up">
           {eyebrow && (
             <Eyebrow tone="brass" className="mb-5">
               {eyebrow}
@@ -56,11 +56,11 @@ export function PageHeader({
           <h1 className="max-w-3xl text-balance text-display-lg font-semibold text-fg-inverted">
             {title}
           </h1>
-        </Reveal>
+        </div>
         {intro && (
-          <Reveal delay={0.08}>
+          <div className="enter-up" style={{ animationDelay: "0.08s" }}>
             <p className="mt-6 max-w-2xl text-base leading-relaxed text-fg-inverted-muted sm:text-lg">{intro}</p>
-          </Reveal>
+          </div>
         )}
         {children}
       </Container>

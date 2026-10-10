@@ -33,9 +33,9 @@ export const siteConfig = {
     city: "Karachi",
     country: "Pakistan",
     mapEmbedUrl:
-      "https://www.google.com/maps?q=Shaheen+Automotive,+DSU-36A+Pakistan+Steel+Industrial+Estate,+Bin+Qasim,+Karachi,+Pakistan&z=16&output=embed",
+      "https://www.google.com/maps?q=Shaheen+Automotive+Pvt+Ltd.,+Bin+Qasim,+Karachi&ll=24.8297958,67.3427047&z=17&output=embed",
     mapLinkUrl:
-      "https://www.google.com/maps/search/?api=1&query=Shaheen+Automotive,+DSU-36A+Pakistan+Steel+Industrial+Estate,+Bin+Qasim,+Karachi,+Pakistan",
+      "https://www.google.com/maps/search/?api=1&query=Shaheen+Automotive+Pvt+Ltd.,+Bin+Qasim,+Karachi",
   },
 
   social: {

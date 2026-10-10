@@ -1,27 +1,19 @@
-"use client";
-
-import { motion, useReducedMotion } from "motion/react";
 import { Container } from "@/components/ui/Container";
 import { Button } from "@/components/ui/Button";
 import { BackdropImage } from "@/components/ui/BackdropImage";
 import { HlsBackground } from "@/components/ui/HlsBackground";
 import { siteConfig } from "@/content/site";
-import { dist, dur, ease } from "@/lib/motion";
 
-/** One headline word, rising out of a clipping mask. */
+/** One headline word, rising out of a clipping mask (CSS, so it runs before hydration). */
 function Word({ children, index, className }: { children: React.ReactNode; index: number; className?: string }) {
-  const reduce = useReducedMotion();
   return (
     <span className="inline-block overflow-hidden pb-[0.12em] -mb-[0.12em] align-bottom">
-      <motion.span
-        initial={reduce ? false : { y: "105%", rotate: dist(3) }}
-        animate={{ y: 0, rotate: 0 }}
-        transition={{ duration: dur(0.8), delay: 0.08 + index * 0.045, ease }}
-        style={{ transformOrigin: "0% 100%" }}
-        className={"inline-block will-change-transform " + (className ?? "")}
+      <span
+        style={{ animationDelay: `${0.08 + index * 0.045}s` }}
+        className={"enter-word inline-block " + (className ?? "")}
       >
         {children}
-      </motion.span>
+      </span>
     </span>
   );
 }
@@ -31,11 +23,8 @@ const headline: { word: string; accent?: boolean }[] = "Jack and Hinges, Sheet M
   .map((word) => ({ word, accent: word === "engineered" }));
 
 export function Hero() {
-  const reduce = useReducedMotion();
   const enter = (delay: number) => ({
-    initial: reduce ? (false as const) : { opacity: 0, y: dist(22) },
-    animate: { opacity: 1, y: 0 },
-    transition: { duration: dur(0.7), delay, ease },
+    style: { "--enter-y": "22px", "--enter-duration": "0.7s", animationDelay: `${delay}s` } as React.CSSProperties,
   });
 
   return (
@@ -57,13 +46,13 @@ export function Hero() {
 
       <Container className="w-full pt-[calc(var(--header-h)+2.5rem)] sm:pt-[calc(var(--header-h)+3rem)] lg:pt-[calc(var(--header-h)+4.5rem)]">
         <div className="@container max-w-3xl">
-          <motion.p
+          <p
             {...enter(0)}
-            className="inline-flex items-center gap-2.5 rounded-full border border-white/15 bg-white/5 px-4 py-1.5 text-xs font-medium text-fg-inverted-muted backdrop-blur"
+            className="enter-up inline-flex items-center gap-2.5 rounded-full border border-white/15 bg-white/5 px-4 py-1.5 text-xs font-medium text-fg-inverted-muted backdrop-blur"
           >
             <span className="h-1.5 w-1.5 rounded-full bg-glow" />
             Manufacturing in Pakistan since 1983
-          </motion.p>
+          </p>
           <h1 className="mt-6 text-balance text-display-xl font-semibold text-fg-inverted">
               {headline.map((w, idx) => (
                 <span key={idx}>
@@ -74,20 +63,20 @@ export function Hero() {
                 </span>
               ))}
             </h1>
-          <motion.p
+          <p
             {...enter(0.14)}
-            className="mt-6 max-w-lg text-base leading-relaxed text-fg-inverted-muted sm:text-lg"
+            className="enter-up mt-6 max-w-lg text-base leading-relaxed text-fg-inverted-muted sm:text-lg"
           >
             Shaheen Automotive (Pvt.) Ltd. designs and manufactures precision components for automotive and home appliance OEMs, from tooling through mass production.
-          </motion.p>
-          <motion.div {...enter(0.22)} className="mt-9 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center sm:gap-4">
+          </p>
+          <div {...enter(0.22)} className="enter-up mt-9 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center sm:gap-4">
             <Button href="/contact" variant="brass" className="w-full sm:w-auto">
               Contact Us
             </Button>
             <Button href="/capabilities" variant="onDark" showArrow={false} className="w-full sm:w-auto">
               Explore Capabilities
             </Button>
-          </motion.div>
+          </div>
         </div>
       </Container>
     </section>

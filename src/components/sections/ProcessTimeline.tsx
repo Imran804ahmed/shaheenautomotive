@@ -1,7 +1,7 @@
 "use client";
 
 import { useRef, useEffect, useState } from "react";
-import { motion, useReducedMotion } from "motion/react";
+import { motion, useReducedMotion, useScroll } from "motion/react";
 import {
   Calculator,
   PencilRuler,
@@ -14,7 +14,6 @@ import type { Icon } from "@phosphor-icons/react";
 import { Container } from "@/components/ui/Container";
 import { Reveal, RevealGroup, RevealItem } from "@/components/ui/Reveal";
 import { SectionHeading } from "@/components/ui/SectionHeading";
-import { gsap, ScrollTrigger } from "@/lib/gsap";
 import { cn } from "@/lib/cn";
 import { ease } from "@/lib/motion";
 import type { ProcessStep } from "@/content/company";
@@ -32,40 +31,30 @@ const pad = (n: number) => String(n).padStart(2, "0");
 
 export function ProcessTimeline({ steps }: { steps: ProcessStep[] }) {
   const root = useRef<HTMLElement>(null);
+  const rail = useRef<HTMLDivElement>(null);
   const [active, setActive] = useState(0);
   const reduce = useReducedMotion();
 
   useEffect(() => {
-    // Highlight the stage crossing the middle of the viewport, so the sticky
+    // Highlight the stage crossing 55% of the viewport height, so the sticky
     // counter and the rail always tell the reader where they are in the sequence.
-    const triggers = gsap.utils.toArray<HTMLElement>("[data-step]", root.current).map((el, i) =>
-      ScrollTrigger.create({
-        trigger: el,
-        start: "top 55%",
-        end: "bottom 55%",
-        onToggle: (self) => self.isActive && setActive(i),
-      })
-    );
-
-    // Rail fills as the reader moves through the stages (scrubbed to scroll).
-    const mm = gsap.matchMedia();
-    mm.add("(prefers-reduced-motion: no-preference)", () => {
-      gsap.fromTo(
-        "[data-rail-fill]",
-        { scaleY: 0 },
-        {
-          scaleY: 1,
-          ease: "none",
-          scrollTrigger: { trigger: "[data-rail]", start: "top 55%", end: "bottom 55%", scrub: true },
+    // The observer's root is shrunk to that single line; a stage stays active
+    // until the next one reaches it.
+    const stepEls = Array.from(root.current?.querySelectorAll<HTMLElement>("[data-step]") ?? []);
+    const io = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (entry.isIntersecting) setActive(stepEls.indexOf(entry.target as HTMLElement));
         }
-      );
-    }, root);
-
-    return () => {
-      triggers.forEach((t) => t.kill());
-      mm.revert();
-    };
+      },
+      { rootMargin: "-55% 0px -45% 0px" }
+    );
+    stepEls.forEach((el) => io.observe(el));
+    return () => io.disconnect();
   }, []);
+
+  // Rail fills as the reader moves through the stages (scrubbed to scroll).
+  const { scrollYProgress } = useScroll({ target: rail, offset: ["start 55%", "end 55%"] });
 
   const current = steps[active];
 
@@ -135,10 +124,13 @@ export function ProcessTimeline({ steps }: { steps: ProcessStep[] }) {
 
           {/* right: timeline */}
           <div className="lg:col-span-7">
-            <div data-rail className="relative">
+            <div ref={rail} className="relative">
               {/* rail track + scrubbed fill, centered on the 3rem nodes */}
               <div aria-hidden="true" className="absolute bottom-6 left-6 top-6 w-px -translate-x-1/2 bg-border">
-                <div data-rail-fill className="h-full w-full origin-top bg-gradient-to-b from-accent to-glow" />
+                <motion.div
+                  style={reduce ? undefined : { scaleY: scrollYProgress }}
+                  className="h-full w-full origin-top bg-gradient-to-b from-accent to-glow"
+                />
               </div>
 
               <RevealGroup className="relative space-y-5">

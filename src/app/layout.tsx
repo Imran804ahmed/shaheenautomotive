@@ -21,6 +21,8 @@ const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
   display: "swap",
+  // only used for figures below the fold; don't compete with the LCP image for bandwidth
+  preload: false,
 });
 
 export const metadata: Metadata = {

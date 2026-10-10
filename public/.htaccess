@@ -1,0 +1,58 @@
+# Apache / LiteSpeed (cPanel) config for the static export in out/.
+# Copied to out/.htaccess by `next build`. Every block is wrapped in <IfModule>,
+# so a host without a given module simply skips it instead of returning a 500.
+#
+# Long-term immutable caching for /_next/static/ (content-hashed filenames) is set
+# by out/_next/static/.htaccess, written by scripts/postbuild.mjs.
+
+DirectoryIndex index.html
+ErrorDocument 404 /404.html
+
+# ---- MIME types -----------------------------------------------------------
+<IfModule mod_mime.c>
+  AddType image/avif .avif
+  AddType image/webp .webp
+  AddType font/woff2 .woff2
+  AddType video/mp4 .mp4
+  AddType application/manifest+json .webmanifest
+  AddType text/plain .txt
+</IfModule>
+
+# ---- compression (text only; images, fonts and video are already compressed) --
+<IfModule mod_brotli.c>
+  AddOutputFilterByType BROTLI_COMPRESS text/html text/plain text/css text/xml application/javascript text/javascript application/json application/xml image/svg+xml application/manifest+json
+</IfModule>
+<IfModule mod_deflate.c>
+  AddOutputFilterByType DEFLATE text/html text/plain text/css text/xml application/javascript text/javascript application/json application/xml image/svg+xml application/manifest+json
+</IfModule>
+
+# ---- browser caching ------------------------------------------------------
+<IfModule mod_expires.c>
+  ExpiresActive On
+  ExpiresDefault "access plus 1 hour"
+  # pages and RSC payloads: always revalidate so a deploy shows up immediately
+  ExpiresByType text/html "access plus 0 seconds"
+  ExpiresByType text/plain "access plus 0 seconds"
+  ExpiresByType application/xml "access plus 1 hour"
+  # photos, posters and video keep stable names across deploys, so 30 days, not immutable
+  ExpiresByType image/avif "access plus 30 days"
+  ExpiresByType image/webp "access plus 30 days"
+  ExpiresByType image/jpeg "access plus 30 days"
+  ExpiresByType image/png "access plus 30 days"
+  ExpiresByType image/svg+xml "access plus 30 days"
+  ExpiresByType video/mp4 "access plus 30 days"
+  ExpiresByType font/woff2 "access plus 1 year"
+  ExpiresByType text/css "access plus 30 days"
+  ExpiresByType application/javascript "access plus 30 days"
+  ExpiresByType text/javascript "access plus 30 days"
+</IfModule>
+
+<IfModule mod_headers.c>
+  <FilesMatch "\.(html|txt)$">
+    Header set Cache-Control "no-cache"
+  </FilesMatch>
+  <FilesMatch "\.(avif|webp|jpe?g|png|svg|mp4)$">
+    Header set Cache-Control "public, max-age=2592000"
+  </FilesMatch>
+  Header always set X-Content-Type-Options "nosniff"
+</IfModule>
