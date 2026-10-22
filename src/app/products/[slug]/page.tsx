@@ -1,12 +1,13 @@
 import type { Metadata } from "next";
 import Image from "next/image";
-import { blurProps } from "@/lib/image-meta";
+import { blurProps, withBlur } from "@/lib/image-meta";
 import { notFound } from "next/navigation";
 import { Container } from "@/components/ui/Container";
 import { Reveal } from "@/components/ui/Reveal";
 import { Button } from "@/components/ui/Button";
 import { PageHeader } from "@/components/sections/PageHeader";
-import { productCategories, categoryPhotos } from "@/content/company";
+import { GalleryGrid } from "@/components/sections/GalleryGrid";
+import { productCategories, categoryPhotos, jackHingeCategories, jackHingePhotos } from "@/content/company";
 
 type RouteParams = { slug: string };
 
@@ -68,22 +69,26 @@ export default async function ProductCategoryPage({
 
       <section className="bg-bg py-section-sm">
         <Container>
-          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {photos.map((photo) => (
-              <Reveal key={photo.src} className="overflow-hidden rounded-sm border border-border bg-bg-elevated shadow-soft">
-                <div className="relative aspect-[4/3] w-full">
-                  <Image
-                    src={photo.src}
-                    alt={photo.alt}
-                    fill
-                    sizes="(min-width: 1280px) 400px, (min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
-                    {...blurProps(photo.src)}
-                    className="object-cover"
-                  />
-                </div>
-              </Reveal>
-            ))}
-          </div>
+          {category.slug === "jack-assemblies" ? (
+            <GalleryGrid photos={withBlur(jackHingePhotos)} categories={jackHingeCategories} showFilters />
+          ) : (
+            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+              {photos.map((photo) => (
+                <Reveal key={photo.src} className="overflow-hidden rounded-sm border border-border bg-bg-elevated shadow-soft">
+                  <div className="relative aspect-[4/3] w-full">
+                    <Image
+                      src={photo.src}
+                      alt={photo.alt}
+                      fill
+                      sizes="(min-width: 1280px) 400px, (min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
+                      {...blurProps(photo.src)}
+                      className="object-cover"
+                    />
+                  </div>
+                </Reveal>
+              ))}
+            </div>
+          )}
         </Container>
       </section>
     </>

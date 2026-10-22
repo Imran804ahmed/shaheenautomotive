@@ -61,6 +61,7 @@ export const siteConfig = {
     { label: "Capabilities", href: "/capabilities" },
     { label: "Products", href: "/products" },
     { label: "Quality", href: "/quality" },
+    { label: "CSR", href: "/csr" },
     { label: "Gallery", href: "/gallery" },
   ],
 

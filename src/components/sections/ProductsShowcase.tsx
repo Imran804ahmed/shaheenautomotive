@@ -15,6 +15,7 @@ export function ProductsShowcase({ categories }: { categories: ProductCategory[]
         <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
           <SectionHeading
             eyebrow="Products"
+            eyebrowClassName="text-sm! sm:text-base!"
             title="Jack and Hinges, Sheet Metal, Rods and Pipes"
             body="Jacks, hinges and stamped, bent and formed components built in-house, from die to dimensional inspection, for automotive, motorcycle and appliance OEMs."
           />

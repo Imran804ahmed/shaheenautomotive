@@ -7,18 +7,20 @@ export function SectionHeading({
   title,
   body,
   className,
+  eyebrowClassName,
   onDark,
 }: {
   eyebrow?: string;
   title: string;
   body?: string;
   className?: string;
+  eyebrowClassName?: string;
   onDark?: boolean;
 }) {
   return (
     <Reveal className={cn("max-w-2xl", className)}>
       {eyebrow && (
-        <Eyebrow tone={onDark ? "brass" : "accent"} className="mb-4">
+        <Eyebrow tone={onDark ? "brass" : "accent"} className={cn("mb-4", eyebrowClassName)}>
           {eyebrow}
         </Eyebrow>
       )}

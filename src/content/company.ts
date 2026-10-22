@@ -36,6 +36,86 @@ export const vision =
 export const mission =
   "To provide customer satisfaction in line with expectations, delivered on time, through continuous improvement in manufacturing, production and quality, driven by innovation and ongoing training.";
 
+// ---------------------------------------------------------------------------
+// CSR (/csr). Kept to commitments the rest of the site already evidences
+// (PPE on the floor, OEM training certificates, ISO 14001, local manufacturing).
+// Community programmes (education, health, ration drives) are not listed until
+// SAPL confirms the details.
+// ---------------------------------------------------------------------------
+export const csrIntro = [
+  "At Shaheen Automotive, responsibility starts on our own shop floor. For more than four decades we have grown alongside Pakistan's automotive industry, and we believe a manufacturer is only as strong as the people who run its lines, the community around its plant and the environment it operates in.",
+  "Our approach to corporate social responsibility is practical: keep every operator safe, keep building their skills, manage our environmental impact, and keep high-value component manufacturing here in Pakistan.",
+];
+
+export type CsrArea = {
+  key: string;
+  label: string;
+  /** one line for the overview tiles under the page intro */
+  summary: string;
+  body: string;
+  points: string[];
+  image: string;
+  imageAlt: string;
+  /** "contain" shows the whole image on a mat, for certificates and documents */
+  fit?: "cover" | "contain";
+};
+
+export const csrAreas: CsrArea[] = [
+  {
+    key: "workplace-safety",
+    summary: "PPE, marked safety zones and guarded equipment on every line.",
+    label: "Workplace health & safety",
+    body: "Safety comes first on every line. Our press shop is a designated hard hat and safety glasses area, and operators are equipped with the protective gear their station requires before a single stroke is run.",
+    points: [
+      "Hard hats, safety glasses, gloves and high-visibility vests on press lines",
+      "Marked PPE zones and safety signage across the shop floor",
+      "Guarded and cordoned-off equipment during setup and maintenance",
+    ],
+    image: "/images/facility/floor/press-operators-hard-hats.jpg",
+    imageAlt: "Press operators in yellow hard hats, gloves and a high-visibility vest working beneath a hard hat and safety glasses sign",
+  },
+  {
+    key: "training",
+    summary: "OEM supplier development and on-the-job skill building.",
+    label: "Training & skills development",
+    body: "Ongoing training is part of our mission. Our team takes part in supplier development programmes run by our OEM customers, bringing modern manufacturing and management practice back to the shop floor.",
+    points: [
+      "Factory management training with Pak Suzuki Motor Co. (2017)",
+      "Value analysis & value engineering training with Pak Suzuki (2015)",
+      "On-the-job skill building across stamping, welding and pipe bending",
+    ],
+    image: "/images/awards/pak-suzuki-factory-management-training-2017.jpg",
+    imageAlt: "Pak Suzuki certificate awarded to Shaheen Automotive for participation in factory management training, April 2017",
+    fit: "contain",
+  },
+  {
+    key: "environment",
+    summary: "An ISO 14001 framework and material yield improvement.",
+    label: "Environmental responsibility",
+    body: "We work to reduce the environmental footprint of our operations, guided by an ISO 14001 environmental management system alongside our ISO 9001 quality system.",
+    points: [
+      "ISO 14001 environmental management framework",
+      "Material yield improvement activities, recognised by Pak Suzuki in 2013",
+      "Organised storage and housekeeping across the plant",
+    ],
+    image: "/images/facility/exterior/sapl-plant-front.jpg",
+    imageAlt: "Front of the Shaheen Automotive plant at Pakistan Steel Industrial Estate, Bin Qasim, Karachi",
+  },
+  {
+    key: "local-industry",
+    summary: "350+ components made in Karachi for Pakistani OEMs.",
+    label: "Supporting local industry",
+    body: "Every part we make is a part that does not need to be imported. By manufacturing more than 350 components in Karachi, we help localise Pakistan's automotive supply chain and create skilled industrial jobs.",
+    points: [
+      "Local manufacturing for Pakistan's leading automotive and appliance OEMs",
+      "Active participant in OEM vendor and supplier conventions since 2000",
+      "Skilled employment in stamping, welding, machining and assembly",
+    ],
+    image: "/images/facility/floor/welding-bay.jpg",
+    imageAlt: "Two welders at their stations beneath a Safety Comes First poster, with bins of formed pipe parts in front",
+  },
+];
+
 export const aboutPillars = [
   {
     title: "Solutions",
@@ -437,9 +517,7 @@ export type Equipment = {
 };
 
 export const equipmentDesignDev: Equipment[] = [
-  { name: "Design software: Unigraphics (UG NX) 11.0" },
-  { name: "PTC Creo 3.0" },
-  { name: "AutoForm 11.0" },
+  { name: "Multiple Design Software" },
   { name: "CNC Wire Cut machines" },
   { name: "CNC Auto-Lathe" },
   { name: "Lathe machines" },
@@ -664,6 +742,34 @@ export const categoryPhotos: Record<ProductCategory["slug"], ProductPhoto[]> = {
     { src: "/images/products/studio/tube-grab-rail.jpg", alt: "Black tube grab rail with flattened, pierced ends" },
   ],
 };
+
+// Filterable gallery on /products/jack-assemblies: jacks and hinges as separate tabs.
+export const jackHingeCategories: PhotoCategory[] = [
+  { key: "jacks", label: "Jacks" },
+  { key: "hinges", label: "Hinges" },
+];
+
+const showcaseShot = (n: number, category: "jacks" | "hinges", caption: string, alt: string): GalleryPhoto => ({
+  src: `/images/products/showcase/showcase-${n}.jpg`,
+  category,
+  caption,
+  alt,
+});
+
+export const jackHingePhotos: GalleryPhoto[] = [
+  showcaseShot(1, "jacks", "Scissor Jack Assembly", "Zinc-plated scissor jack assembly with lead screw"),
+  showcaseShot(31, "jacks", "Scissor Jack, Yellow Zinc", "Yellow zinc scissor jack with riveted saddle, lead screw and clevis drive end"),
+  showcaseShot(33, "jacks", "Scissor Jack with Formed Saddle", "Zinc-plated scissor jack with formed saddle, black lead screw and eye drive end"),
+  showcaseShot(35, "jacks", "Scissor Jack with Hex Drive", "Zinc-plated scissor jack with formed saddle and hex drive end"),
+  showcaseShot(37, "jacks", "Scissor Jack with Slotted Saddle", "Zinc-plated scissor jack with slotted saddle and flat drive end"),
+  showcaseShot(32, "jacks", "Scissor Jack, Angled View", "Yellow zinc scissor jack from an angled view"),
+  showcaseShot(34, "jacks", "Scissor Jack with Box Saddle", "Zinc-plated scissor jack with box saddle, black lead screw and eye drive end"),
+  showcaseShot(36, "jacks", "Scissor Jack with Slotted Box Saddle", "Zinc-plated scissor jack with slotted box saddle and hex drive end"),
+  showcaseShot(4, "hinges", "Hood Hinge", "Zinc-plated hood hinge with formed arm and pivot bracket"),
+  showcaseShot(5, "hinges", "Hood Hinge, Yellow Zinc", "Yellow zinc hood hinge with cranked arm and mounting bracket"),
+  showcaseShot(6, "hinges", "Hood Hinge, Long Arm", "Yellow zinc hood hinge with long arm and pivot bracket"),
+  showcaseShot(2, "hinges", "Hood Hinge Assembly", "Zinc-plated hood hinge arm with pivot bracket"),
+];
 
 // Filterable product gallery on /products: one tab per product family.
 // Studio product photographs (no older OEM snapshots); Rods adds one

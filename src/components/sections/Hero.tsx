@@ -18,9 +18,9 @@ function Word({ children, index, className }: { children: React.ReactNode; index
   );
 }
 
-const headline: { word: string; accent?: boolean }[] = "Jack and Hinges, Sheet Metal, Rods and Pipes, engineered for OEM production lines."
+const headline: { word: string; accent?: boolean }[] = "Engineering the Parts That Move Pakistan’s Automotive Industry."
   .split(" ")
-  .map((word) => ({ word, accent: word === "engineered" }));
+  .map((word) => ({ word, accent: word === "Move" }));
 
 export function Hero() {
   const enter = (delay: number) => ({
@@ -67,7 +67,7 @@ export function Hero() {
             {...enter(0.14)}
             className="enter-up mt-6 max-w-lg text-base leading-relaxed text-fg-inverted-muted sm:text-lg"
           >
-            Shaheen Automotive (Pvt.) Ltd. designs and manufactures precision components for automotive and home appliance OEMs, from tooling through mass production.
+            Precision-engineered automotive components, pioneering metal-forming expertise, and dependable OEM manufacturing — built on decades of industry experience.
           </p>
           <div {...enter(0.22)} className="enter-up mt-9 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center sm:gap-4">
             <Button href="/contact" variant="brass" className="w-full sm:w-auto">

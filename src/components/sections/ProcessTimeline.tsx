@@ -74,7 +74,8 @@ export function ProcessTimeline({ steps }: { steps: ProcessStep[] }) {
           <div className="lg:col-span-5">
             <div className="lg:sticky lg:top-32">
               <SectionHeading
-                eyebrow="Process"
+                eyebrow="Project Development Process"
+                eyebrowClassName="text-sm! sm:text-base!"
                 title="From feasibility to mass production, in six stages."
                 body="One accountable team carries every part from first quotation to on-time delivery, with the customer signing off at each gate."
               />

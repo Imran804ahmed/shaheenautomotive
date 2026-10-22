@@ -21,7 +21,8 @@ export function QualityEvidence({ awards }: { awards: Award[] }) {
       <Container>
         <div className="flex flex-col items-start justify-between gap-6 sm:flex-row sm:items-end">
           <SectionHeading
-            eyebrow="Quality"
+            eyebrow="Awards and Certificate"
+            eyebrowClassName="text-sm! sm:text-base!"
             title="Recognition from the OEMs we manufacture for."
             body="Supplier awards for delivery, development and overall performance, presented at OEM supplier conventions."
           />

@@ -11,6 +11,7 @@ const companyLinks = [
   { label: "Capabilities", href: "/capabilities" },
   { label: "Inside the Plant", href: "/facility" },
   { label: "Quality", href: "/quality" },
+  { label: "CSR", href: "/csr" },
   { label: "Contact", href: "/contact" },
 ];
 

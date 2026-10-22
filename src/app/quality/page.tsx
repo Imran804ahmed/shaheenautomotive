@@ -1,16 +1,17 @@
 import type { Metadata } from "next";
 import { Eyebrow } from "@/components/ui/Eyebrow";
 import Image from "next/image";
-import { CheckCircle, SealWarning, Trophy } from "@phosphor-icons/react/dist/ssr";
+import { Clock, Leaf, SealCheck, ShieldCheck, Trophy } from "@phosphor-icons/react/dist/ssr";
 import { PageHeader } from "@/components/sections/PageHeader";
 import { Container } from "@/components/ui/Container";
+import { ParallaxImage } from "@/components/ui/ParallaxImage";
 import { Reveal, RevealGroup, RevealItem } from "@/components/ui/Reveal";
 import { blurProps } from "@/lib/image-meta";
+import { cn } from "@/lib/cn";
 import {
   certificationsNote,
   namedAwards,
   awardPhotos,
-  equipmentInspection,
   type Award,
 } from "@/content/company";
 
@@ -66,28 +67,49 @@ function AwardCard({ award }: { award: Award }) {
 
 const floorPhoto = (name: string) => `/images/facility/floor/${name}.jpg`;
 
-const checkpoints = [
+/** The three quality gates, laid out like the plant areas on /facility. */
+const qualityStages = [
   {
-    stage: "Tooling sign-off",
-    title: "OTS sample inspection",
+    key: "ots-inspection",
+    number: "01",
+    label: "OTS sample inspection",
     body: "Once tooling is complete, an off-tool sample is produced and inspected jointly by the SAPL quality team and the customer's quality department before the part is approved.",
-    tag: "SAPL QA + customer QA",
-    image: { src: floorPhoto("checking-fixture-closeup"), position: "50% 55%", alt: "Inspector checking a stamped part on a clamped checking fixture" },
+    cover: floorPhoto("checking-fixture-closeup"),
+    coverAlt: "Inspector checking a stamped part on a clamped checking fixture",
+    facts: [
+      { name: "Stage", value: "Tooling sign-off" },
+      { name: "Inspected by", value: "SAPL + customer QA" },
+    ],
   },
   {
-    stage: "Pre-volume",
-    title: "Trial production & line verification",
+    key: "line-verification",
+    number: "02",
+    label: "Trial production & line verification",
     body: "A line verification process is run in the presence of the customer's team, confirming the production line is ready for volume before mass production begins.",
-    tag: "Customer team on-site",
-    image: { src: floorPhoto("press-line-safety-gear"), position: "50% 50%", alt: "Operators in hard hats, safety glasses and high-visibility vests running a line of mechanical power presses" },
+    cover: floorPhoto("press-line-safety-gear"),
+    coverAlt: "Operators in hard hats, safety glasses and high-visibility vests running a line of mechanical power presses",
+    facts: [
+      { name: "Stage", value: "Pre-volume" },
+      { name: "Witnessed by", value: "Customer team on-site" },
+    ],
   },
   {
-    stage: "Mass production",
-    title: "Production quality assurance",
-    body: "Once in mass production, parts are delivered against schedule with consistent quality checks maintained through the run.",
-    tag: "Scheduled delivery",
-    image: { src: floorPhoto("parts-racks"), position: "40% 60%", alt: "Finished parts staged in bins and racks for delivery" },
+    key: "production-qa",
+    number: "03",
+    label: "Production quality assurance",
+    body: "Once in mass production, parts are checked on gauging fixtures through the run and delivered against schedule with consistent quality.",
+    cover: floorPhoto("panel-gauging"),
+    coverAlt: "Inspector clamping a sheet metal part into a gauging fixture",
+    facts: [
+      { name: "Stage", value: "Mass production" },
+      { name: "Delivery", value: "Against schedule" },
+    ],
   },
+];
+
+const isoStandards = [
+  { code: "ISO 9001", name: "Quality management system", icon: ShieldCheck },
+  { code: "ISO 14001", name: "Environmental management system", icon: Leaf },
 ];
 
 export default function QualityPage() {
@@ -104,76 +126,72 @@ export default function QualityPage() {
         flat
       />
 
-      <section className="bg-bg py-section-sm">
-        <Container>
-          <RevealGroup className="grid grid-cols-1 gap-5 sm:gap-6 md:grid-cols-3">
-            {checkpoints.map((c) => (
-              <RevealItem key={c.title} className="h-full">
-                <article className="group flex h-full flex-col overflow-hidden rounded-[1.75rem] border border-border bg-bg-elevated shadow-soft transition-[box-shadow,border-color,transform] duration-500 ease-out hover:-translate-y-1 hover:border-accent/30 hover:shadow-lift motion-reduce:hover:translate-y-0">
-                  <div className="relative aspect-[4/3] overflow-hidden bg-bg">
-                    <Image
-                      src={c.image.src}
-                      alt={c.image.alt}
-                      fill
-                      sizes="(min-width: 1280px) 400px, (min-width: 768px) 33vw, 100vw"
-                      {...blurProps(c.image.src)}
-                      style={{ objectPosition: c.image.position }}
-                      className="object-cover transition-transform duration-700 ease-out group-hover:scale-[1.05] motion-reduce:transition-none"
-                    />
-                    <div
-                      aria-hidden="true"
-                      className="absolute inset-0 bg-[linear-gradient(180deg,rgb(10_26_19/0.35)_0%,transparent_32%,transparent_55%,rgb(10_26_19/0.78)_100%)]"
-                    />
-                    <span className="absolute left-4 top-4 rounded-full border border-white/20 bg-black/30 px-3 py-1 text-[11px] font-medium uppercase tracking-[0.14em] text-white backdrop-blur-md">
-                      {c.stage}
-                    </span>
-                    <span className="absolute bottom-4 left-4 inline-flex h-11 w-11 items-center justify-center rounded-2xl bg-accent text-accent-fg shadow-lift ring-4 ring-white/15">
-                      <CheckCircle size={22} weight="bold" />
-                    </span>
-                  </div>
-                  <div className="flex flex-1 flex-col p-6 sm:p-7">
-                    <h3 className="text-lg font-semibold tracking-tight text-fg">{c.title}</h3>
-                    <p className="mb-6 mt-2.5 text-sm leading-relaxed text-fg-muted">{c.body}</p>
-                    <div className="mt-auto flex items-center gap-2 border-t border-border pt-4 text-xs font-medium text-accent-strong">
-                      <span className="h-1.5 w-1.5 rounded-full bg-brass" aria-hidden="true" />
-                      {c.tag}
+      <section className="surface-paper bg-bg py-section">
+        <Container className="space-y-16 sm:space-y-24 lg:space-y-28">
+          {qualityStages.map((stage, i) => (
+            <div key={stage.key} id={stage.key} className="grid scroll-mt-28 items-center gap-8 sm:gap-10 lg:grid-cols-2 lg:gap-16">
+              <Reveal from={i % 2 ? "right" : "left"} className={cn(i % 2 && "lg:order-2")}>
+                <ParallaxImage
+                  src={stage.cover}
+                  alt={stage.coverAlt}
+                  sizes="(min-width: 1280px) 720px, (min-width: 1024px) 50vw, 100vw"
+                  blurDataURL={blurProps(stage.cover).blurDataURL}
+                  className="aspect-[4/3] rounded-[2rem] shadow-lift ring-1 ring-border"
+                />
+              </Reveal>
+
+              <Reveal delay={0.08}>
+                <p className="mono-figure text-4xl font-semibold text-accent/25 sm:text-6xl">{stage.number}</p>
+                <h2 className="mt-3 text-display-md font-semibold tracking-tight text-fg">{stage.label}</h2>
+                <p className="mt-4 max-w-xl text-base leading-relaxed text-fg-muted sm:text-lg">{stage.body}</p>
+
+                <dl className="mt-8 grid max-w-md grid-cols-2 gap-2 sm:gap-3">
+                  {stage.facts.map((f) => (
+                    <div key={f.name} className="min-w-0 rounded-2xl border border-border bg-bg-elevated p-3 shadow-soft sm:p-4">
+                      <dt className="text-[11px] leading-snug text-fg-muted sm:text-xs">{f.name}</dt>
+                      <dd className="mt-2 text-sm font-semibold leading-snug text-fg sm:text-base">{f.value}</dd>
                     </div>
-                  </div>
-                </article>
-              </RevealItem>
-            ))}
-          </RevealGroup>
+                  ))}
+                </dl>
+              </Reveal>
+            </div>
+          ))}
         </Container>
       </section>
 
-      <section className="rounded-section bg-bg-elevated shadow-soft py-section-sm">
-        <Container className="grid gap-10 lg:grid-cols-2 lg:items-center">
-          <Reveal>
-            <h2 className="text-display-md font-semibold tracking-tight text-fg">
-              Dimensional Inspection
-            </h2>
-            <p className="mt-4 max-w-md text-base leading-relaxed text-fg-muted">
-              A FARO Arm with laser scanner supports manual and automated inspection of individual parts, sub-components and final assemblies, alongside conventional gauging equipment.
-            </p>
-          </Reveal>
-          <Reveal delay={0.08}>
-            <ul className="divide-y divide-border rounded-sm border border-border bg-bg">
-              {equipmentInspection.map((eq) => (
-                <li key={eq.name} className="px-5 py-4 text-sm font-medium text-fg">
-                  {eq.name}
-                </li>
-              ))}
-            </ul>
-          </Reveal>
-        </Container>
-      </section>
-
-      <section className="bg-bg py-section-sm">
+      <section className="bg-bg pb-section-sm">
         <Container>
-          <Reveal className="max-w-2xl rounded-sm border border-border bg-bg-elevated shadow-soft p-7">
-            <SealWarning size={24} className="text-fg-muted" />
-            <h2 className="mt-4 text-xl font-semibold tracking-tight text-fg">{certificationsNote.headline}</h2>
-            <p className="mt-3 text-sm leading-relaxed text-fg-muted">{certificationsNote.body}</p>
+          <Reveal className="relative overflow-hidden rounded-[2rem] border border-border bg-bg-elevated p-6 shadow-soft sm:p-10 lg:p-12">
+            <div aria-hidden="true" className="pointer-events-none absolute -right-24 -top-24 h-72 w-72 rounded-full bg-accent/10 blur-3xl" />
+            <div className="relative grid gap-10 lg:grid-cols-[1.15fr_1fr] lg:items-center lg:gap-14">
+              <div>
+                <Eyebrow className="mb-4">Certifications</Eyebrow>
+                <h2 className="text-balance text-display-md font-semibold tracking-tight text-fg">{certificationsNote.headline}</h2>
+                <p className="mt-4 max-w-xl text-sm leading-relaxed text-fg-muted sm:text-base">{certificationsNote.body}</p>
+                <p className="mt-6 inline-flex items-center gap-2 rounded-full border border-brass/40 bg-brass-soft/40 px-3.5 py-1.5 text-xs font-medium text-fg">
+                  <Clock size={14} weight="bold" className="text-brass" />
+                  Certificate details pending verification
+                </p>
+              </div>
+
+              <div className="grid gap-3 sm:grid-cols-2 sm:gap-4">
+                {isoStandards.map((std) => (
+                  <div key={std.code} className="flex flex-col rounded-[1.5rem] border border-border bg-bg p-5 sm:p-6">
+                    <span className="inline-flex h-11 w-11 items-center justify-center rounded-xl bg-accent text-accent-fg shadow-soft">
+                      <std.icon size={22} weight="duotone" />
+                    </span>
+                    <p className="mono-figure mt-5 text-2xl font-semibold text-fg">{std.code}</p>
+                    <p className="mt-1 text-sm leading-snug text-fg-muted">{std.name}</p>
+                  </div>
+                ))}
+                <div className="flex items-center gap-3 rounded-[1.5rem] border border-dashed border-border px-5 py-4 sm:col-span-2">
+                  <SealCheck size={20} weight="duotone" className="shrink-0 text-accent" />
+                  <p className="text-sm text-fg-muted">
+                    Certified under <span className="font-semibold text-fg">UKAS</span>, Pakistan
+                  </p>
+                </div>
+              </div>
+            </div>
           </Reveal>
         </Container>
       </section>

@@ -69,7 +69,8 @@ export function CapabilitiesGrid({ capabilities }: { capabilities: Capability[] 
         <div className="flex flex-col items-start justify-between gap-6 sm:flex-row sm:items-end">
           <SectionHeading
             eyebrow="Capabilities"
-            title="Manufacturing capabilities built around your production line."
+            eyebrowClassName="text-sm! sm:text-base!"
+            title="Manufacturing capabilities built around our production line."
           />
           <Reveal delay={0.06} className="shrink-0">
             <Link
