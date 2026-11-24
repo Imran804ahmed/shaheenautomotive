@@ -1,3 +1,4 @@
+import type { HomeImages } from "@/lib/server/homepage-images";
 import Link from "next/link";
 import { Eyebrow } from "@/components/ui/Eyebrow";
 import { ArrowUpRight } from "@phosphor-icons/react/dist/ssr";
@@ -8,12 +9,12 @@ import { Reveal } from "@/components/ui/Reveal";
 import { InViewVideo } from "@/components/ui/InViewVideo";
 
 /** Home-page teaser for /facility: the machines and people behind the parts. */
-export function ShopFloor() {
+export function ShopFloor({ images }: { images: HomeImages }) {
   return (
     <section className="surface-ink overflow-hidden py-section-sm">
       {/* parts-store photo behind the copy, lit the same way as the home hero: dark on the copy side, opening up to the right */}
       <div aria-hidden="true" className="absolute inset-0 -z-10">
-        <BackdropImage src="/images/facility/storage/parts-store.webp" />
+        <BackdropImage src={images["shop-background"]?.src || "/images/facility/storage/parts-store.webp"} />
         <div className="scrim-hero" />
       </div>
       <Container className="grid items-center gap-10 lg:grid-cols-12 lg:gap-14">
@@ -40,7 +41,7 @@ export function ShopFloor() {
         </div>
 
         <Reveal from="scale" className="lg:col-span-7">
-          <VideoCard />
+          <VideoCard poster={images["shop-poster"]?.src || "/images/video/shop-floor-poster.jpg"} />
         </Reveal>
       </Container>
     </section>
@@ -48,7 +49,7 @@ export function ShopFloor() {
 }
 
 /** Looping 30s cut of the operators across the press shop, pipe bending, welding floor, QA/QC lab and warehouse, framed like the site's photo tiles: thin white border, glowing edge and arrow on hover. */
-function VideoCard() {
+function VideoCard({ poster }: { poster: string }) {
   return (
     <Link
       href="/facility"
@@ -58,7 +59,7 @@ function VideoCard() {
         <figure className="relative aspect-[16/9] overflow-hidden rounded-[1.35rem] bg-accent-strong ring-1 ring-white/20">
           <InViewVideo
             src="/videos/shop-floor.mp4"
-            poster="/images/video/shop-floor-poster.jpg"
+            poster={poster}
             posterSizes="(min-width: 1280px) 690px, (min-width: 1024px) 55vw, 100vw"
             label="SAPL operators running the press lines, bending tubes on hydraulic pipe benders and MIG welding parts, followed by the QA/QC lab and the SAPL warehouse"
             className="transition-transform duration-700 ease-out group-hover:scale-[1.03]"

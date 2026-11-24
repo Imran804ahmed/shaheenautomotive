@@ -5,11 +5,11 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { AnimatePresence, motion, useMotionValueEvent, useReducedMotion, useScroll, useSpring } from "motion/react";
 import { List, X, CaretDown, ArrowUpRight } from "@phosphor-icons/react";
-import { siteConfig } from "@/content/site";
+import type { Content } from "@/lib/server/content";
 import { cn } from "@/lib/cn";
 import { Container } from "@/components/ui/Container";
 
-const productCategories = siteConfig.productCategories;
+
 
 const menuItem = {
   hidden: { opacity: 0, y: 14 },
@@ -18,7 +18,8 @@ const menuItem = {
 
 const isActive = (pathname: string, href: string) => (href === "/" ? pathname === "/" : pathname.startsWith(href));
 
-export function Header() {
+export function Header({ siteConfig, products, logo, logoLabel }: { siteConfig: Content["settings"]; products: Content["productCategories"]; logo: string; logoLabel?: string }) {
+  const productCategories = products.map(({ slug, shortTitle }) => ({ slug, label: shortTitle }));
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
   const [productsOpen, setProductsOpen] = useState(false);
@@ -104,9 +105,10 @@ export function Header() {
           href="/"
           onClick={closeMenu}
           className="flex h-11 shrink-0 items-center active:scale-[0.98]"
-          aria-label={`${siteConfig.companyLegalName}, home`}
+          aria-label={`${logoLabel || siteConfig.companyLegalName}, home`}
         >
           <span
+            style={{ maskImage: `url("${logo}")` }}
             className={cn(
               "logo-duo h-9 w-auto origin-left transition-transform duration-500 ease-out sm:h-11",
               solid && "scale-[0.84]"

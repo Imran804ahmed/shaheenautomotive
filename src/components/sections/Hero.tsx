@@ -1,8 +1,9 @@
+import type { HomeImages } from "@/lib/server/homepage-images";
 import { Container } from "@/components/ui/Container";
 import { Button } from "@/components/ui/Button";
 import { BackdropImage } from "@/components/ui/BackdropImage";
 import { HlsBackground } from "@/components/ui/HlsBackground";
-import { siteConfig } from "@/content/site";
+import { getContent, type Content } from "@/lib/server/content";
 
 /** One headline word, rising out of a clipping mask (CSS, so it runs before hydration). */
 function Word({ children, index, className }: { children: React.ReactNode; index: number; className?: string }) {
@@ -18,11 +19,10 @@ function Word({ children, index, className }: { children: React.ReactNode; index
   );
 }
 
-const headline: { word: string; accent?: boolean }[] = "Engineering the Parts That Move Pakistan’s Automotive Industry."
-  .split(" ")
-  .map((word) => ({ word, accent: word === "Move" }));
-
-export function Hero() {
+export async function Hero({ preview, images }: { preview?: Content["hero"]; images?: HomeImages } = {}) {
+  const { hero: published, settings: siteConfig } = await getContent();
+  const hero = preview ?? published;
+  const headline = hero.title.split(" ").map((word) => ({ word, accent: word === "Move" }));
   const enter = (delay: number) => ({
     style: { "--enter-y": "22px", "--enter-duration": "0.7s", animationDelay: `${delay}s` } as React.CSSProperties,
   });
@@ -32,11 +32,11 @@ export function Hero() {
       {/* full-bleed plant exterior, kept bright; only the copy side is darkened */}
       <div aria-hidden="true" className="absolute inset-0 -z-10">
         <div className="absolute inset-0">
-          <BackdropImage src="/images/facility/exterior/sapl-plant-front.jpg" position="60% center" priority />
+          <BackdropImage src={images?.["hero-background"]?.src || hero.image} position="60% center" priority />
         </div>
         {siteConfig.heroVideo.src && (
           <div className="absolute inset-0 isolate">
-            <HlsBackground src={siteConfig.heroVideo.src} poster={siteConfig.heroVideo.poster || undefined} />
+            <HlsBackground src={siteConfig.heroVideo.src} poster={images?.["hero-poster"]?.src || siteConfig.heroVideo.poster || undefined} />
           </div>
         )}
         {/* dark on the copy side, opening up towards the right */}
@@ -51,7 +51,7 @@ export function Hero() {
             className="enter-up inline-flex items-center gap-2.5 rounded-full border border-white/15 bg-white/5 px-4 py-1.5 text-xs font-medium text-fg-inverted-muted backdrop-blur"
           >
             <span className="h-1.5 w-1.5 rounded-full bg-glow" />
-            Manufacturing in Pakistan since 1983
+            {hero.eyebrow}
           </p>
           <h1 className="mt-6 text-balance text-display-xl font-semibold text-fg-inverted">
               {headline.map((w, idx) => (
@@ -67,14 +67,14 @@ export function Hero() {
             {...enter(0.14)}
             className="enter-up mt-6 max-w-lg text-base leading-relaxed text-fg-inverted-muted sm:text-lg"
           >
-            Precision-engineered automotive components, pioneering metal-forming expertise, and dependable OEM manufacturing — built on decades of industry experience.
+            {hero.description}
           </p>
           <div {...enter(0.22)} className="enter-up mt-9 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center sm:gap-4">
-            <Button href="/contact" variant="brass" className="w-full sm:w-auto">
-              Contact Us
+            <Button href={hero.primaryHref} variant="brass" className="w-full sm:w-auto">
+              {hero.primaryLabel}
             </Button>
-            <Button href="/capabilities" variant="onDark" showArrow={false} className="w-full sm:w-auto">
-              Explore Capabilities
+            <Button href={hero.secondaryHref} variant="onDark" showArrow={false} className="w-full sm:w-auto">
+              {hero.secondaryLabel}
             </Button>
           </div>
         </div>

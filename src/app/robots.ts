@@ -1,14 +1,12 @@
 import type { MetadataRoute } from "next";
-import { siteConfig } from "@/content/site";
+import { getContent } from "@/lib/server/content";
 
-export const dynamic = "force-static";
+export const dynamic = "force-dynamic";
 
-export default function robots(): MetadataRoute.Robots {
+export default async function robots(): Promise<MetadataRoute.Robots> {
+  const { settings } = await getContent();
   return {
-    rules: {
-      userAgent: "*",
-      allow: "/",
-    },
-    sitemap: `${siteConfig.baseUrl}/sitemap.xml`,
+    rules: { userAgent: "*", disallow: settings.robotsIndex ? ["/admin/", "/api/"] : "/" },
+    sitemap: `${settings.baseUrl}/sitemap.xml`,
   };
 }

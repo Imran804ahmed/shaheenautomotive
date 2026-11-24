@@ -1,0 +1,74 @@
+{
+  "contact": {
+    "eyebrow": "Contact",
+    "title": "Contact us.",
+    "intro": "Tell us about the part and we'll come back with feasibility, process and a quotation. The more detail you share up front, the faster we can respond.",
+    "image": {
+      "src": "/images/facility/exterior/shaheen-plant-exterior.webp",
+      "position": "62% center"
+    }
+  },
+  "products": {
+    "eyebrow": "Products",
+    "title": "Jack and Hinges, Sheet Metal, Rods and Pipes",
+    "intro": "Every category below links to verified component examples manufactured for our OEM customers, alongside the processes used to produce them.",
+    "image": {
+      "src": "/images/products/hero/bent-rods-bin.webp",
+      "position": "60% center"
+    }
+  },
+  "capabilities": {
+    "eyebrow": "Capabilities",
+    "title": "Six capabilities, one production line.",
+    "intro": "From design and tooling through sheet metal stamping, pipe bending, welding, surface finishing and dimensional inspection, SAPL runs the full development-to-production chain in-house.",
+    "image": {
+      "src": "/images/facility/floor/press-operators-hard-hats.jpg",
+      "position": "70% center"
+    }
+  },
+  "csr": {
+    "eyebrow": "CSR",
+    "title": "Corporate Social Responsibility",
+    "intro": "Building components responsibly: for the people on our lines, the community around our plant and the industry we have served since 1983.",
+    "image": {
+      "src": "/images/facility/exterior/shaheen-plant-exterior.webp",
+      "position": "35% center"
+    }
+  },
+  "quality": {
+    "eyebrow": "Quality",
+    "title": "Quality verified at every stage, not just at the end.",
+    "intro": "From the first off-tool sample through trial production and into mass production, every part is checked against customer and SAPL quality requirements before it ships.",
+    "image": {
+      "src": "/images/quality/hero/panel-gauging-green.webp",
+      "position": "70% 30%"
+    }
+  },
+  "gallery": {
+    "eyebrow": "Gallery",
+    "title": "A look inside our plant.",
+    "intro": "The Press Shop, welding and finishing lines, QA & QC lab and stores where every Shaheen Automotive part is made.",
+    "image": {
+      "src": "/images/facility/floor/press-shop-hall.jpg",
+      "position": "center 55%"
+    }
+  },
+  "about": {
+    "eyebrow": "About us",
+    "title": "Four decades of precision manufacturing.",
+    "intro": "Shaheen Automotive (Pvt.) Ltd. designs and manufactures jack assemblies, sheet metal, bent rod and formed pipe components for the automotive and home appliance industries.",
+    "image": {
+      "src": "/images/facility/floor/press-line-operators.jpg",
+      "position": "center 60%"
+    }
+  },
+  "facility": {
+    "eyebrow": "Facility",
+    "title": "Inside the plant",
+    "intro": "Our Press Shop, welding bays and spot welding lines, and the operators who run them every shift.",
+    "image": {
+      "src": "/images/facility/floor/enhanced/press-shop-hall.jpg",
+      "position": "60% 65%"
+    }
+  }
+}

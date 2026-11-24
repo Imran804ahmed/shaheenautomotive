@@ -1,3 +1,4 @@
+import { awardImageKey, type HomeImages } from "@/lib/server/homepage-images";
 import Image from "next/image";
 import { blurProps } from "@/lib/image-meta";
 import { ArrowUpRight, Trophy } from "@phosphor-icons/react/dist/ssr";
@@ -8,9 +9,9 @@ import { SectionHeading } from "@/components/ui/SectionHeading";
 import { SpotTrack } from "@/components/ui/SpotTrack";
 import type { Award } from "@/content/company";
 
-export function QualityEvidence({ awards }: { awards: Award[] }) {
+export function QualityEvidence({ awards, images }: { awards: Award[]; images: HomeImages }) {
   const years = awards.flatMap((a) => (a.year ? a.year.match(/\d{4}/g) ?? [] : [])).map(Number);
-  const first = Math.min(...years);
+  const first = years.length ? Math.min(...years) : null;
   const last = Math.max(...years, new Date().getFullYear());
   const oems = new Set(awards.map((a) => a.oem).filter(Boolean)).size;
   // stats cover the full record; the cards show only the featured pieces
@@ -39,7 +40,7 @@ export function QualityEvidence({ awards }: { awards: Award[] }) {
             {[
               { value: String(awards.length), label: "Awards & certificates" },
               { value: String(oems), label: "OEM groups" },
-              { value: `${first}–${last}`, label: "Years of recognition" },
+              { value: first ? `${first}–${last}` : "—", label: "Years of recognition" },
             ].map((s) => (
               <div key={s.label} className="flex items-baseline justify-between gap-4 px-5 py-3.5 sm:block sm:px-6 sm:py-5">
                 <dt className="text-[11px] font-medium uppercase tracking-[0.14em] text-fg-muted sm:text-xs">{s.label}</dt>
@@ -68,11 +69,11 @@ export function QualityEvidence({ awards }: { awards: Award[] }) {
                       {/* fixed 3:4 print so every card matches; wide photos (certificates) sit whole on a mat matched to their light-grey studio backdrop instead of being cropped */}
                       <div className="relative aspect-[3/4] h-full max-w-full overflow-hidden rounded-xl bg-[linear-gradient(to_bottom,rgb(221_228_234),rgb(229_236_240))] shadow-[0_18px_30px_-12px_rgb(0_0_0/0.45)] ring-1 ring-black/5 transition-transform duration-700 ease-out group-hover:scale-[1.04] motion-reduce:transition-none">
                         <Image
-                          src={award.image}
-                          alt={`${award.title}, ${award.awardedBy}`}
+                          src={images[awardImageKey(award)]?.src || award.image}
+                          alt={images[awardImageKey(award)]?.alt ?? `${award.title}, ${award.awardedBy}`}
                           fill
                           sizes="(min-width: 1280px) 240px, (min-width: 1024px) 20vw, 260px"
-                          {...blurProps(award.image)}
+                          {...blurProps(images[awardImageKey(award)]?.src || award.image)}
                           className="object-contain"
                         />
                       </div>

@@ -7,7 +7,7 @@ import type { Client } from "@/content/company";
  * prefers-reduced-motion via the .marquee-track rule in globals via Tailwind
  * arbitrary variant below.
  */
-export function LogoMarquee({ clients }: { clients: Client[] }) {
+export function LogoMarquee({ clients }: { clients: (Client & { alt?: string })[] }) {
   const loop = [...clients, ...clients];
   return (
     <div className="relative overflow-hidden py-2 [mask-image:linear-gradient(to_right,transparent,black_6%,black_94%,transparent)]">
@@ -18,7 +18,7 @@ export function LogoMarquee({ clients }: { clients: Client[] }) {
             key={`${client.name}-${i}`}
             src={client.logo}
             // the second copy exists only to make the loop seamless; screen readers get the list once
-            alt={i < clients.length ? client.name : ""}
+            alt={i < clients.length ? client.alt ?? client.name : ""}
             aria-hidden={i >= clients.length || undefined}
             width={480}
             height={200}

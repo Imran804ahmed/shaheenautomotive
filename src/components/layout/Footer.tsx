@@ -1,8 +1,8 @@
+import type { HomeImages } from "@/lib/server/homepage-images";
 import Link from "next/link";
 import Image from "next/image";
 import { ArrowUpRight, EnvelopeSimple, MapPin, Phone } from "@phosphor-icons/react/dist/ssr";
-import { siteConfig } from "@/content/site";
-import { brand } from "@/content/company";
+import { getContent } from "@/lib/server/content";
 import { Container } from "@/components/ui/Container";
 import { RevealGroup, RevealItem } from "@/components/ui/Reveal";
 
@@ -13,11 +13,6 @@ const companyLinks = [
   { label: "Quality", href: "/quality" },
   { label: "CSR", href: "/csr" },
   { label: "Contact", href: "/contact" },
-];
-
-const productLinks = [
-  ...siteConfig.productCategories.map((c) => ({ label: c.label, href: `/products/${c.slug}` })),
-  { label: "Gallery", href: "/gallery" },
 ];
 
 const headingClasses = "text-xs font-semibold uppercase tracking-[0.18em] text-white/60";
@@ -35,14 +30,19 @@ function FooterLink({ href, children }: { href: string; children: React.ReactNod
   );
 }
 
-export function Footer() {
+export async function Footer({ images }: { images?: HomeImages }) {
+  const { settings: siteConfig, brand, productCategories } = await getContent();
+  const productLinks = [
+    ...productCategories.filter(({ visible }) => visible).map((item) => ({ label: item.shortTitle, href: `/products/${item.slug}` })),
+    { label: "Gallery", href: "/gallery" },
+  ];
   const year = new Date().getFullYear();
 
   return (
     <footer className="surface-footer">
       {/* oversized brand mark, barely visible, anchored bottom right */}
       <Image
-        src={brand.markLight}
+        src={images?.["footer-mark"]?.src || brand.markLight}
         alt=""
         aria-hidden="true"
         width={512}
@@ -56,13 +56,13 @@ export function Footer() {
       <Container className="relative">
         <div className="flex flex-col gap-8 border-b border-white/[0.07] pb-12 pt-16 sm:pt-20 lg:flex-row lg:items-end lg:justify-between">
           <p className="max-w-3xl text-balance text-[clamp(1.9rem,1.2rem+2.6vw,3.4rem)] font-bold leading-[1.02] tracking-tight text-white">
-            Engineering excellence. <span className="text-metal">Driving the future.</span>
+            {siteConfig.footerHeadline} <span className="text-metal">{siteConfig.footerHighlight}</span>
           </p>
           <Link
-            href="/contact"
+            href={siteConfig.footerActionHref}
             className="group inline-flex min-h-12 shrink-0 items-center gap-3 self-start rounded-full border border-white/15 bg-white/[0.04] py-2 pl-6 pr-2 text-sm font-semibold text-white transition-colors hover:border-accent hover:bg-accent-strong lg:self-auto"
           >
-            Start a project
+            {siteConfig.footerAction}
             <span className="flex h-10 w-10 items-center justify-center rounded-full bg-accent-strong transition-[transform,background-color,color] duration-300 group-hover:rotate-45 group-hover:bg-white group-hover:text-accent-strong">
               <ArrowUpRight size={16} weight="bold" />
             </span>
@@ -74,11 +74,11 @@ export function Footer() {
           className="grid grid-cols-2 gap-x-6 gap-y-12 py-14 sm:gap-x-10 md:grid-cols-4 lg:grid-cols-[1.4fr_0.8fr_0.9fr_1.2fr] lg:gap-x-12"
         >
           <RevealItem className="col-span-2 md:col-span-4 lg:col-span-1">
-            <Link href="/" className="inline-flex" aria-label={`${siteConfig.companyLegalName}, home`}>
-              <span className="logo-duo h-11 w-auto" />
+            <Link href="/" className="inline-flex" aria-label={`${images?.["footer-logo"]?.alt || siteConfig.companyLegalName}, home`}>
+              <span style={{ maskImage: `url("${images?.["footer-logo"]?.src || brand.logoFull}")` }} className="logo-duo h-11 w-auto" />
             </Link>
             <p className="mt-6 max-w-sm text-sm leading-relaxed text-fg-inverted-muted">
-              Shaheen Automotive (Pvt.) Ltd. designs and manufactures jack assemblies, sheet metal, bent rod and formed pipe components for the automotive and home appliance industries.
+              {siteConfig.footerDescription}
             </p>
           </RevealItem>
 
@@ -165,7 +165,7 @@ export function Footer() {
       <div className="relative border-t border-white/[0.07] py-6">
         <Container className="flex flex-col items-center justify-between gap-2 text-center text-xs text-white/60 sm:flex-row sm:gap-6 sm:text-left">
           <p>
-            &copy; {year} {siteConfig.companyLegalName}. All rights reserved.
+            &copy; {year} {siteConfig.companyLegalName} {siteConfig.copyright}
           </p>
         </Container>
       </div>

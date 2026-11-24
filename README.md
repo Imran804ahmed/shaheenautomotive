@@ -1,108 +1,97 @@
-# Shaheen Automotive (Pvt.) Ltd. — corporate website
+# Shaheen Automotive
 
-A static, production-ready corporate website for SAPL, built with Next.js (App Router), TypeScript and Tailwind CSS v4. Content and imagery are sourced from `SAPL Profile 2025.pptx`.
+The dynamic branch runs the existing corporate site and an admin workspace in one Next.js App Router application. Public URLs and the existing Tailwind, Motion, and image treatments remain in place. The workspace opens at `/admin`.
 
-## Stack
+## Development
 
-- Next.js 16 (App Router, static export via `output: "export"`)
-- TypeScript
-- Tailwind CSS v4
-- Motion (`motion/react`) for restrained, reduced-motion-aware animation
-- Phosphor Icons
-
-No server, database, or API routes are used anywhere; this is a fully static site.
-
-## Running locally
+Use Node.js 24 with npm. Set up the environment and install the locked dependencies.
 
 ```bash
-npm install
-npm run dev
+npm ci
+cp .env.example .env.local
+npm run images
 ```
 
-Open http://localhost:3000.
-
-## Production build & static export
+Create the `shaheenautomotive` database and assign a dedicated MySQL user such as `shaheen_app` in phpMyAdmin or your hosting panel. Use MySQL 8.0.13+ or MariaDB 10.11. Copy the actual database name, user, host, port and password into `.env.local`. Use `MYSQL_SOCKET` for XAMPP socket connections. On cPanel, use the full prefixed database and user names shown in the panel. Set `MYSQL_TLS=1` if your host requires a trusted TLS connection.
 
 ```bash
-npm run build
+npm run db:migrate
 ```
 
-This runs `next build`, which, because `next.config.ts` sets `output: "export"`, also produces a fully static site in `out/`. Deploy the contents of `out/` to any static host (Netlify, Cloudflare Pages, S3 + CloudFront, GitHub Pages, Vercel static, etc.) or behind any web server.
+For an existing SQLite installation, import its data into an empty MySQL database **before opening the app**. The importer transfers administrator hashes, published content, drafts, inquiries, uploaded media and audit history. Administrators sign in again after the move.
 
 ```bash
-npx serve out      # quick local preview of the exported site
+npm run db:import-sqlite -- data/shaheen.sqlite
 ```
 
-## Project structure
+Run `npm run dev` and open http://localhost:3000. The CMS inserts missing sections on first use and preserves saved edits. The administrator account table is `administrators`.
 
-```
-src/
-  app/                 Routes (App Router). Each folder is a page.
-  components/
-    layout/             Header, Footer
-    sections/           Page-level sections reused across routes (Hero, PageHeader, CtaBanner, ...)
-    ui/                 Small reusable primitives (Button, Container, Reveal, StatCounter, ...)
-    forms/              RfqForm (the Request a Quote form)
-  content/
-    company.ts          All factual company content, sourced from the SAPL profile deck. Edit this file to update stats, capabilities, equipment lists, awards, products, clients, etc.
-    site.ts              Business/contact configuration and navigation. Edit this file to fill in placeholders.
-  lib/cn.ts             Small classnames helper
-public/images/           All imagery extracted from the source PPTX (brand, clients, awards, product photos, one facility photo)
+For a fresh database, provision the first super administrator. Enter a unique password of 14–128 characters through standard input. For example, in Bash use an interactive hidden prompt and clear the variable afterward.
+
+```bash
+read -rs -p 'Initial admin password: ' shaheen_initial_password
+printf '\n'
+printf '%s\n' "$shaheen_initial_password" | npm run admin:provision -- you@example.com 'Site Administrator'
+unset shaheen_initial_password
 ```
 
-## Before you launch: things that still need real information
+Sign in at http://localhost:3000/admin. Super administrators can create, deactivate, and assign roles to other administrators. Both roles can manage website content, media, and inquiries. Each administrator can update their own profile and password.
 
-The source PowerPoint's ISO / "Future Plans" content was inconsistent or time-sensitive. Rather than invent any of this, the site ships with clearly labelled placeholders. Fix all of the following before going live:
+## Editorial workflow
 
-### 1. `src/content/site.ts`
-- `domain` / `baseUrl` — set to your real production domain (used for canonical URLs, sitemap, Open Graph).
-- `contact.mapEmbedUrl` — optional, if you want an embedded map on the Contact page.
-- `social.linkedin` — optional.
-- `rfqFormEndpoint` — see "RFQ form" below.
+- **Website content** contains the home hero and section order, company information, capability cards and equipment, product families and specifications, facility and galleries, awards, CSR, branding, settings, and page SEO. Array sections support adding, removing, reordering, searching, and paging through entries.
+- **Save draft** stores changes privately. **Publish changes** makes the current editor values visible on the next public request. The home hero and page banners support a private preview after saving a draft. A stale editor revision is rejected so a second editor cannot silently overwrite it.
+- **Product families** use SEO slugs. The four imported slugs remain routable. Use Visible to control listings and Featured to control placement on the home page. Product Details accepts matching slugs for specifications and additional images.
+- **Media library** accepts JPEG, PNG, and WebP and converts them to WebP. Use the media picker in image fields and set contextual alternative text where the editor provides it. An image referenced by published content or a draft must be detached before deletion. Replacing a shared image changes its appearance wherever it is used.
+- **Inquiries** stores submitted RFQs and their optional attachments. Staff can filter, sort, download attachments, change the inquiry status, and export the filtered results as CSV. Review unread inquiries from the dashboard or sidebar. Attachment downloads require an authenticated account.
+- **SEO** accepts optional title, description, canonical, and sharing image overrides. The base URL and indexing policy control metadata, robots, and sitemap generation.
 
-### 2. RFQ form delivery (`src/content/site.ts` → `rfqFormEndpoint`)
-This is a static site, so the "Request a Quote" form cannot post to a database on its own. It supports two modes:
+The content source in `src/content/` provides the initial seed. The runtime uses published database values. Registered page banners and editorial modules are editable. Presentation copy inside some existing components and fixed equipment anchors are part of the layouts.
 
-- **Recommended:** sign up for a static-form provider (Formspree, Getform, Basin, etc.), create a form, and paste its POST endpoint URL into `rfqFormEndpoint`. The form will then submit directly to that service client-side, including the optional file attachment, and show a real success/error state.
-- **Default fallback (no configuration needed):** with `rfqFormEndpoint` left empty, the form builds a pre-filled `mailto:` link to `contact.email` and opens the visitor's own email client. This is clearly labelled in the UI ("this form opens a pre-filled email...") so visitors are never told something was "submitted" when nothing was actually sent anywhere. Note that file attachments cannot be auto-attached via `mailto:`; the UI tells the visitor to attach the file manually.
+## Production deployment
 
-### 3. Certifications (`src/content/company.ts` → `certificationsNote`)
-The source deck references **inconsistent ISO standard revisions** across slides ("ISO 19001:2008", "ISO 9001:2004", and two different ISO 14001 dates). Rather than publish a specific certificate number / revision / validity date that cannot be verified from the source material, the Quality page shows a clearly-labelled placeholder statement instead of ISO badges. Once you have the actual certificates in hand, update `certificationsNote` with the verified standard, revision, certificate number and validity date, and consider adding the real certificate badge images to `public/images/`.
+1. Deploy with a Node.js server and HTTPS reverse proxy. Build with `npm run build`, then start with `npm run start`. Use `npm run build -- --webpack` on systems that restrict Turbopack's worker processes. The existing Google fonts are downloaded during the build.
+2. Set the MySQL environment variables and run `npm run db:migrate` or `npm run db:import-sqlite` before starting the Node.js app. The runtime applies the schema when its connection pool opens and needs SELECT, INSERT, UPDATE, DELETE, CREATE, and REFERENCES privileges on its own database. Keep credentials and database backups private. Set MySQL's allowed packet size above the application upload limits and test restoring a backup before cutover.
+3. Set `APP_ORIGIN` to the exact public HTTPS origin. Forward the original host and protocol through the reverse proxy. Serve authenticated and dynamic HTML without shared caching. Keep the request body limit at least 9 MB for admin uploads and configure request rate limits at the proxy.
+4. For self-service password reset, set `RESEND_API_KEY` and `PASSWORD_RESET_FROM` with a verified sender. The app stores a hash of the single-use token and expires it after 30 minutes. Exclude reset URL query strings from access logs. Test delivery in the target environment.
+5. Provision the first account in the configured MySQL database. Review the migrated business claims, contact details, canonical origin, and page metadata. Submit a test RFQ and confirm it appears under Inquiries.
+6. Preserve the existing deployment and database backup until the new service is verified. Keep the Node process under your service manager and monitor errors, storage capacity, and backup health.
 
-### 4. "Future Plans" slide (excluded)
-Slide 19 of the source deck ("Future Plans") lists 2025-dated expansion items (press tonnage upgrade, new pipe grooving machine, facility expansion). Because their completion status cannot be confirmed from the source material and the target dates have since passed, **this content was deliberately left out of the site**. If these have since been completed, consider adding them to Capabilities as confirmed, dated achievements rather than "future plans."
+MySQL stores CMS data, sessions, inquiries and uploads. The dynamic branch requires a Node.js process even when the database is managed with phpMyAdmin.
 
-### 5. Galvanizing & powder coating status
-The Capabilities page carries a note that this facility's current operating status should be reconfirmed before publishing without qualification (per the source brief). Remove the note once confirmed, or update the copy if the facility's status has changed.
+## Checks
 
-### 6. Production figures
-350+ parts, 200+ projects, 8+ OEMs and 100–120 tons/month are presented as figures published in the SAPL Profile 2025 deck, not as independently re-verified current figures. They live in `src/content/company.ts` (`heroStats`, `aboutStats`) as single-source-of-truth values, easy to update once reconfirmed.
+```bash
+npm run lint
+npx next typegen
+npx tsc --noEmit
+npm run build -- --webpack
+node --test scripts/database.test.mjs
+```
 
-### 7. Imagery
-`public/images/` contains only photography and logos that were verifiably genuine (SAPL's own logo, real award/trophy photographs, real product photographs shot on the shop floor, one real factory-floor photograph, and OEM/client logos). Generic vendor/catalog stock photos of machinery that appeared in the source deck (press, welder, FARO arm, caliper stock photography) were **deliberately excluded** rather than presented as photographs of SAPL's own equipment; equipment specifications are instead presented as data (Capabilities page) rather than stock imagery. If you commission real photography of your press shop, pipe shop, welding shop and inspection room, add it to `public/images/facility/` and wire it into `src/content/company.ts` and the relevant section components.
+For release verification, sign in with a disposable test database first. Exercise admin and super-admin access, draft and publish visibility, media replacement and dependency checks, RFQ validation and export, session expiry and logout, and password-reset delivery. Verify the existing public routes and product slugs on desktop and mobile.
 
-### 8. Product photo → part name pairing
-The source deck lists named parts per OEM (e.g. "Support Radiator", "Luggage Hinges") separately from its photographs, with no explicit pairing between a specific photo and a specific part name. To avoid misattributing a part identity, the Products pages show the verified part-name lists and the photo galleries as two independent, clearly-labelled sections rather than force-pairing them. If you can confirm which photograph is which named part, update the `alt` text and captions in `src/content/company.ts` (`productPrograms`, `categoryPhotos`) accordingly.
+## Migrated business information
 
-## Updating content
+The original SAPL Profile 2025 content remains the source for the imported figures and photographed parts. Confirm production volumes, ISO certificate revisions and expiry dates, and the current galvanizing and powder-coating status before public rollout. Confirm photo-to-part pairings with the company before changing captions. Record completed expansion projects after the operating team verifies them.
 
-Almost everything you'll want to change day-to-day lives in two files:
+### Browser smoke test
 
-- `src/content/company.ts` — facts: history, vision/mission, stats, capabilities, equipment lists, awards, products, clients.
-- `src/content/site.ts` — business config: contact details, RFQ endpoint, nav labels, product category slugs/labels.
+Build the app first. Install `playwright-core` in a temporary tooling directory and use a local Chrome or Chromium installation. Set `PLAYWRIGHT_MODULE` to the absolute path of `playwright-core/index.mjs` and `CHROME_PATH` to the browser executable. Set `MYSQL_TEST_DATABASE` to an empty disposable database whose name starts with `shaheen_test_`, and supply its MySQL connection settings in the environment. Run `node scripts/browser-smoke.mjs`. The test starts a loopback production server on port 3314, provisions disposable accounts and exercises public routes, role checks, draft publishing, image management, RFQ handling, and single-use reset tokens. Set `SMOKE_PORT` if 3314 is occupied.
 
-Both are plain, typed TypeScript objects; editing a string value and re-running `npm run build` is all that's needed for most changes.
+## Homepage image inventory
 
-## SEO
+Open `/admin/homepage/images/` under Website management → Home page. The inventory is derived from the configured homepage. The first visit records each original source before any replacements.
 
-- Per-page metadata (title, description, canonical URL) is set in each `page.tsx`.
-- `src/app/sitemap.ts` and `src/app/robots.ts` generate `sitemap.xml` and `robots.txt` at build time; update `siteConfig.baseUrl` first.
-- Open Graph / Twitter card defaults are set in `src/app/layout.tsx`.
+| Location | Recommended canvas | Rendering |
+| --- | --- | --- |
+| Hero background and optional video poster | 1920 × 1080 | Full-width cover with the existing hero layout |
+| Header and footer wordmarks | 1000 × 231 | Separate logo masks |
+| Footer watermark | 512 × 509 | Decorative mark |
+| Client marquee logos | 480 × 200 | Transparent contain canvas. Both loop copies use the same client slot |
+| Capability cards | 960 × 540 | Cover with the existing card focal positions |
+| Featured product covers | 1000 × 800 | Cover within each product card |
+| Shop-floor background and video poster | 1920 × 1080 and 1280 × 720 | Cover. The existing video remains in use |
+| Featured award photographs | 720 × 960 | Contain within the existing award card |
 
-## Accessibility & performance notes
-
-- All interactive components are keyboard-navigable with visible focus states (see `:focus-visible` in `globals.css`).
-- Motion respects `prefers-reduced-motion` throughout (see `src/components/ui/Reveal.tsx`, `StatCounter.tsx`, and the reduced-motion block in `globals.css`).
-- Images use `next/image` with explicit `sizes`. Because a static export has no image optimizer, `npm run images` (also run automatically before `npm run build`) pre-renders every original in `public/images/` into `public/img-opt/<path>-<width>.webp` at each width in `src/lib/image-config.json` (plus AVIF for the full-bleed backdrops listed there), strips EXIF/GPS metadata, and records dimensions and blur placeholders in `src/lib/image-manifest.json`. The custom loader in `src/lib/image-loader.ts` points `next/image` srcsets at those files. To add an image, drop the original into `public/images/` and reference it by that path; never reference `/img-opt/` directly.
-- Page hero backdrops use `BackdropImage` (a `<picture>` with AVIF + WebP) and load eagerly at high fetch priority as the LCP element; everything below the fold lazy-loads with a blur-up placeholder.
-- There is exactly one marquee on the site (the client logo strip on the homepage) and no scroll-hijacking.
+The same slots serve desktop and mobile. Managed replacements are stored as responsive WebP variants in MySQL. Each replacement has a new URL, and the five most recent uploads per slot remain available for restore. The original source is retained separately. The video files and embedded map keep their existing CMS or application configuration.

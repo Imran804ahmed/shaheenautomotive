@@ -5,6 +5,8 @@
  * Anything outside /images (SVGs, remote or data URLs) is served as-is.
  */
 export default function imageLoader({ src, width }: { src: string; width: number; quality?: number }) {
+  const managed = /^\/home-image\/([a-f0-9-]{36})\/0\/$/.exec(src);
+  if (managed) return `/home-image/${managed[1]}/${width}/`;
   const match = /^\/images\/(.+)\.(?:jpe?g|png|webp)$/i.exec(src);
   return match ? `/img-opt/${match[1]}-${width}.webp` : src;
 }

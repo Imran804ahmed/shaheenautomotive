@@ -3,11 +3,10 @@
 import { useState, Suspense } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { useSearchParams } from "next/navigation";
-import { WarningCircle, PaperPlaneTilt } from "@phosphor-icons/react";
-import { siteConfig } from "@/content/site";
+import { PaperPlaneTilt } from "@phosphor-icons/react";
 import { cn } from "@/lib/cn";
 
-const productCategories = siteConfig.productCategories;
+type RfqProps = { email: string; productCategories: { slug: string; label: string }[] };
 
 type Status = "idle" | "submitting" | "success" | "error";
 
@@ -112,7 +111,7 @@ function DrawnCheck() {
   );
 }
 
-function RfqFormInner() {
+function RfqFormInner({ email, productCategories }: RfqProps) {
   const searchParams = useSearchParams();
   const [category, setCategory] = useState(() => {
     const fromQuery = searchParams.get("category");
@@ -148,8 +147,6 @@ function RfqFormInner() {
     },
   });
 
-  const hasEndpoint = Boolean(siteConfig.rfqFormEndpoint);
-
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const form = e.currentTarget;
@@ -167,57 +164,24 @@ function RfqFormInner() {
       return;
     }
 
-    if (!hasEndpoint) {
-      const name = String(data.get("name") ?? "");
-      const company = String(data.get("company") ?? "");
-      const email = String(data.get("email") ?? "");
-      const phone = String(data.get("phone") ?? "");
-      const qty = String(data.get("quantity") ?? "");
-      const cat = String(data.get("category") ?? "");
-      const description = String(data.get("description") ?? "");
-      const message = String(data.get("message") ?? "");
-
-      const subject = `RFQ: ${cat || "New enquiry"} — ${company || name}`;
-      const bodyLines = [
-        `Name: ${name}`,
-        `Company: ${company}`,
-        `Work email: ${email}`,
-        `Phone: ${phone}`,
-        `Process / category: ${cat}`,
-        `Estimated quantity: ${qty}`,
-        "",
-        "Part description:",
-        description,
-        "",
-        "Additional message:",
-        message,
-        "",
-        "Note: if you selected a drawing/specification file, please attach it manually to this email before sending.",
-      ];
-      const mailto = `mailto:${siteConfig.contact.email}?subject=${encodeURIComponent(
-        subject
-      )}&body=${encodeURIComponent(bodyLines.join("\n"))}`;
-      window.location.href = mailto;
-      setStatus("success");
-      return;
-    }
-
     setStatus("submitting");
     setErrorMessage("");
     try {
-      const res = await fetch(siteConfig.rfqFormEndpoint, {
+      const res = await fetch("/api/inquiries/", {
         method: "POST",
         body: data,
         headers: { Accept: "application/json" },
       });
-      if (!res.ok) throw new Error("Request failed");
+      if (!res.ok) {
+        const result = await res.json().catch(() => ({}));
+        throw new Error(result.error || "We couldn’t send this automatically.");
+      }
       setStatus("success");
       form.reset();
-    } catch {
+      setCategory("");
+    } catch (error) {
       setStatus("error");
-      setErrorMessage(
-        "We couldn't send this automatically. Please email us directly instead."
-      );
+      setErrorMessage(error instanceof Error ? error.message : "Please try again.");
     }
   }
 
@@ -232,12 +196,10 @@ function RfqFormInner() {
       >
         <DrawnCheck />
         <h3 className="mt-4 text-lg font-semibold text-fg">
-          {hasEndpoint ? "Your RFQ has been sent" : "Your email client should now be open"}
+          Your RFQ has been sent
         </h3>
         <p className="mt-2 text-sm leading-relaxed text-fg-muted">
-          {hasEndpoint
-            ? "Thank you. Our team will review your request and respond to the email address you provided."
-            : `A pre-filled email to ${siteConfig.contact.email} has been opened in your default email application. Please review it, attach any drawing file, and hit send.`}
+          Thank you. Our team will review your request and respond to the email address you provided.
         </p>
         <button
           type="button"
@@ -252,16 +214,6 @@ function RfqFormInner() {
 
   return (
     <form onSubmit={handleSubmit} className="space-y-6" noValidate aria-busy={status === "submitting"}>
-      {!hasEndpoint && (
-        <div className="flex items-start gap-3 rounded-sm border border-border bg-bg-elevated p-4">
-          <WarningCircle size={18} className="mt-0.5 shrink-0 text-fg-muted" />
-          <p className="text-xs leading-relaxed text-fg-muted">
-            This form opens a pre-filled email in your own email client when submitted; it does not send data to a
-            server. Nothing is transmitted until you press send in your email app.
-          </p>
-        </div>
-      )}
-
       <div className="grid gap-5 sm:grid-cols-2 sm:gap-6">
         <Field label="Full name" name="name" required error={errors.name}>
           <input {...fieldProps("name")} type="text" autoComplete="name" className={cn(fieldClasses, errors.name && invalidClasses)} placeholder="Your name" />
@@ -309,13 +261,9 @@ function RfqFormInner() {
       <Field
         label="Drawing / specification"
         name="attachment"
-        hint={
-          hasEndpoint
-            ? "PDF, image or CAD file, up to a few MB."
-            : "File attachments can't be sent through this button; please attach the file manually once your email client opens."
-        }
+        hint="PDF, PNG, JPEG, STEP or DWG, up to 5 MB."
       >
-        <input id="rfq-attachment" name="attachment" type="file" className={cn(fieldClasses, "cursor-pointer file:mr-3 file:rounded-full file:border-0 file:bg-bg-inverted file:px-3 file:py-1.5 file:text-xs file:font-medium file:text-fg-inverted")} />
+        <input id="rfq-attachment" name="attachment" type="file" accept=".pdf,.png,.jpg,.jpeg,.step,.stp,.dwg" className={cn(fieldClasses, "cursor-pointer file:mr-3 file:rounded-full file:border-0 file:bg-bg-inverted file:px-3 file:py-1.5 file:text-xs file:font-medium file:text-fg-inverted")} />
       </Field>
 
       <Field label="Additional message" name="message">
@@ -325,8 +273,8 @@ function RfqFormInner() {
       {status === "error" && (
         <p role="alert" className="text-sm text-fg">
           {errorMessage} Email us at{" "}
-          <a href={`mailto:${siteConfig.contact.email}`} className="text-accent underline underline-offset-4">
-            {siteConfig.contact.email}
+          <a href={`mailto:${email}`} className="text-accent underline underline-offset-4">
+            {email}
           </a>
           .
         </p>
@@ -338,16 +286,16 @@ function RfqFormInner() {
         className="inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-full border border-accent bg-accent px-7 py-3.5 text-sm font-semibold sm:w-auto text-accent-fg shadow-[0_10px_24px_-10px_rgb(23_112_63/0.7)] transition-[transform,background-color,opacity] hover:-translate-y-0.5 hover:bg-accent-strong active:translate-y-0 active:scale-[0.98] disabled:translate-y-0 disabled:opacity-70"
       >
         {status === "submitting" ? <Spinner /> : <PaperPlaneTilt size={16} weight="bold" />}
-        {status === "submitting" ? "Sending..." : hasEndpoint ? "Send RFQ" : "Open email to send this RFQ"}
+        {status === "submitting" ? "Sending..." : "Send RFQ"}
       </button>
     </form>
   );
 }
 
-export function RfqForm() {
+export function RfqForm(props: RfqProps) {
   return (
     <Suspense fallback={<div className="h-96 animate-pulse rounded-sm bg-bg-elevated" />}>
-      <RfqFormInner />
+      <RfqFormInner {...props} />
     </Suspense>
   );
 }

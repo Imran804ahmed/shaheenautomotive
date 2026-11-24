@@ -1,9 +1,5 @@
-import type { Metadata } from "next";
 import { Geist, Geist_Mono, Bricolage_Grotesque } from "next/font/google";
 import "./globals.css";
-import { Header } from "@/components/layout/Header";
-import { Footer } from "@/components/layout/Footer";
-import { siteConfig } from "@/content/site";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -25,42 +21,6 @@ const geistMono = Geist_Mono({
   preload: false,
 });
 
-export const metadata: Metadata = {
-  metadataBase: new URL(siteConfig.baseUrl),
-  title: {
-    default: `${siteConfig.companyLegalName} | Jack, Sheet Metal, Rod & Pipe Component Manufacturer`,
-    template: `%s | ${siteConfig.siteName}`,
-  },
-  description:
-    "Shaheen Automotive (Pvt.) Ltd. designs and manufactures jack assemblies, sheet metal, bent rod and formed pipe components for automotive and home appliance OEMs in Pakistan, since 1983.",
-  keywords: [
-    "sheet metal stamping Pakistan",
-    "pipe bending manufacturer Pakistan",
-    "automotive OEM parts manufacturer",
-    "Shaheen Automotive",
-    "Shaheen Engineering Works",
-    "sheet metal parts manufacturer",
-  ],
-  icons: {
-    icon: "/images/brand/sapl-mark.png",
-    apple: "/images/brand/sapl-mark.png",
-  },
-  openGraph: {
-    type: "website",
-    siteName: siteConfig.siteName,
-    title: `${siteConfig.companyLegalName} | Jack, Sheet Metal, Rod & Pipe Component Manufacturer`,
-    description:
-      "Shaheen Automotive (Pvt.) Ltd. designs and manufactures jack assemblies, sheet metal, bent rod and formed pipe components for the automotive and home appliance industries.",
-    images: ["/images/facility/hydraulic-press-operator.jpeg"],
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: `${siteConfig.companyLegalName} | Jack, Sheet Metal, Rod & Pipe Component Manufacturer`,
-    description:
-      "Shaheen Automotive (Pvt.) Ltd. designs and manufactures jack assemblies, sheet metal, bent rod and formed pipe components for the automotive and home appliance industries.",
-  },
-};
-
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
@@ -69,18 +29,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       className={`${geistSans.variable} ${geistMono.variable} ${bricolage.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col bg-bg text-fg">
-        <a
-          href="#main-content"
-          className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-[100] focus:rounded-full focus:bg-accent focus:px-4 focus:py-2 focus:text-accent-fg"
-        >
-          Skip to content
-        </a>
-        <Header />
-        {/* clip (not hidden): side-entering reveals can't widen the page, and sticky columns keep working */}
-        <main id="main-content" className="flex-1 overflow-x-clip">
-          {children}
-        </main>
-        <Footer />
+        {children}
       </body>
     </html>
   );

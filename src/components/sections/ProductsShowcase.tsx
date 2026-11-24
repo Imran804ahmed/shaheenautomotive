@@ -1,3 +1,4 @@
+import { productImageKey, type HomeImages } from "@/lib/server/homepage-images";
 import Link from "next/link";
 import { ArrowUpRight } from "@phosphor-icons/react/dist/ssr";
 import { Container } from "@/components/ui/Container";
@@ -6,9 +7,11 @@ import { Tilt } from "@/components/ui/Tilt";
 import Image from "next/image";
 import { blurProps } from "@/lib/image-meta";
 import { SectionHeading } from "@/components/ui/SectionHeading";
-import { categoryPhotos, type ProductCategory } from "@/content/company";
+import type { ProductCategory } from "@/content/company";
+import { getContent } from "@/lib/server/content";
 
-export function ProductsShowcase({ categories }: { categories: ProductCategory[] }) {
+export async function ProductsShowcase({ categories, images }: { categories: ProductCategory[]; images?: HomeImages }) {
+  const { categoryPhotos, productDetails } = await getContent();
   return (
     <section className="surface-paper bg-bg py-section">
       <Container>
@@ -36,7 +39,10 @@ export function ProductsShowcase({ categories }: { categories: ProductCategory[]
 
         <div className="mt-10 grid grid-cols-1 gap-5 sm:mt-12 sm:grid-cols-2 sm:gap-6 xl:grid-cols-4">
           {categories.map((cat, i) => {
-            const photos = categoryPhotos[cat.slug].slice(0, 4);
+            const custom = productDetails.find(({ slug }) => slug === cat.slug)?.photos;
+            const photos = (custom?.length ? custom : categoryPhotos[cat.slug] ?? []).slice(0, 4);
+            const managed = images?.[productImageKey(cat.slug)];
+            const cover = (managed?.src ? managed : undefined) ?? photos[0] ?? (cat.heroImage && { src: cat.heroImage.src, alt: cat.title });
             return (
               <Reveal key={cat.slug} delay={i * 0.07} className="h-full">
                 <Tilt className="h-full">
@@ -45,14 +51,14 @@ export function ProductsShowcase({ categories }: { categories: ProductCategory[]
                     className="group relative flex h-full flex-col overflow-hidden rounded-[1.75rem] border border-border bg-bg-elevated p-2 shadow-soft transition-[box-shadow,border-color] duration-500 hover:border-accent/40 hover:shadow-lift"
                   >
                     <div className="relative aspect-[5/4] w-full shrink-0 overflow-hidden rounded-[1.35rem] bg-bg-inverted">
-                      <Image
-                        src={photos[0].src}
-                        alt={photos[0].alt}
+                      {cover && <Image
+                        src={cover.src}
+                        alt={cover.alt}
                         fill
                         sizes="(min-width: 1280px) 300px, (min-width: 640px) 45vw, 95vw"
-                        {...blurProps(photos[0].src)}
+                        {...blurProps(cover.src)}
                         className="object-cover transition-transform duration-1000 ease-out group-hover:scale-[1.06]"
-                      />
+                      />}
                       <div className="absolute inset-0 bg-gradient-to-t from-bg-inverted via-bg-inverted/35 to-bg-inverted/10" />
                       <div className="absolute inset-0 bg-[radial-gradient(28rem_16rem_at_0%_100%,rgb(56_194_122/0.22),transparent_65%)] opacity-60 transition-opacity duration-500 group-hover:opacity-100" />
                       <span className="spot-glow" aria-hidden="true" />

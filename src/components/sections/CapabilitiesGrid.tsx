@@ -1,3 +1,5 @@
+import { capabilityImageKey, type HomeImages } from "@/lib/server/homepage-images";
+import { capabilityPhotos } from "@/content/capability-photos";
 import Link from "next/link";
 import Image from "next/image";
 import { blurProps } from "@/lib/image-meta";
@@ -14,6 +16,7 @@ import { Container } from "@/components/ui/Container";
 import { Reveal } from "@/components/ui/Reveal";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { SpotTrack } from "@/components/ui/SpotTrack";
+import { getContent } from "@/lib/server/content";
 import type { Capability } from "@/content/company";
 
 const icons: Record<string, React.ComponentType<{ size?: number; weight?: "regular" | "bold" }>> = {
@@ -27,42 +30,13 @@ const icons: Record<string, React.ComponentType<{ size?: number; weight?: "regul
 
 const anchored = new Set(["design-tooling", "press-shop", "pipe-shop", "welding", "inspection"]);
 
-// a shop-floor photo for each capability card
-const photos: Record<string, { src: string; alt: string; position?: string }> = {
-  "press-shop": {
-    src: "/images/facility/floor/press-line-safety-gear.jpg",
-    alt: "Operators in hard hats, safety glasses and high-visibility vests running a line of mechanical power presses",
-  },
-  inspection: {
-    src: "/images/facility/floor/faro-arm-inspection.jpg",
-    alt: "Inspector in a Shaheen Automotive shirt measuring a checking fixture with a FARO Platinum Arm probe",
-    position: "50% 64%",
-  },
-  "pipe-shop": {
-    src: "/images/facility/floor/cnc-pipe-bender-operator.jpg",
-    alt: "Operator in a green cap and gloves loading a steel tube into a CNC pipe bending machine",
-    position: "50% 40%",
-  },
-  welding: {
-    src: "/images/facility/floor/mig-welding-pipe-assembly.jpg",
-    alt: "Welder in a hi-vis vest and welding helmet MIG welding a pipe assembly on a bench fixture, sparks flying",
-    position: "50% 31%",
-  },
-  "design-tooling": {
-    src: "/images/facility/floor/checking-fixture.jpg",
-    alt: "Inspector clamping a stamped sheet metal panel into a checking fixture",
-  },
-  "surface-finishing": {
-    src: "/images/facility/floor/surface-activation-tank-front-v2.jpg",
-    alt: "Motor-driven perforated barrels in a Shaheen surface activation tank, with racks of pipe parts in the foreground",
-    position: "50% 32%",
-  },
-};
+export async function CapabilitiesGrid({ capabilities, images }: { capabilities: Capability[]; images: HomeImages }) {
 
-export function CapabilitiesGrid({ capabilities }: { capabilities: Capability[] }) {
-  const bySlug = Object.fromEntries(capabilities.map((c) => [c.slug, c]));
-  const order = ["press-shop", "inspection", "pipe-shop", "welding", "design-tooling", "surface-finishing"];
-
+  const { capabilityImages, capabilityVisibility, homeCapabilityOrder } = await getContent();
+  const position = new Map(homeCapabilityOrder.map((slug, index) => [slug, index]));
+  const ordered = capabilities.slice().sort((left, right) =>
+    (position.get(left.slug) ?? position.size) - (position.get(right.slug) ?? position.size)
+  );
   return (
     <section className="surface-paper bg-bg pb-section pt-0">
       <Container>
@@ -88,10 +62,13 @@ export function CapabilitiesGrid({ capabilities }: { capabilities: Capability[] 
         </div>
 
         <div className="mt-10 grid grid-cols-1 gap-5 sm:mt-12 sm:grid-cols-2 lg:grid-cols-3">
-          {order.map((slug, i) => {
-            const cap = bySlug[slug];
-            const Icon = icons[slug];
-            const photo = photos[slug];
+          {ordered.filter(({ slug }) => capabilityVisibility.find((item) => item.slug === slug)?.visible !== false).map((cap, i) => {
+            const { slug } = cap;
+            const Icon = icons[slug] ?? Wrench;
+            const custom = capabilityImages.find((item) => item.slug === slug && item.src);
+            const source = custom ? { ...custom, position: undefined } : capabilityPhotos[slug] ?? capabilityPhotos["design-tooling"];
+            const managed = images[capabilityImageKey(slug)];
+            const photo = managed?.src ? { ...source, ...managed } : source;
             // only these capabilities have their own section on /capabilities
             const href = anchored.has(slug) ? `/capabilities#${slug}` : "/capabilities";
             return (
