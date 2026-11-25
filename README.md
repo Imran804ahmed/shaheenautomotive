@@ -50,7 +50,7 @@ The content source in `src/content/` provides the initial seed. The runtime uses
 
 ## Production deployment
 
-1. Deploy with a Node.js server and HTTPS reverse proxy. Build with `npm run build`, then start with `npm run start`. Use `npm run build -- --webpack` on systems that restrict Turbopack's worker processes. The existing Google fonts are downloaded during the build.
+1. Deploy with a Node.js server and HTTPS reverse proxy. Build with `npm run build`, then start with `npm run start`. Production builds use Webpack to avoid the Turbopack PostCSS worker failure on Hostinger. The existing Google fonts are downloaded during the build.
 2. Set the MySQL environment variables and run `npm run db:migrate` or `npm run db:import-sqlite` before starting the Node.js app. The runtime applies the schema when its connection pool opens and needs SELECT, INSERT, UPDATE, DELETE, CREATE, and REFERENCES privileges on its own database. Keep credentials and database backups private. Set MySQL's allowed packet size above the application upload limits and test restoring a backup before cutover.
 3. Set `APP_ORIGIN` to the exact public HTTPS origin. Forward the original host and protocol through the reverse proxy. Serve authenticated and dynamic HTML without shared caching. Keep the request body limit at least 9 MB for admin uploads and configure request rate limits at the proxy.
 4. For self-service password reset, set `RESEND_API_KEY` and `PASSWORD_RESET_FROM` with a verified sender. The app stores a hash of the single-use token and expires it after 30 minutes. Exclude reset URL query strings from access logs. Test delivery in the target environment.
@@ -61,7 +61,7 @@ MySQL stores CMS data, sessions, inquiries and uploads. The dynamic branch requi
 
 ### cPanel and CloudLinux Passenger
 
-1. On your workstation or CI, run `npm ci` and `npm run deploy:zip`. Use `npm run deploy:zip -- --webpack` if Turbopack workers are restricted. The script runs prebuild image optimization, builds Next.js, and verifies `build/shaheenautomotive-deployment.zip`. The ZIP includes the compiled app, public assets, and runtime files. Keep credentials and database backups outside the ZIP.
+1. On your workstation or CI, run `npm ci` and `npm run deploy:zip`. The script runs prebuild image optimization, builds Next.js, and verifies `build/shaheenautomotive-deployment.zip`. The ZIP includes the compiled app, public assets, and runtime files. Keep credentials and database backups outside the ZIP.
 2. Back up the current app files. Replace the old `.next` directory with the ZIP's `.next` directory and extract the other files into `/home/shaheen/shaheenautomotive`. Remove the legacy `next.config.ts` from the app root. Preserve the server's environment and database.
 3. In the cPanel terminal, use the app's Node environment and install production dependencies with optional packages enabled so npm can install Sharp's Linux binary.
 
@@ -86,7 +86,7 @@ Keep `public_html/.htaccess` and edit only the old static-export rules outside c
 npm run lint
 npx next typegen
 npx tsc --noEmit
-npm run build -- --webpack
+npm run build
 node --test scripts/database.test.mjs
 ```
 
