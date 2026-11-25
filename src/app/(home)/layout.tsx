@@ -1,5 +1,5 @@
 import { PublicShell } from "@/components/layout/PublicShell";
-import { getHomepageImages } from "@/lib/server/homepage-images";
+import { getHomepageImages } from "@/lib/server/website-images";
 
 export { generateMetadata } from "../(public)/layout";
 export const dynamic = "force-dynamic";

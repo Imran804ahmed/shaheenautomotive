@@ -14,9 +14,9 @@ export function AuthForm({ mode, token = "" }: { mode: "login" | "forgot" | "res
       {mode !== "forgot" && (
         <>
           <label>{mode === "reset" ? "New password" : "Password"}
-            <input name="password" type={show ? "text" : "password"} minLength={14} maxLength={128} autoComplete={mode === "login" ? "current-password" : "new-password"} required />
+            <input name="password" type={show ? "text" : "password"} minLength={6} maxLength={128} autoComplete={mode === "login" ? "current-password" : "new-password"} required />
           </label>
-          {mode === "reset" && <label>Confirm password<input name="confirm" type={show ? "text" : "password"} minLength={14} maxLength={128} autoComplete="new-password" required /></label>}
+          {mode === "reset" && <label>Confirm password<input name="confirm" type={show ? "text" : "password"} minLength={6} maxLength={128} autoComplete="new-password" required /></label>}
           <label className="admin-check"><input type="checkbox" checked={show} onChange={(event) => setShow(event.target.checked)} /> Show password</label>
         </>
       )}

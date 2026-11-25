@@ -1,3 +1,4 @@
+import { getImageManagementPages, imageManagementHref } from "@/lib/server/website-image-inventory";
 import Link from "next/link";
 import Image from "next/image";
 import { requireAdministrator } from "@/lib/server/auth";
@@ -8,6 +9,7 @@ import { logout } from "../auth-actions";
 export default async function ProtectedLayout({ children }: { children: React.ReactNode }) {
   const admin = await requireAdministrator();
   const { brand, settings } = await getContent();
+  const imagePages = await getImageManagementPages();
   const unread = Number((await db().prepare("SELECT count(*) AS total FROM inquiries WHERE status='unread'").get())?.total);
   return (
     <div className="admin-shell">
@@ -20,14 +22,21 @@ export default async function ProtectedLayout({ children }: { children: React.Re
             <Link href="/admin/content">Website content</Link>
             <details className="admin-home-nav">
               <summary>Website management</summary>
-              <details open>
-                <summary>Home page</summary>
-                <Link href="/admin/homepage/images">Image management</Link>
-              </details>
+              <Link href="/admin/website/images">All website images</Link>
+              <Link href="/admin/website/images/global">Global images</Link>
+              {imagePages.main.map(({ key, title }) => (
+                <details key={key} open={key === "home"}>
+                  <summary>{title}</summary>
+                  <Link href={imageManagementHref(key)}>Image management</Link>
+                  {key === "products" && imagePages.products.map((product) => (
+                    <Link key={product.key} href={imageManagementHref(product.key)}>{product.title} images</Link>
+                  ))}
+                </details>
+              ))}
             </details>
             <Link href="/admin/inquiries">Inquiries {unread > 0 && <span className="admin-badge">{unread}</span>}</Link>
             <Link href="/admin/media">Media library</Link>
-            {admin.role === "super_admin" && <Link href="/admin/administrators">Administrators</Link>}
+            {admin.role === "super_admin" && <Link href="/admin/administrators">Users</Link>}
           </nav>
         </details>
         <Link className="admin-public-link" href="/">View website ↗</Link>

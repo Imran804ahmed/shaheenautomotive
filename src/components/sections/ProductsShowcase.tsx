@@ -10,7 +10,7 @@ import { SectionHeading } from "@/components/ui/SectionHeading";
 import type { ProductCategory } from "@/content/company";
 import { getContent } from "@/lib/server/content";
 
-export async function ProductsShowcase({ categories, images }: { categories: ProductCategory[]; images?: HomeImages }) {
+export async function ProductsShowcase({ categories, images, imageKey = productImageKey }: { categories: ProductCategory[]; images?: HomeImages; imageKey?: (slug: string) => string }) {
   const { categoryPhotos, productDetails } = await getContent();
   return (
     <section className="surface-paper bg-bg py-section">
@@ -41,7 +41,7 @@ export async function ProductsShowcase({ categories, images }: { categories: Pro
           {categories.map((cat, i) => {
             const custom = productDetails.find(({ slug }) => slug === cat.slug)?.photos;
             const photos = (custom?.length ? custom : categoryPhotos[cat.slug] ?? []).slice(0, 4);
-            const managed = images?.[productImageKey(cat.slug)];
+            const managed = images?.[imageKey(cat.slug)];
             const cover = (managed?.src ? managed : undefined) ?? photos[0] ?? (cat.heroImage && { src: cat.heroImage.src, alt: cat.title });
             return (
               <Reveal key={cat.slug} delay={i * 0.07} className="h-full">

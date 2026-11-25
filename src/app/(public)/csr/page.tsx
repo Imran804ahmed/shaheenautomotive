@@ -1,3 +1,5 @@
+import { getPageImages } from "@/lib/server/website-images";
+import { pageImageKey } from "@/lib/server/website-image-inventory";
 import { pageMetadata } from "@/lib/server/seo";
 import { getContent } from "@/lib/server/content";
 import type { Metadata } from "next";
@@ -38,10 +40,15 @@ const areaIcons: Record<string, PhosphorIcon> = {
 };
 
 export default async function CsrPage() {
-  const { pageHeaders, csrAreas, csrIntro } = await getContent();
+  const images = await getPageImages("csr");
+  const { pageHeaders, csrAreas: originalAreas, csrIntro } = await getContent();
+  const csrAreas = originalAreas.map((area) => {
+    const image = images[pageImageKey("csr", area.key)];
+    return image?.src ? { ...area, image: image.src, imageAlt: image.alt } : area;
+  });
   return (
     <>
-      <PageHeader {...pageHeaders.csr} flat />
+      <PageHeader {...pageHeaders.csr} image={ { ...pageHeaders.csr.image, src: images[pageImageKey("csr", "banner")]?.src || pageHeaders.csr.image.src } } flat />
 
       <section className="bg-bg pt-section-sm">
         <Container>

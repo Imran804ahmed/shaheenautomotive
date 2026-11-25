@@ -1,3 +1,5 @@
+import { getPageImages } from "@/lib/server/website-images";
+import { pageImageKey, mapGallery, resolvePhoto } from "@/lib/server/website-image-inventory";
 import { pageMetadata } from "@/lib/server/seo";
 import { getContent } from "@/lib/server/content";
 import type { Metadata } from "next";
@@ -16,14 +18,15 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function GalleryPage() {
+  const images = await getPageImages("gallery");
   const { pageHeaders, galleryPhotos, galleryCategories } = await getContent();
   return (
     <>
-      <PageHeader {...pageHeaders.gallery} flat />
+      <PageHeader {...pageHeaders.gallery} image={ { ...pageHeaders.gallery.image, src: images[pageImageKey("gallery", "banner")]?.src || pageHeaders.gallery.image.src } } flat />
 
       <section className="bg-bg py-16">
         <Container>
-          <GalleryGrid categories={galleryCategories} photos={withBlur(galleryPhotos)} />
+          <GalleryGrid categories={galleryCategories} photos={withBlur(mapGallery("gallery", galleryPhotos, (id, photo) => resolvePhoto(images, id, photo)))} />
         </Container>
       </section>
     </>

@@ -20,8 +20,8 @@ export default async function Account({ searchParams }: { searchParams: Promise<
         <section className="admin-card"><h2>Password</h2>
           <FeedbackForm submit={changePassword} label="Change password">
             <label>Current password<input name="current" type="password" autoComplete="current-password" maxLength={128} required /></label>
-            <label>New password<input name="password" type="password" autoComplete="new-password" minLength={14} maxLength={128} required /></label>
-            <label>Confirm password<input name="confirm" type="password" autoComplete="new-password" minLength={14} maxLength={128} required /></label>
+            <label>New password<input name="password" type="password" autoComplete="new-password" minLength={6} maxLength={128} required /></label>
+            <label>Confirm password<input name="confirm" type="password" autoComplete="new-password" minLength={6} maxLength={128} required /></label>
           </FeedbackForm>
         </section>
       </div>

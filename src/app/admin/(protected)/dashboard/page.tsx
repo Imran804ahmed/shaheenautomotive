@@ -1,10 +1,12 @@
+import { getImageManagementPages, imageManagementHref } from "@/lib/server/website-image-inventory";
 import Link from "next/link";
 import { requireAdministrator } from "@/lib/server/auth";
 import { db } from "@/lib/server/database.mjs";
 
 export default async function Dashboard() {
-  await requireAdministrator();
+  const administrator = await requireAdministrator();
   const database = db();
+  const imagePages = await getImageManagementPages();
   const inquiries = await database.prepare("SELECT id, company, category, status FROM inquiries ORDER BY id DESC LIMIT 5").all();
   const events = await database.prepare(`
     SELECT audit.id, action, subject, audit.created_at, name FROM audit
@@ -27,8 +29,28 @@ export default async function Dashboard() {
   const peak = Math.max(1, ...days.map(({ total }) => Number(total)));
   return (
     <>
-      <div className="admin-heading"><div><p className="admin-kicker">Workspace</p><h1>Overview</h1></div><Link className="admin-button" href="/admin/content">Edit website</Link></div>
+      <div className="admin-heading"><div><p className="admin-kicker">Workspace</p><h1>Overview</h1></div><div className="admin-inline">
+        <Link className="admin-button" href="/admin/content">Edit website</Link>
+        {administrator.role === "super_admin" && <Link className="admin-button" href="/admin/administrators">Manage users</Link>}
+      </div></div>
       <div className="admin-metrics">{totals.map(([label, total]) => <article key={label}><p>{label}</p><strong>{String(total)}</strong></article>)}</div>
+      <section className="admin-card" aria-labelledby="dashboard-website-images">
+        <div className="admin-heading">
+          <h2 id="dashboard-website-images">Website images by page</h2>
+          <Link href="/admin/website/images">View all images</Link>
+        </div>
+        <div className="dashboard-image-links">
+          {[...imagePages.main, { key: "global", title: "Global Images" }].map(({ key, title }) => (
+            <Link key={key} href={imageManagementHref(key)}>{title}</Link>
+          ))}
+        </div>
+        <h3>Product detail pages</h3>
+        <div className="dashboard-image-links">
+          {imagePages.products.map(({ key, title }) => (
+            <Link key={key} href={imageManagementHref(key)}>{title}</Link>
+          ))}
+        </div>
+      </section>
       <div className="admin-columns">
         <section className="admin-card">
           <h2>Inquiries over the last seven days</h2>

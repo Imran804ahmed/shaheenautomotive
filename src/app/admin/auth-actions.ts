@@ -67,7 +67,7 @@ export async function resetPassword(_: string, form: FormData) {
   const token = String(form.get("token") ?? "");
   const password = String(form.get("password") ?? "");
   if (!/^[\w-]{43}$/.test(token)) return "This reset link is invalid or expired.";
-  if (!validPassword(password) || password !== form.get("confirm")) return "Enter matching passwords of 14–128 characters.";
+  if (!validPassword(password) || password !== form.get("confirm")) return "Enter matching passwords of 6–128 characters.";
   if (!(await rateLimit("reset:consume", 120, 900))) return "Too many attempts. Try again later.";
   const key = digest(token);
   const query = "SELECT administrator_id FROM reset_tokens JOIN administrators ON administrators.id=administrator_id WHERE token_hash=? AND expires_at>? AND active=1";

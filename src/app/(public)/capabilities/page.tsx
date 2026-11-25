@@ -1,3 +1,6 @@
+import { getPageImages } from "@/lib/server/website-images";
+import { pageImageKey } from "@/lib/server/website-image-inventory";
+import { productPhotos } from "@/content/capability-page-photos";
 import { pageMetadata } from "@/lib/server/seo";
 import { getContent } from "@/lib/server/content";
 import type { Metadata } from "next";
@@ -41,38 +44,6 @@ const icons: Record<
 };
 
 const equipmentSections = new Set(["design-tooling", "press-shop", "pipe-shop", "welding", "inspection"]);
-
-// the same shop-floor photo each capability uses on the home page
-const productPhotos: Record<string, { src: string; alt: string; position?: string }> = {
-  "design-tooling": {
-    src: "/images/facility/floor/checking-fixture.jpg",
-    alt: "Inspector clamping a stamped sheet metal panel into a checking fixture",
-  },
-  "press-shop": {
-    src: "/images/facility/floor/press-line-safety-gear.jpg",
-    alt: "Operators in hard hats, safety glasses and high-visibility vests running a line of mechanical power presses",
-  },
-  "pipe-shop": {
-    src: "/images/facility/floor/cnc-pipe-bender-operator.jpg",
-    alt: "Operator in a green cap and gloves loading a steel tube into a CNC pipe bending machine",
-    position: "50% 40%",
-  },
-  welding: {
-    src: "/images/facility/floor/mig-welding-pipe-assembly.jpg",
-    alt: "Welder in a hi-vis vest and welding helmet MIG welding a pipe assembly on a bench fixture, sparks flying",
-    position: "50% 31%",
-  },
-  "surface-finishing": {
-    src: "/images/facility/floor/surface-activation-tank-front-v2.jpg",
-    alt: "Motor-driven perforated barrels in a Shaheen surface activation tank, with racks of pipe parts in the foreground",
-    position: "50% 32%",
-  },
-  inspection: {
-    src: "/images/facility/floor/faro-arm-inspection.jpg",
-    alt: "Inspector in a Shaheen Automotive shirt measuring a checking fixture with a FARO Platinum Arm probe",
-    position: "50% 64%",
-  },
-};
 
 function EquipmentTable({
   id,
@@ -127,10 +98,11 @@ function EquipmentTable({
 }
 
 export default async function CapabilitiesPage() {
+  const images = await getPageImages("capabilities");
   const { pageHeaders, capabilities, capabilityImages, capabilityVisibility, equipmentDesignDev, equipmentPressShop, equipmentPipeShop, equipmentWeldingShop, equipmentInspection, pressShopTotal, weldingShopTotal } = await getContent();
   return (
     <>
-      <PageHeader {...pageHeaders.capabilities} flat />
+      <PageHeader {...pageHeaders.capabilities} image={ { ...pageHeaders.capabilities.image, src: images[pageImageKey("capabilities", "banner")]?.src || pageHeaders.capabilities.image.src } } flat />
 
       <section className="surface-paper bg-bg py-section-sm">
         <Container>
@@ -138,7 +110,9 @@ export default async function CapabilitiesPage() {
             {capabilities.filter(({ slug }) => capabilityVisibility.find((item) => item.slug === slug)?.visible !== false).map((cap, i) => {
               const Icon = icons[cap.slug] ?? Wrench;
               const custom = capabilityImages.find((item) => item.slug === cap.slug && item.src);
-              const photo = custom ? { ...custom, position: undefined } : productPhotos[cap.slug];
+              const source = custom ? { ...custom, position: undefined } : productPhotos[cap.slug];
+              const managed = images[pageImageKey("capabilities", cap.slug)];
+              const photo = managed?.src ? { ...source, ...managed } : source;
               // only these capabilities have an equipment section further down the page
               const linked = equipmentSections.has(cap.slug);
               const Card = linked ? "a" : "div";

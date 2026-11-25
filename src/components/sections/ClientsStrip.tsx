@@ -1,9 +1,12 @@
+import { getPageImages } from "@/lib/server/website-images";
+import { globalClientKey } from "@/lib/server/website-image-inventory";
 import { clientImageKey, type HomeImages } from "@/lib/server/homepage-images";
 import { Container } from "@/components/ui/Container";
 import { LogoMarquee } from "@/components/ui/LogoMarquee";
 import type { Client } from "@/content/company";
 
-export function ClientsStrip({ clients, images }: { clients: Client[]; images?: HomeImages }) {
+export async function ClientsStrip({ clients, images }: { clients: Client[]; images?: HomeImages }) {
+  const global = await getPageImages("global");
   return (
     <section className="bg-bg py-14 sm:py-16">
       <Container>
@@ -12,7 +15,7 @@ export function ClientsStrip({ clients, images }: { clients: Client[]; images?: 
         </p>
         <div className="mt-10 sm:mt-12 lg:mt-14">
           <LogoMarquee clients={clients.map((client) => {
-            const image = images?.[clientImageKey(client.name)];
+            const image = images?.[clientImageKey(client.name)] ?? global[globalClientKey(client.name)];
             return { ...client, logo: image?.src || client.logo, alt: image?.alt };
           })} />
         </div>

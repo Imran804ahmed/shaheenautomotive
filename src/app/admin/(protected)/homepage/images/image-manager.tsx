@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState, useTransition } from "react";
 
 export type ManagedImage = {
-  key: string; title: string; section: string; src: string; alt: string; original: string;
+  key: string; pageKey: string; title: string; section: string; src: string; alt: string; original: string;
   width: number; height: number; fit: "cover" | "contain";
   actualWidth: number | null; actualHeight: number | null; bytes: number | null;
   currentVersion: string | null; revision: number; updatedAt: number | null;
@@ -52,10 +52,11 @@ function ImageDialog({ image, mode, close, finish }: {
   useEffect(() => () => { if (preview) URL.revokeObjectURL(preview); }, [preview]);
 
   function save(action: "replace" | "alt" | "original" | "restore", version?: string) {
-    if ((action === "original" || action === "restore") && !window.confirm("Restore this image on the homepage?")) return;
-    if (action === "replace" && !window.confirm("Publish this replacement on the homepage?")) return;
+    if ((action === "original" || action === "restore") && !window.confirm("Restore this image?")) return;
+    if (action === "replace" && !window.confirm("Publish this replacement?")) return;
     const data = new FormData();
     data.set("key", image.key);
+    data.set("page", image.pageKey);
     data.set("revision", String(image.revision));
     data.set("action", action);
     data.set("alt", alt);

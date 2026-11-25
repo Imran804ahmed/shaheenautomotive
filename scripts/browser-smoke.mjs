@@ -46,8 +46,8 @@ async function waitForServer(server) {
 let server = startServer();
 const email = "qa@example.test";
 const password = randomBytes(24).toString("hex");
-const changedPassword = randomBytes(24).toString("hex");
-const regularPassword = randomBytes(24).toString("hex");
+const changedPassword = randomBytes(3).toString("hex");
+const regularPassword = randomBytes(3).toString("hex");
 let browser;
 const ok = (name) => console.log("PASS", name);
 
@@ -87,6 +87,16 @@ try {
   await click("Sign in");
   await page.waitForURL("**/admin/dashboard/");
   await see("Inquiries over the last seven days");
+  const dashboardImages = page.getByRole("region", { name: "Website images by page" });
+  assert.equal(await dashboardImages.getByRole("link", { name: "About Us", exact: true }).getAttribute("href"), "/admin/website/images/about/");
+  assert.equal(await dashboardImages.getByRole("link", { name: "Jack and Hinges", exact: true }).getAttribute("href"), "/admin/website/images/product-jack-assemblies/");
+  const sidebar = page.getByRole("navigation", { name: "Admin", exact: true });
+  await sidebar.getByText("Website management", { exact: true }).click();
+  await sidebar.getByText("About Us", { exact: true }).click();
+  await sidebar.locator('a[href="/admin/website/images/about/"]').click();
+  await page.waitForURL("**/admin/website/images/about/");
+  await page.getByRole("heading", { name: "Image management", exact: true }).waitFor();
+  ok("dashboard and sidebar page-specific image navigation");
   const cookie = (await context.cookies()).find(({ name }) => name === "shaheen_admin");
   assert.ok(cookie?.secure && cookie.httpOnly && cookie.sameSite === "Lax" && cookie.expires > Date.now() / 1000);
   ok("invalid login, valid login, persistent secure cookie");
@@ -149,12 +159,12 @@ try {
   const card = page.getByRole("article").filter({ has: page.getByRole("heading", { name: "Hero background", exact: true }) });
   const openImage = () => card.getByRole("button", { name: "Replace image", exact: true }).click();
   const upload = (file) => page.locator("dialog input[type=file]").setInputFiles(file);
-  async function saveHomeImage(button) {
+  async function saveHomeImage(button, message = "Homepage image saved.") {
     const response = page.waitForResponse((result) => result.url().endsWith("/api/admin/homepage-images/") && result.request().method() === "POST");
     await click(button);
     const saved = await response;
     assert.ok(saved.ok(), await saved.text());
-    await see("Homepage image saved.");
+    await see(message);
   }
   await openImage();
   await upload({ name: "bad.jpg", mimeType: "image/jpeg", buffer: Buffer.from("invalid image") });
@@ -205,6 +215,41 @@ try {
   await publicImagePage.close();
   ok("homepage image authorization, file validation, replacement, cache versioning and both restore paths");
 
+  await page.goto(origin + "/admin/website/images/");
+  await page.getByRole("heading", { name: "Website images" }).waitFor();
+  assert.equal(await page.getByRole("link", { name: "Manage images", exact: true }).count(), 14);
+  const aboutCard = page.getByRole("article").filter({ has: page.getByRole("heading", { name: "About Us", exact: true }) });
+  await aboutCard.getByRole("link", { name: "Manage images" }).click();
+  const banner = page.getByRole("article").filter({ has: page.getByRole("heading", { name: "Page banner", exact: true }) });
+  await banner.getByRole("button", { name: "Replace image" }).click();
+  await upload(root + "/public/images/video/shop-floor-poster.jpg");
+  await page.getByLabel("Center crop to the recommended ratio").check();
+  await saveHomeImage("Save changes", "Website image saved.");
+  const otherPage = await context.newPage();
+  await otherPage.goto(origin + "/about/");
+  const aboutImage = await otherPage.locator('img[fetchpriority="high"]').first().getAttribute("src");
+  assert.match(aboutImage, /\/home-image\//);
+  await otherPage.goto(origin + "/contact/");
+  assert.notEqual(await otherPage.locator('img[fetchpriority="high"]').first().getAttribute("src"), aboutImage);
+  await banner.getByRole("button", { name: "Replace image" }).click();
+  await saveHomeImage("Restore original image", "Website image saved.");
+  await otherPage.goto(origin + "/about/");
+  assert.notEqual(await otherPage.locator('img[fetchpriority="high"]').first().getAttribute("src"), aboutImage);
+  await page.goto(origin + "/admin/website/images/product-jack-assemblies/");
+  assert.ok(await page.getByRole("article").count() > 2);
+
+  await page.goto(origin + "/admin/website/images/global/");
+  const header = page.getByRole("article").filter({ has: page.getByRole("heading", { name: "Header wordmark", exact: true }) });
+  await header.getByRole("button", { name: "Replace image" }).click();
+  await upload(root + "/public/images/brand/sapl-logo-full.png");
+  await saveHomeImage("Save changes", "Website image saved.");
+  for (const path of ["/", "/about/", "/products/jack-assemblies/"]) {
+    await otherPage.goto(origin + path);
+    assert.match(await otherPage.locator("header .logo-duo").getAttribute("style"), /\/home-image\//);
+  }
+  await otherPage.close();
+  ok("website overview, nested image page, page-specific replacement and restore, and global branding propagation");
+
   await page.goto(origin + "/contact/?category=jack-assemblies");
   await page.locator("#rfq-name").fill("QA Contact");
   await page.locator("#rfq-company").fill("QA Company");
@@ -234,7 +279,7 @@ try {
   await put("Name", "QA Editor");
   await put("Email", "editor@example.test");
   await put("Initial password", regularPassword);
-  await click("Create administrator"); await see("Administrator created.");
+  await click("Add user"); await see("Administrator created.");
   const editor = await browser.newContext({ viewport: { width: 390, height: 844 } });
   const editorPage = await editor.newPage();
   await editorPage.goto(origin + "/admin/login/");
@@ -248,6 +293,21 @@ try {
   await editorPage.goto(origin + "/admin/content/");
   assert.equal(await editorPage.evaluate(() => document.documentElement.scrollWidth), 390);
   ok("role enforcement and mobile workspace widths");
+  await editorPage.goto(origin + "/admin/dashboard/");
+  assert.equal(await editorPage.getByRole("link", { name: "Manage users", exact: true }).count(), 0);
+  await page.goto(origin + "/admin/dashboard/");
+  await page.getByRole("link", { name: "Manage users", exact: true }).click();
+  const editorAccount = page.getByRole("listitem").filter({ hasText: "editor@example.test" });
+  await editorAccount.getByRole("button", { name: "Remove access", exact: true }).click();
+  await see("User access removed.");
+  await editorPage.goto(origin + "/admin/dashboard/");
+  await editorPage.waitForURL("**/admin/login/");
+  await editorPage.getByLabel("Email", { exact: true }).fill("editor@example.test");
+  await editorPage.getByLabel("Password", { exact: true }).fill(regularPassword);
+  await editorPage.getByRole("button", { name: "Sign in", exact: true }).click();
+  await editorPage.getByText("The email or password is incorrect.", { exact: true }).waitFor();
+  ok("Super Admin user creation and removal, session revocation and blocked sign-in");
+
 
   await page.goto(origin + "/admin/account/");
   await page.getByText("QA Super Administrator", { exact: true }).click();

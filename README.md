@@ -26,7 +26,7 @@ npm run db:import-sqlite -- data/shaheen.sqlite
 
 Run `npm run dev` and open http://localhost:3000. The CMS inserts missing sections on first use and preserves saved edits. The administrator account table is `administrators`.
 
-For a fresh database, provision the first super administrator. Enter a unique password of 14–128 characters through standard input. For example, in Bash use an interactive hidden prompt and clear the variable afterward.
+For a fresh database, provision the first super administrator. Enter a unique password of 6–128 characters through standard input. For example, in Bash use an interactive hidden prompt and clear the variable afterward.
 
 ```bash
 read -rs -p 'Initial admin password: ' shaheen_initial_password
@@ -95,3 +95,36 @@ Open `/admin/homepage/images/` under Website management → Home page. The inven
 | Featured award photographs | 720 × 960 | Contain within the existing award card |
 
 The same slots serve desktop and mobile. Managed replacements are stored as responsive WebP variants in MySQL. Each replacement has a new URL, and the five most recent uploads per slot remain available for restore. The original source is retained separately. The video files and embedded map keep their existing CMS or application configuration.
+
+## Website-wide image management
+
+The main dashboard and the Website Management sidebar link directly to each page. The protected overview at `/admin/website/images/` links to each page's inventory, including product category detail pages. Its cards show the page URL, preview, image-slot count, and most recent edit. The existing `/admin/homepage/images/` URL continues to manage the same homepage slots and version history.
+
+### Page-wise inventory
+
+| Public page | Independently managed image locations |
+| --- | --- |
+| `/` | Every homepage slot listed above, plus the page-specific social sharing image |
+| `/about/` | Banner, press-shop photograph, individual board and management portraits, and sharing image |
+| `/capabilities/` | Banner, each capability card photograph, and sharing image |
+| `/facility/` | Banner, each facility gallery entry, and sharing image |
+| `/products/` | Banner, each product family cover, each product gallery entry, and sharing image |
+| `/products/jack-assemblies/` | Banner, each jack and hinge gallery image, and sharing image |
+| `/products/sheet-metal-parts/` | Banner, each sheet metal gallery image, and sharing image |
+| `/products/bent-rod-parts/` | Banner, each rod gallery image, and sharing image |
+| `/products/formed-pipe-parts/` | Banner, each pipe gallery image, and sharing image |
+| `/quality/` | Banner, the three production-stage photographs, each award or certificate photograph, and sharing image |
+| `/csr/` | Banner, each CSR initiative image, and sharing image |
+| `/gallery/` | Banner, each plant gallery image, and sharing image |
+| `/contact/` | Banner and sharing image |
+| Global | Header and footer wordmarks, footer watermark, favicon and Apple touch icon, default social image, and each client logo shared by the homepage and Products |
+
+Each page inventory lists the current source preview, recommended dimensions, original or uploaded dimensions when known, file size when available, alternative text, and edit history. The original asset is preserved per slot even when two pages initially use the same file. Home branding and client logo slots with explicit edits take priority on Home. Decorative icons, embedded maps, and video streams retain their existing rendering.
+
+### Registering future image slots
+
+1. Add the public page and its default image slots to `src/lib/server/website-image-inventory.ts`. Use a durable content identifier such as a product slug, team member slug, or source gallery identifier. Give each image its own section, title, fallback, and recommended canvas.
+2. In the public server component, load the page's image map with `getPageImages(pageKey)`. Resolve each slot by the same key before passing it into the existing image component. Preserve its container, crop position, loading priority, and responsive sizes.
+3. Open Website Management once to register new slots. The additive `website_image_pages` index maps slots to pages, while the existing slot, version, and file tables retain previous homepage uploads. Page rendering also registers its own missing slots. Verify a replacement and restore on the new page.
+
+The existing protected upload endpoint and immutable WebP URLs serve both homepage and website-wide images. Apply `npm run db:migrate` when rolling out the feature. Routine image edits use the Admin Panel and take effect on the next public request.

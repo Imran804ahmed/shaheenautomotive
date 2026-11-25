@@ -10,7 +10,7 @@ export const now = () => Math.floor(Date.now() / 1000);
 export const newToken = () => randomBytes(32).toString("base64url");
 export const digest = (value: string) => createHash("sha256").update(value).digest("hex");
 export const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-export const validPassword = (value: string) => value.length >= 14 && value.length <= 128;
+export const validPassword = (value: string) => value.length >= 6 && value.length <= 128;
 
 export async function audit(administratorId: number | null, action: string, subject: string) {
   await db().prepare("INSERT INTO audit(administrator_id,action,subject) VALUES (?,?,?)").run(administratorId, action, subject);

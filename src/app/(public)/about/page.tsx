@@ -1,3 +1,5 @@
+import { getPageImages } from "@/lib/server/website-images";
+import { pageImageKey, aboutPress, resolvePhoto } from "@/lib/server/website-image-inventory";
 import { pageMetadata } from "@/lib/server/seo";
 import { getContent } from "@/lib/server/content";
 import type { Metadata } from "next";
@@ -20,10 +22,16 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function AboutPage() {
+  const images = await getPageImages("about");
   const { pageHeaders, history, vision, mission, aboutPillars, industriesServed, leadership, managementTeam } = await getContent();
+  const press = resolvePhoto(images, pageImageKey("about", "press"), aboutPress);
+  const withPortrait = (member: (typeof leadership)[number]) => {
+    const image = images[pageImageKey("about", member.slug)];
+    return image?.src ? { ...member, photo: image.src, photoAlt: image.alt } : member;
+  };
   return (
     <>
-      <PageHeader {...pageHeaders.about} flat />
+      <PageHeader {...pageHeaders.about} image={ { ...pageHeaders.about.image, src: images[pageImageKey("about", "banner")]?.src || pageHeaders.about.image.src } } flat />
 
       <section className="bg-bg py-section-sm">
         <Container className="grid gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:gap-16">
@@ -64,7 +72,7 @@ export default async function AboutPage() {
         </Container>
       </section>
 
-      <Leadership members={leadership} management={managementTeam} />
+      <Leadership members={leadership.map(withPortrait)} management={managementTeam.map(withPortrait)} />
 
       <section className="rounded-section bg-bg-elevated shadow-soft py-section-sm">
         <Container>
@@ -88,10 +96,10 @@ export default async function AboutPage() {
         <Container className="grid gap-10 lg:grid-cols-[1fr_1fr] lg:items-center">
           <Reveal from="left">
             <ParallaxImage
-              src="/images/facility/floor/komatsu-200-press.jpg"
-              alt="Komatsu 200-tonne straight-side power press, P.P. 53, on the SAPL press shop floor"
+              src={press.src}
+              alt={press.alt}
               sizes="(min-width: 1024px) 28rem, 90vw"
-              blurDataURL={blurProps("/images/facility/floor/komatsu-200-press.jpg").blurDataURL}
+              blurDataURL={blurProps(press.src).blurDataURL}
               className="mx-auto aspect-[4/5] max-w-md rounded-[2rem] border border-border bg-bg-inverted shadow-lift lg:mx-0"
             />
           </Reveal>

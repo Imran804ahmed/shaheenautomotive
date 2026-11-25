@@ -1,3 +1,5 @@
+import { getPageImages } from "@/lib/server/website-images";
+import { pageImageKey } from "@/lib/server/website-image-inventory";
 import { pageMetadata } from "@/lib/server/seo";
 import { getContent } from "@/lib/server/content";
 import type { Metadata } from "next";
@@ -17,10 +19,11 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function ContactPage() {
+  const images = await getPageImages("contact");
   const { pageHeaders, settings: siteConfig, productCategories } = await getContent();
   return (
     <>
-      <PageHeader {...pageHeaders.contact} flat />
+      <PageHeader {...pageHeaders.contact} image={ { ...pageHeaders.contact.image, src: images[pageImageKey("contact", "banner")]?.src || pageHeaders.contact.image.src } } flat />
 
       <section className="py-16 sm:py-20">
         <Container className="grid gap-10 sm:gap-12 lg:grid-cols-[0.85fr_1.15fr] lg:gap-16">

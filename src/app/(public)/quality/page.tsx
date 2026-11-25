@@ -1,3 +1,6 @@
+import { getPageImages } from "@/lib/server/website-images";
+import { pageImageKey, qualityAwardKey } from "@/lib/server/website-image-inventory";
+import { qualityStages } from "@/content/quality-stages";
 import type { Award } from "@/content/company";
 import { pageMetadata } from "@/lib/server/seo";
 import { getContent } from "@/lib/server/content";
@@ -21,7 +24,7 @@ export async function generateMetadata(): Promise<Metadata> {
 });
 }
 
-function AwardCard({ award }: { award: Award }) {
+function AwardCard({ award }: { award: Award & { managedAlt?: string } }) {
   return (
     <figure className="card-lift group flex h-full flex-col overflow-hidden rounded-[1.5rem] border border-border-inverted bg-bg-inverted shadow-soft">
       {/* light display stage, as on the home page: every award is a whole 3:4 print, never cropped */}
@@ -33,7 +36,7 @@ function AwardCard({ award }: { award: Award }) {
             <div className="relative aspect-[3/4] h-full max-w-full overflow-hidden rounded-xl bg-[linear-gradient(to_bottom,rgb(221_228_234),rgb(229_236_240))] shadow-[0_18px_30px_-12px_rgb(0_0_0/0.45)] ring-1 ring-black/5 transition-transform duration-700 ease-out motion-safe:group-hover:scale-[1.04]">
               <Image
                 src={award.image}
-                alt={`${award.title}, ${award.awardedBy}`}
+                alt={award.managedAlt ?? `${award.title}, ${award.awardedBy}`}
                 fill
                 sizes="(min-width: 1280px) 260px, (min-width: 1024px) 28vw, (min-width: 640px) 45vw, 85vw"
                 {...blurProps(award.image)}
@@ -59,66 +62,33 @@ function AwardCard({ award }: { award: Award }) {
   );
 }
 
-const floorPhoto = (name: string) => `/images/facility/floor/${name}.jpg`;
-
-/** The three quality gates, laid out like the plant areas on /facility. */
-const qualityStages = [
-  {
-    key: "ots-inspection",
-    number: "01",
-    label: "OTS sample inspection",
-    body: "Once tooling is complete, an off-tool sample is produced and inspected jointly by the SAPL quality team and the customer's quality department before the part is approved.",
-    cover: floorPhoto("checking-fixture-closeup"),
-    coverAlt: "Inspector checking a stamped part on a clamped checking fixture",
-    facts: [
-      { name: "Stage", value: "Tooling sign-off" },
-      { name: "Inspected by", value: "SAPL + customer QA" },
-    ],
-  },
-  {
-    key: "line-verification",
-    number: "02",
-    label: "Trial production & line verification",
-    body: "A line verification process is run in the presence of the customer's team, confirming the production line is ready for volume before mass production begins.",
-    cover: floorPhoto("press-line-safety-gear"),
-    coverAlt: "Operators in hard hats, safety glasses and high-visibility vests running a line of mechanical power presses",
-    facts: [
-      { name: "Stage", value: "Pre-volume" },
-      { name: "Witnessed by", value: "Customer team on-site" },
-    ],
-  },
-  {
-    key: "production-qa",
-    number: "03",
-    label: "Production quality assurance",
-    body: "Once in mass production, parts are checked on gauging fixtures through the run and delivered against schedule with consistent quality.",
-    cover: floorPhoto("panel-gauging"),
-    coverAlt: "Inspector clamping a sheet metal part into a gauging fixture",
-    facts: [
-      { name: "Stage", value: "Mass production" },
-      { name: "Delivery", value: "Against schedule" },
-    ],
-  },
-];
-
 const isoStandards = [
   { code: "ISO 9001", name: "Quality management system", icon: ShieldCheck },
   { code: "ISO 14001", name: "Environmental management system", icon: Leaf },
 ];
 
 export default async function QualityPage() {
+  const images = await getPageImages("quality");
   const { pageHeaders, certificationsNote, namedAwards, awardPhotos } = await getContent();
+  const managedAwards = awardPhotos.map((award) => {
+    const image = images[qualityAwardKey(award)];
+    return image?.src ? { ...award, image: image.src, managedAlt: image.alt } : award;
+  });
+  const stages = qualityStages.map((stage) => {
+    const image = images[pageImageKey("quality", stage.key)];
+    return image?.src ? { ...stage, cover: image.src, coverAlt: image.alt } : stage;
+  });
   const awardGroups = [
-    { title: "Performance & appreciation awards", items: awardPhotos.filter((a) => a.category === "award") },
-    { title: "Supplier conventions & certificates", items: awardPhotos.filter((a) => a.category === "recognition") },
+    { title: "Performance & appreciation awards", items: managedAwards.filter((a) => a.category === "award") },
+    { title: "Supplier conventions & certificates", items: managedAwards.filter((a) => a.category === "recognition") },
   ];
   return (
     <>
-      <PageHeader {...pageHeaders.quality} flat />
+      <PageHeader {...pageHeaders.quality} image={ { ...pageHeaders.quality.image, src: images[pageImageKey("quality", "banner")]?.src || pageHeaders.quality.image.src } } flat />
 
       <section className="surface-paper bg-bg py-section">
         <Container className="space-y-16 sm:space-y-24 lg:space-y-28">
-          {qualityStages.map((stage, i) => (
+          {stages.map((stage, i) => (
             <div key={stage.key} id={stage.key} className="grid scroll-mt-28 items-center gap-8 sm:gap-10 lg:grid-cols-2 lg:gap-16">
               <Reveal from={i % 2 ? "right" : "left"} className={cn(i % 2 && "lg:order-2")}>
                 <ParallaxImage

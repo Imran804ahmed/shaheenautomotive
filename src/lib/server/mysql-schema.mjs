@@ -50,6 +50,12 @@ export const schema = [
     updated_by INT, updated_at BIGINT,
     FOREIGN KEY(updated_by) REFERENCES administrators(id)
   ) ${table}`,
+  `CREATE TABLE IF NOT EXISTS website_image_pages (
+    image_key VARCHAR(100) CHARACTER SET ascii COLLATE ascii_bin PRIMARY KEY,
+    page_key VARCHAR(100) CHARACTER SET ascii COLLATE ascii_bin NOT NULL,
+    INDEX(page_key),
+    FOREIGN KEY(image_key) REFERENCES homepage_images(image_key) ON DELETE CASCADE
+  ) ${table}`,
   `CREATE TABLE IF NOT EXISTS homepage_image_versions (
     id CHAR(36) CHARACTER SET ascii COLLATE ascii_bin PRIMARY KEY,
     image_key VARCHAR(100) CHARACTER SET ascii COLLATE ascii_bin NOT NULL,

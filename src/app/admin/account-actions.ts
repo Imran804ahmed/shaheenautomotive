@@ -33,7 +33,7 @@ export async function changePassword(_: string, form: FormData) {
   const administrator = await requireAdministrator();
   const current = String(form.get("current") ?? "");
   const password = String(form.get("password") ?? "");
-  if (!validPassword(password) || password !== form.get("confirm") || current === password) return "Enter a different new password of 14–128 characters and confirm it.";
+  if (!validPassword(password) || password !== form.get("confirm") || current === password) return "Enter a different new password of 6–128 characters and confirm it.";
   if (!validPassword(current) || !(await rateLimit(`password:${administrator.id}`, 10, 900))) return "Enter your current password or try again later.";
   const database = db();
   const existing = String((await database.prepare("SELECT password_hash FROM administrators WHERE id=?").get(administrator.id))?.password_hash ?? "");
@@ -64,7 +64,7 @@ export async function saveAdministrator(id: number, _: string, form: FormData) {
     const email = String(form.get("email") ?? "").trim().toLowerCase();
     const name = String(form.get("name") ?? "").trim();
     const password = String(form.get("password") ?? "");
-    if (!name || name.length > 120 || email.length > 254 || !emailPattern.test(email) || !validPassword(password)) return "Enter a name, a valid email and a password of 14–128 characters.";
+    if (!name || name.length > 120 || email.length > 254 || !emailPattern.test(email) || !validPassword(password)) return "Enter a name, a valid email and a password of 6–128 characters.";
     const hash = await hashPassword(password);
     const message = await transaction(async () => {
       if (!(await database.prepare("SELECT id FROM administrators WHERE id=? AND active=1 AND role='super_admin'").get(administrator.id))) return "Your permissions changed. Sign in again.";
@@ -77,16 +77,29 @@ export async function saveAdministrator(id: number, _: string, form: FormData) {
     return message;
   }
 
-  if (id === administrator.id) return "Another super administrator must change your access.";
-  const active = Number(form.has("active"));
+  return updateAdministratorAccess(administrator.id, id, role, Number(form.has("active")));
+}
+
+export async function removeAdministratorAccess(id: number) {
+  const administrator = await requireAdministrator(true);
+  const message = await updateAdministratorAccess(administrator.id, id, null, 0);
+  if (message === "User access removed.") redirect("/admin/administrators?removed=1");
+  return message;
+}
+
+async function updateAdministratorAccess(actorId: number, id: number, role: string | null, active: number) {
+  if (id === actorId) return "Another super administrator must change your access.";
+  const database = db();
   const message = await transaction(async () => {
-    if (!(await database.prepare("SELECT id FROM administrators WHERE id=? AND active=1 AND role='super_admin'").get(administrator.id))) return "Your permissions changed. Sign in again.";
-    const result = await database.prepare("UPDATE administrators SET role=?,active=?,updated_at=UNIX_TIMESTAMP() WHERE id=?").run(role, active, id);
+    const actor = await database.prepare("SELECT id FROM administrators WHERE id=? AND active=1 AND role='super_admin'").get(actorId);
+    if (!actor) return "Your permissions changed. Sign in again.";
+    const result = await database.prepare("UPDATE administrators SET role=COALESCE(?,role),active=?,updated_at=UNIX_TIMESTAMP() WHERE id=?")
+      .run(role, active, id);
     if (!result.changes) return "This administrator no longer exists.";
     await database.prepare("DELETE FROM sessions WHERE administrator_id=?").run(id);
     await database.prepare("DELETE FROM reset_tokens WHERE administrator_id=?").run(id);
-    await audit(administrator.id, "Updated administrator access", String(id));
-    return "Access updated.";
+    await audit(actorId, role === null ? "Removed administrator access" : "Updated administrator access", String(id));
+    return role === null ? "User access removed." : "Access updated.";
   });
   revalidatePath("/admin/administrators");
   return message;

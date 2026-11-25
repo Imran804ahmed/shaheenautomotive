@@ -3,7 +3,7 @@ import sharp from "sharp";
 import { revalidatePath } from "next/cache";
 import { audit, getAdministrator } from "@/lib/server/auth";
 import { db, transaction } from "@/lib/server/database.mjs";
-import { getHomepageSlots } from "@/lib/server/homepage-images";
+import { getWebsiteSlots } from "@/lib/server/website-images";
 
 const maxSize = 8 * 1024 * 1024;
 const accepted: Record<string, { format: string; mime: string }> = {
@@ -26,7 +26,8 @@ export async function POST(request: Request) {
   if (!request.headers.get("content-type")?.startsWith("multipart/form-data;")) return response("Invalid form format.", 415);
   let form: FormData;
   try { form = await request.formData(); } catch { return response("The upload could not be read.", 400); }
-  const slot = (await getHomepageSlots()).find(({ key }) => key === form.get("key"));
+  const pageKey = form.get("page");
+  const slot = (await getWebsiteSlots(typeof pageKey === "string" && pageKey ? pageKey : "home")).find(({ key }) => key === form.get("key"));
   if (!slot) return response("This image slot is unavailable.", 404);
   const revision = form.get("revision");
   if (revision === null || Number(revision) !== slot.revision) return response("This image changed. Refresh and try again.", 409);
@@ -109,11 +110,13 @@ export async function POST(request: Request) {
       `).all(slot.key, version);
       for (const { id } of expired) await database.prepare("DELETE FROM homepage_image_versions WHERE id=?").run(String(id));
     }
-    await audit(admin.id, `Homepage image ${action}`, slot.key);
+    await audit(admin.id, `${slot.pageKey === "home" ? "Homepage" : "Website"} image ${action}`, slot.key);
     return true;
   });
   if (!result) return response("The image changed or the selected version has expired.", 409);
-  revalidatePath("/", "page");
+  if (slot.pageKey === "global") revalidatePath("/", "layout");
+  else revalidatePath(slot.path, "page");
+  revalidatePath("/admin/website/images", "layout");
   revalidatePath("/admin/homepage/images");
-  return response("Homepage image saved.");
+  return response(slot.pageKey === "home" ? "Homepage image saved." : "Website image saved.");
 }

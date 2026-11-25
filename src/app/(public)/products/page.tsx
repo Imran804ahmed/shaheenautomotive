@@ -1,3 +1,5 @@
+import { getPageImages } from "@/lib/server/website-images";
+import { pageImageKey, mapGallery, resolvePhoto } from "@/lib/server/website-image-inventory";
 import { pageMetadata } from "@/lib/server/seo";
 import { getContent } from "@/lib/server/content";
 import type { Metadata } from "next";
@@ -19,12 +21,13 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function ProductsPage() {
+  const images = await getPageImages("products");
   const { pageHeaders, productCategories, clients, productGalleryCategories, productGalleryPhotos } = await getContent();
   const hiddenSlugs = new Set(productCategories.filter(({ visible }) => !visible).map(({ slug }) => String(slug)));
   return (
     <>
-      <PageHeader {...pageHeaders.products} flat />
-      <ProductsShowcase categories={productCategories.filter(({ visible }) => visible)} />
+      <PageHeader {...pageHeaders.products} image={ { ...pageHeaders.products.image, src: images[pageImageKey("products", "banner")]?.src || pageHeaders.products.image.src } } flat />
+      <ProductsShowcase images={images} imageKey={(slug) => pageImageKey("products", slug)} categories={productCategories.filter(({ visible }) => visible)} />
 
       <section className="bg-bg pb-section">
         <Container>
@@ -34,7 +37,7 @@ export default async function ProductsPage() {
             body="Filter by family to see stamped, formed and assembled parts made on our lines."
             className="mx-auto mb-10 text-center"
           />
-          <GalleryGrid photos={withBlur(productGalleryPhotos.filter(({ category }) => !hiddenSlugs.has(category)))} categories={productGalleryCategories.filter(({ key }) => !hiddenSlugs.has(key))} showFilters />
+          <GalleryGrid photos={withBlur(mapGallery("products", productGalleryPhotos, (id, photo) => resolvePhoto(images, id, photo)).filter(({ category }) => !hiddenSlugs.has(category)))} categories={productGalleryCategories.filter(({ key }) => !hiddenSlugs.has(key))} showFilters />
         </Container>
       </section>
       <ClientsStrip clients={clients} />

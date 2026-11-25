@@ -1,4 +1,4 @@
-import { getHomepageImages } from "@/lib/server/homepage-images";
+import { getHomepageImages } from "@/lib/server/website-images";
 import { Fragment } from "react";
 import { pageMetadata } from "@/lib/server/seo";
 import { getContent } from "@/lib/server/content";

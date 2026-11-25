@@ -1,3 +1,5 @@
+import { getPageImages } from "@/lib/server/website-images";
+import { defaultSharingImage } from "@/lib/server/website-image-inventory";
 import type { Metadata } from "next";
 import { PublicShell } from "@/components/layout/PublicShell";
 import { getContent } from "@/lib/server/content";
@@ -6,6 +8,8 @@ export const dynamic = "force-dynamic";
 
 export async function generateMetadata(): Promise<Metadata> {
   const { settings: siteConfig, brand } = await getContent();
+  const global = await getPageImages("global");
+  const favicon = global["global-favicon"]?.src || brand.mark;
   return {
     metadataBase: new URL(siteConfig.baseUrl),
     title: {
@@ -23,8 +27,8 @@ export async function generateMetadata(): Promise<Metadata> {
       "sheet metal parts manufacturer",
     ],
     icons: {
-      icon: brand.mark,
-      apple: brand.mark,
+      icon: favicon,
+      apple: favicon,
     },
     openGraph: {
       type: "website",
@@ -32,7 +36,7 @@ export async function generateMetadata(): Promise<Metadata> {
       title: `${siteConfig.companyLegalName} | Jack, Sheet Metal, Rod & Pipe Component Manufacturer`,
       description:
         "Shaheen Automotive (Pvt.) Ltd. designs and manufactures jack assemblies, sheet metal, bent rod and formed pipe components for the automotive and home appliance industries.",
-      images: ["/images/facility/hydraulic-press-operator.jpeg"],
+      images: [global["global-sharing"]?.src || defaultSharingImage],
     },
     twitter: {
       card: "summary_large_image",
