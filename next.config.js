@@ -1,7 +1,8 @@
-import type { NextConfig } from "next";
-import imageConfig from "./src/lib/image-config.json";
+/* eslint-disable @typescript-eslint/no-require-imports -- Next.js loads this file as CommonJS on the host. */
+const imageConfig = require("./src/lib/image-config.json");
 
-const nextConfig: NextConfig = {
+/** @type {import("next").NextConfig} */
+const nextConfig = {
   poweredByHeader: false,
   async headers() {
     return [
@@ -36,4 +37,4 @@ const nextConfig: NextConfig = {
   trailingSlash: true,
 };
 
-export default nextConfig;
+module.exports = nextConfig;

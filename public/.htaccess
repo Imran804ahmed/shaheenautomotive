@@ -1,12 +1,5 @@
-# Apache / LiteSpeed (cPanel) config for the static export in out/.
-# Copied to out/.htaccess by `next build`. Every block is wrapped in <IfModule>,
-# so a host without a given module simply skips it instead of returning a 500.
-#
-# Long-term immutable caching for /_next/static/ (content-hashed filenames) is set
-# by out/_next/static/.htaccess, written by scripts/postbuild.mjs.
-
-DirectoryIndex index.html
-ErrorDocument 404 /404.html
+# Optional Apache / LiteSpeed rules for directly served files.
+# cPanel manages the document root's Passenger configuration separately.
 
 # ---- MIME types -----------------------------------------------------------
 <IfModule mod_mime.c>

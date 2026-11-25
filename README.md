@@ -59,6 +59,27 @@ The content source in `src/content/` provides the initial seed. The runtime uses
 
 MySQL stores CMS data, sessions, inquiries and uploads. The dynamic branch requires a Node.js process even when the database is managed with phpMyAdmin.
 
+### cPanel and CloudLinux Passenger
+
+1. On your workstation or CI, run `npm ci` and `npm run deploy:zip`. Use `npm run deploy:zip -- --webpack` if Turbopack workers are restricted. The script runs prebuild image optimization, builds Next.js, and verifies `build/shaheenautomotive-deployment.zip`. The ZIP includes the compiled app, public assets, and runtime files. Keep credentials and database backups outside the ZIP.
+2. Back up the current app files. Replace the old `.next` directory with the ZIP's `.next` directory and extract the other files into `/home/shaheen/shaheenautomotive`. Remove the legacy `next.config.ts` from the app root. Preserve the server's environment and database.
+3. In the cPanel terminal, use the app's Node environment and install production dependencies with optional packages enabled so npm can install Sharp's Linux binary.
+
+   ```sh
+   source /home/shaheen/nodevenv/shaheenautomotive/20/bin/activate
+   cd /home/shaheen/shaheenautomotive
+   node --version
+   getconf GNU_LIBC_VERSION
+   npm install --omit=dev --include=optional
+   node -e 'console.log(require("sharp").versions.vips)'
+   ```
+
+4. In **Setup Node.js App**, keep the app root at `/home/shaheen/shaheenautomotive`, the startup file at `server.js`, and the latest Node 20 patch available from the host. Keep your MySQL variables and `APP_ORIGIN`, then click **Restart**. Check the homepage, `/admin/login/`, and admin image uploads. Run `npm run db:migrate` in the app's Node environment if initializing a new MySQL database. Build only on your workstation or CI.
+
+The CommonJS `next.config.js` loads directly in Node. Passenger uses the existing `server.js` and its `PORT` environment variable. npm may install an optional Next.js SWC binary, but the compiled app starts without loading it. Sharp is required by admin image uploads. Its Linux x64 prebuilt binary requires glibc 2.28 or newer and SSE4.2. If the Sharp check fails, ask the host for a compatible runtime before switching traffic. [Sharp installation requirements](https://sharp.pixelplumbing.com/install/#prebuilt-binaries)
+
+Keep `public_html/.htaccess` and edit only the old static-export rules outside cPanel's `CLOUDLINUX PASSENGER CONFIGURATION` and `CLOUDLINUX ENV VARS` blocks. Preserve both generated blocks exactly. Remove the old `out/` comments, `DirectoryIndex index.html`, and `ErrorDocument 404 /404.html` if they came from the static deploy. Move old exported pages and `_next/` assets out of the document root if they are shadowing Passenger URLs. The app uses `/home/shaheen/shaheenautomotive/.next` and serves `/_next/static/` itself. Passenger does not need `public_html/.next`.
+
 ## Checks
 
 ```bash
